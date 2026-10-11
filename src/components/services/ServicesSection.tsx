@@ -9,6 +9,16 @@ import { clamp, easeOutCubic } from "@/lib/scroll";
 
 const headingWords = ["Our", "Services"];
 
+// Stage of the journey each service belongs to (matches the Services menu)
+const stage: Record<string, string> = {
+  university: "Plan & apply",
+  scholarship: "Plan & apply",
+  tests: "Prepare & travel",
+  visa: "Prepare & travel",
+  landing: "Settle in abroad",
+  accommodation: "Settle in abroad",
+};
+
 /* --------------------------------------------------------------------------
    ServicesSection — "Our Services" in a staggered two-column grid
    --------------------------------------------------------------------------
@@ -16,7 +26,9 @@ const headingWords = ["Our", "Services"];
      --hp  on the section: heading words slide up out of their masks
      --sp  on the section: the right column travels faster than the left,
            closing its offset as you scroll (staggered parallax)
-     --rv / --pa on each card: reveal (scale + unmask) and image parallax
+     --rv / --pa on each card: reveal (unmask from below) and image parallax
+     --vel / --vabs on the section: eased scroll velocity; the cards bend
+           (skew + squash) with it, after the featured work on lusion.co
    Smoothness comes from Lenis (components/layout/SmoothScroll).
    Styles live in globals.css under "Services".
    -------------------------------------------------------------------------- */
@@ -28,6 +40,9 @@ export default function ServicesSection() {
     if (!section) return;
     const heading = section.querySelector<HTMLElement>("[data-svc-heading]");
     const cards = Array.from(section.querySelectorAll<HTMLElement>("[data-svc-card]"));
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let lastY = window.scrollY;
+    let vel = 0;
     let raf = 0;
 
     const tick = () => {
@@ -42,6 +57,16 @@ export default function ServicesSection() {
         section.style.setProperty("--hp", clamp((vh - h.top) / (vh * 0.55)).toFixed(4));
       }
 
+      // Scroll velocity (−1…1), eased so the cards bend with the scroll and
+      // relax back once it stops — like Lusion's featured work
+      const y = window.scrollY;
+      const target = reduce ? 0 : clamp((y - lastY) / (vh * 0.035), -1, 1);
+      lastY = y;
+      vel += (target - vel) * 0.18;
+      if (Math.abs(vel) < 0.001) vel = 0;
+      section.style.setProperty("--vel", vel.toFixed(4));
+      section.style.setProperty("--vabs", Math.abs(vel).toFixed(4));
+
       cards.forEach((card) => {
         const r = card.getBoundingClientRect();
         const rv = easeOutCubic(clamp((vh - r.top) / (vh * 0.7)));
@@ -49,6 +74,9 @@ export default function ServicesSection() {
         card.style.setProperty("--rv", rv.toFixed(4));
         card.style.setProperty("--pa", pa.toFixed(4));
       });
+
+      // Keep easing until the bend has fully relaxed
+      if (vel !== 0) raf = requestAnimationFrame(tick);
     };
     const request = () => {
       if (!raf) raf = requestAnimationFrame(tick);
@@ -114,46 +142,42 @@ export default function ServicesSection() {
           {services.map((service, i) => (
             <li key={service.slug} data-svc-card className="svc-card">
               <Link href={`/services#${service.slug}`} className="group block focus-visible:outline-none">
-                {/* Media */}
-                <div
-                  className="svc-media relative aspect-[4/3] overflow-hidden"
-                  onPointerMove={handlePointerMove}
-                >
+                {/* Media: unmasks from below on reveal, bends with scroll speed */}
+                <div className="svc-media relative aspect-[4/3] overflow-hidden" onPointerMove={handlePointerMove}>
                   <div className="svc-scene absolute inset-0">
                     <Image
-                      src={`/images/services/${service.art}.jpg`}
+                      src={service.photo}
                       alt=""
                       fill
                       sizes="(min-width: 768px) 45vw, 100vw"
                       className="svc-art object-cover"
                     />
                   </div>
-                  <span className="absolute left-5 top-5 sm:left-6 sm:top-6 rounded-full bg-white/85 backdrop-blur px-2.5 py-1 font-mono text-xs tracking-widest text-slate-700">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
                   <span className="svc-cursor" aria-hidden="true">
                     Explore
                   </span>
                 </div>
 
-                {/* Meta */}
-                <div className="svc-meta mt-5 sm:mt-6 flex items-start justify-between gap-6">
-                  <div className="min-w-0">
-                    <h3 className="text-xl sm:text-2xl lg:text-[1.75rem] font-normal tracking-tight text-slate-900 leading-snug">
-                      {service.title}
-                    </h3>
-                    <p className="mt-2 sm:mt-3 text-sm sm:text-base text-slate-500 leading-relaxed max-w-lg">
-                      {service.description}
+                {/* Caption + title (title gets Lusion's slide-in arrow on hover) */}
+                <div className="svc-meta mt-5 sm:mt-6">
+                  <div className="svc-line overflow-hidden">
+                    <p className="svc-line__inner flex items-center gap-3 text-[11px] sm:text-xs uppercase tracking-[0.2em] text-slate-500">
+                      <span className="tabular-nums text-[#0a7fb3]">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="h-px w-6 bg-slate-300" aria-hidden="true" />
+                      {stage[service.art]}
                     </p>
                   </div>
-                  <span
-                    className="shrink-0 mt-1 w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-slate-300 flex items-center justify-center text-slate-700 transition-all duration-500 group-hover:bg-[#009cd9] group-hover:border-[#009cd9] group-hover:text-white group-hover:-rotate-45 group-focus-visible:ring-4 group-focus-visible:ring-[#009cd9]/30"
-                    aria-hidden="true"
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </span>
+                  <div className="svc-line overflow-hidden mt-2.5 sm:mt-3">
+                    <h3 className="svc-line__inner svc-title relative text-2xl sm:text-3xl lg:text-[2.4rem] font-normal tracking-[-0.03em] text-slate-900 leading-[1.1]">
+                      <span className="svc-title__arrow" aria-hidden="true">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.343 8h11.314m0 0-4.984 4.984M13.657 8 8.673 3.016" />
+                        </svg>
+                      </span>
+                      <span className="svc-title__text">{service.title}</span>
+                    </h3>
+                  </div>
+                  <p className="mt-3 text-sm sm:text-base text-slate-500 leading-relaxed max-w-lg">{service.description}</p>
                 </div>
                 <span className="sr-only">Learn more about {service.title}</span>
               </Link>

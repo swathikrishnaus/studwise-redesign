@@ -4,6 +4,7 @@ import { footerNavLinks, serviceMenu } from "@/data/navigation";
 import { offices } from "@/data/offices";
 import { bookAppointmentHref } from "@/data/whyChooseUs";
 import FooterClock from "./FooterClock";
+import SocialLinks from "@/components/ui/SocialLinks";
 
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
 
@@ -43,9 +44,9 @@ export default function Footer() {
   return (
     <footer className="site-footer relative z-10 overflow-hidden text-white bg-[#0b2a45] rounded-t-[2rem] lg:rounded-t-[3rem]">
 
-      <div className="relative max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pt-16 sm:pt-20 lg:pt-24">
+      <div className="relative max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pt-14 sm:pt-16">
         {/* ---------------- Statement + contact cards ---------------- */}
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end pb-12 sm:pb-16 border-b border-white/10">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end pb-10 sm:pb-12 border-b border-white/10">
           <div className="lg:col-span-6">
             <p className="flex items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-sky-200/80">
               <span className="h-px w-10 bg-sky-200/40" aria-hidden="true" />
@@ -94,7 +95,7 @@ export default function Footer() {
         </div>
 
         {/* ---------------- Link columns ---------------- */}
-        <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 sm:gap-y-12 pt-12 sm:pt-16 pb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 sm:gap-y-12 pt-10 sm:pt-12 pb-2">
           <div className="col-span-1 lg:col-span-3">
             <Link href="/" aria-label="Studwise home" className="inline-block">
               <Image src="/images/logo-white.png" alt="Studwise" width={657} height={240} className="h-11 w-auto" />
@@ -103,6 +104,7 @@ export default function Footer() {
               Study abroad consultants from Kerala — guiding students from shortlist to visa to their first day on
               campus.
             </p>
+            <SocialLinks className="mt-5" />
             <a
               href="#main-content"
               className="group mt-5 inline-flex items-center gap-3 text-sm text-white/80 hover:text-white transition-colors"
@@ -170,9 +172,9 @@ export default function Footer() {
       </div>
 
       {/* ---------------- Wordmark, with a plane flying its route above ---------------- */}
-      <div className="relative select-none pt-10 sm:pt-14 pb-8 sm:pb-12" aria-hidden="true">
+      <div className="relative select-none overflow-hidden pt-6 sm:pt-8" aria-hidden="true">
         {/* Dashed route + plane sit in their own band above the letters */}
-        <div className="relative h-8 sm:h-10 mb-4 sm:mb-6">
+        <div className="relative h-8 sm:h-10 mb-1 sm:mb-2">
           <svg className="absolute inset-x-0 top-1/2 w-full h-2 -translate-y-1/2 overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 10">
             <line x1="0" y1="5" x2="100" y2="5" stroke="rgba(255,255,255,0.18)" strokeWidth="0.15" strokeDasharray="1 1" vectorEffect="non-scaling-stroke" />
           </svg>
@@ -182,12 +184,12 @@ export default function Footer() {
             </svg>
           </div>
         </div>
-        <p className="text-center font-normal leading-[0.9] tracking-[-0.065em] text-[16vw] text-white/[0.07]">studwise</p>
+        <p className="text-center font-normal leading-[0.8] tracking-[-0.065em] text-[15vw] text-white/[0.07] translate-y-[16%]">studwise</p>
       </div>
 
       {/* ---------------- Bottom bar ---------------- */}
       <div className="relative border-t border-white/10">
-        <div className="max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 py-7 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
+        <div className="max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
           <p>© {year} Studwise Pvt Ltd. All rights reserved.</p>
           <p className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />

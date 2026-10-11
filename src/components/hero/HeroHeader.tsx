@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import CloudButton from "@/components/ui/CloudButton";
+import SocialLinks from "@/components/ui/SocialLinks";
 import { aboutMenu, headerContact, mainNavLinks, serviceMenu } from "@/data/navigation";
 import type { MegaItem } from "@/data/navigation";
 
@@ -88,6 +89,21 @@ export default function HeroHeader() {
 
   return (
     <header ref={headerRef} className="relative z-50 w-full font-sans" onPointerLeave={scheduleClose}>
+      {/* Backdrop while a mega menu is open: dims and blurs the page so the
+          panel reads cleanly (inside the header's stacking context, so it
+          sits above the page but below the header and panels) */}
+      <div
+        className={`hidden lg:block fixed inset-0 -z-10 bg-[#0b2a45]/35 backdrop-blur-[6px] transition-opacity duration-300 ${
+          open ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onPointerEnter={scheduleClose}
+        onClick={close}
+        aria-hidden="true"
+      />
+      <div
+        className={`absolute inset-x-0 top-0 h-20 -z-[5] bg-[#F1F5F9] transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
+        aria-hidden="true"
+      />
       <div className="max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7 h-20 flex items-center justify-between gap-6">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="Studwise Home">
@@ -246,6 +262,7 @@ export default function HeroHeader() {
                     {headerContact.email}
                   </a>
                 </div>
+                <SocialLinks className="pt-1" />
               </div>
             </div>
           </div>
@@ -342,6 +359,7 @@ export default function HeroHeader() {
                 {headerContact.email}
               </a>
             </div>
+            <SocialLinks tone="light" />
           </div>
         </div>
       )}

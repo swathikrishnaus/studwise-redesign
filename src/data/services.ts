@@ -7,8 +7,7 @@
 export const servicesIntro =
   "As a leading study abroad education consultancy, we ensure our services cover every nook and hiccup.";
 
-/** Card photo: public/images/services/{key}.jpg — Pexels (Pexels licence) and
-    Wikimedia Commons (CC0, visa), 2000 × 1500 */
+/** Card photos (`photo`): Pexels (Pexels licence) and Wikimedia Commons (CC0, visa) */
 export type ServiceArtKey =
   | "university"
   | "scholarship"
@@ -22,6 +21,8 @@ export type Service = {
   title: string;
   description: string;
   art: ServiceArtKey;
+  /** Card photo in public/images/services (2000 × 1500) */
+  photo: string;
 };
 
 export const services: Service[] = [
@@ -31,6 +32,7 @@ export const services: Service[] = [
     description:
       "We help you to take the best university in accordance with your academic qualification to secure your career aligned with top universities across the world.",
     art: "university",
+    photo: "/images/services/university-hd.jpg",
   },
   {
     slug: "scholarship-assistance",
@@ -38,6 +40,7 @@ export const services: Service[] = [
     description:
       "Students will be given proper guidance and reliable information on the scholarships that the Universities provide.",
     art: "scholarship",
+    photo: "/images/services/scholarship-hd.jpg",
   },
   {
     slug: "visa-processing",
@@ -45,6 +48,7 @@ export const services: Service[] = [
     description:
       "Around 1000+ students received our help with effortlessly obtaining their visas.",
     art: "visa",
+    photo: "/images/services/visa-hd.jpg",
   },
   {
     slug: "ielts-toefl-ept-preparation",
@@ -52,6 +56,7 @@ export const services: Service[] = [
     description:
       "We conducts comprehensive IELTS/TOEFL/EPT classes that will boost your results on these important language tests.",
     art: "tests",
+    photo: "/images/services/tests-study.jpg",
   },
   {
     slug: "pre-landing-and-post-landing-services",
@@ -59,6 +64,7 @@ export const services: Service[] = [
     description:
       "Specialized services offered by us can smoothen the immigration process as simply and direct as possible.",
     art: "landing",
+    photo: "/images/services/landing-hd.jpg",
   },
   {
     slug: "accommodation-assistance",
@@ -66,5 +72,6 @@ export const services: Service[] = [
     description:
       "We at Studwise can assist you in locating the best and secured accommodation options under your budget.",
     art: "accommodation",
+    photo: "/images/services/accommodation-hd.jpg",
   },
 ];
