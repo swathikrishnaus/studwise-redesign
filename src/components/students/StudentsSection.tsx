@@ -38,76 +38,61 @@ function Flag({ code, className = "" }: { code: string; className?: string }) {
 
 function TierLabel({ children }: { children: string }) {
   return (
-    <div className="mb-8 lg:mb-12 lg:text-center text-[11px] sm:text-xs uppercase tracking-[0.22em] text-slate-400">
-      {children}
+    <div className="mb-10 lg:mb-14 flex justify-center">
+      <span className="relative z-40 inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.18em] text-[#0a6c99] ring-1 ring-sky-100 shadow-[0_10px_24px_-16px_rgba(0,80,130,0.45)]">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#009cd9]" aria-hidden="true" />
+        {children}
+      </span>
     </div>
   );
 }
 
+// Token size, shared by every tier (phones / tablets / desktop)
+const TOKEN = {
+  disc: "w-20 h-20 sm:w-28 sm:h-28 lg:w-52 lg:h-52",
+  name: "text-lg sm:text-2xl lg:text-[2.6rem]",
+  offers: "text-sm sm:text-base lg:text-lg",
+};
+
 /**
- * The smaller tiers, as aligned cards either side of the plane's lane.
- * Countries alternate left / right so both columns stay balanced; "lg"
- * cards show a bar of each country's share of its tier's top count.
+ * One tier of countries as floating flag tokens in two columns either
+ * side of the plane's lane, the right column staggered lower. The same
+ * layout runs at every size; only the lane and tokens scale down.
  */
-function CountryColumns({ list, size }: { list: CountryOffers[]; size: "lg" | "sm" }) {
-  const max = list[0].offers;
+function TokenTier({ list }: { list: CountryOffers[] }) {
   return (
-    // Below lg the side columns dissolve (display: contents) and `order`
-    // lists the countries in true descending order in one flow
-    <div
-      className={`grid gap-3 sm:gap-4 lg:gap-0 lg:grid-cols-[1fr_minmax(380px,30vw)_1fr] ${size === "sm" ? "sm:grid-cols-2" : ""}`}
-    >
+    <div className="grid grid-cols-[1fr_84px_1fr] sm:grid-cols-[1fr_140px_1fr] lg:grid-cols-[1fr_minmax(380px,30vw)_1fr]">
       {[0, 1].map((side) => (
         <div
           key={side}
-          className={`contents lg:grid lg:gap-4 lg:content-start lg:w-full lg:max-w-[30rem] ${size === "sm" ? "lg:grid-cols-2" : "lg:grid-cols-1"} ${
-            side === 0 ? "lg:col-start-1 lg:justify-self-end" : "lg:col-start-3 lg:justify-self-start"
+          className={`flex flex-col items-center gap-10 sm:gap-14 lg:gap-20 ${
+            side === 0
+              ? "col-start-1 lg:items-end lg:pr-[3vw]"
+              : "col-start-3 pt-16 sm:pt-20 lg:items-start lg:pl-[3vw] lg:pt-28"
           }`}
         >
           {list
             .map((c, i) => ({ c, i }))
             .filter(({ i }) => i % 2 === side)
-            .map(({ c, i }) =>
-              size === "lg" ? (
-                <div
-                  key={c.code}
-                  data-reveal
-                  className="reach-card flex items-center gap-4 rounded-2xl bg-white ring-1 ring-slate-200/80 p-4 sm:p-5 shadow-[0_18px_40px_-28px_rgba(0,80,130,0.35)]"
-                  style={{ "--i": i, order: i } as CSSProperties}
-                >
-                  <Flag code={c.code} className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-3">
-                      <span className="text-lg sm:text-xl tracking-tight text-slate-900 leading-tight">{c.country}</span>
-                      <span className="text-sm sm:text-base text-slate-500 tabular-nums whitespace-nowrap">
-                        <Count value={c.offers} /> offers
-                      </span>
-                    </div>
-                    <div className="mt-3 h-1.5 rounded-full bg-sky-50 overflow-hidden" aria-hidden="true">
-                      <div
-                        className="reach-bar h-full rounded-full bg-[#009cd9]"
-                        style={{ width: `${Math.max(6, (c.offers / max) * 100)}%` }}
-                      />
-                    </div>
-                  </div>
+            .map(({ c, i }) => (
+              <div
+                key={c.code}
+                data-reveal
+                className="orbit-token flex flex-col items-center text-center"
+                style={{ "--float-delay": `${i * -1.3}s` } as CSSProperties}
+              >
+                <div className="orbit-token__disc">
+                  <Flag
+                    code={c.code}
+                    className={`${TOKEN.disc} rounded-full ring-4 lg:ring-[6px] ring-white shadow-[0_24px_40px_-18px_rgba(0,80,130,0.45)]`}
+                  />
                 </div>
-              ) : (
-                <div
-                  key={c.code}
-                  data-reveal
-                  className="reach-card flex items-center gap-3 rounded-2xl bg-white ring-1 ring-slate-200/80 p-3 sm:p-4 shadow-[0_14px_30px_-24px_rgba(0,80,130,0.35)]"
-                  style={{ "--i": i, order: i } as CSSProperties}
-                >
-                  <Flag code={c.code} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full shrink-0" />
-                  <div className="min-w-0">
-                    <div className="text-sm sm:text-base tracking-tight text-slate-900 leading-tight">{c.country}</div>
-                    <div className="text-xs sm:text-sm text-slate-500 tabular-nums">
-                      <Count value={c.offers} /> offers
-                    </div>
-                  </div>
+                <div className={`mt-3 lg:mt-4 ${TOKEN.name} leading-tight tracking-tight text-slate-900`}>{c.country}</div>
+                <div className={`mt-1 ${TOKEN.offers} text-slate-500 tabular-nums`}>
+                  <Count value={c.offers} /> offers
                 </div>
-              )
-            )}
+              </div>
+            ))}
         </div>
       ))}
     </div>
@@ -120,12 +105,13 @@ function CountryColumns({ list, size }: { list: CountryOffers[]; size: "lg" | "s
    A top-down airplane flies the whole section, like the bottle on
    klimtwine.com: it drops in from above the viewport while the previous
    section is still on screen (small, angled, high up), settles into the
-   centre lane, weaves and banks past the countries on either side, then
+   centre lane between two columns of countries (at every screen size),
+   weaves and banks past them, then
    lands in the centre of a panel that scales up from the bottom ("Taste
    the Art of Wine" on klimtwine). It is a fixed overlay positioned from
    scroll each frame. Countries are grouped by offers and each group has
-   its own arrangement: giant names, orbiting flag tokens, then aligned
-   country cards and compact chips either side of the lane.
+   the same floating flag tokens, sized by offer count, either side of
+   the lane.
    Scroll sets --rv on each [data-reveal] (reveal 0→1) and flips
    data-on once an item is in view; styles live in globals.css.
    -------------------------------------------------------------------------- */
@@ -169,7 +155,7 @@ export default function StudentsSection() {
 
       // ---------------- Airplane ----------------
       const vw = window.innerWidth;
-      const nextSize = desktop ? Math.round(Math.min(340, vh * 0.38)) : vw >= 640 ? 130 : 100;
+      const nextSize = desktop ? Math.round(Math.min(340, vh * 0.38)) : vw >= 640 ? 110 : 76;
       if (nextSize !== size) {
         size = nextSize;
         flyer.style.width = flyer.style.height = `${size}px`;
@@ -184,9 +170,7 @@ export default function StudentsSection() {
       // Exit: once the landing panel's centre climbs past mid-screen, the
       // plane rides along with it (it has touched down)
       const y = Math.min(lerp(-size * 0.75, vh / 2, enter), l.top + l.height / 2);
-      // Below lg there is no room for a lane beside the content, so the
-      // plane waits for the landing panel and fades in as it arrives
-      const arrive = desktop ? 1 : clamp((vh * 0.8 - l.top) / (vh * 0.35));
+      const arrive = 1;
       const visible = s.top < vh && l.bottom > 0 && arrive > 0;
       flyer.style.visibility = visible ? "visible" : "hidden";
       flyer.style.opacity = String(arrive);
@@ -195,8 +179,8 @@ export default function StudentsSection() {
       const settle = 1 - smoothstep(0.35, 1, clamp((vh - l.top) / vh));
       const motion = reduce ? 0 : 1;
       const turn = Math.cos(p * Math.PI * 5) * settle * enter * motion;
-      const laneX = vw / 2;
-      const x = laneX + (desktop ? Math.sin(p * Math.PI * 5) * Math.min(vw * 0.04, 64) * settle * enter * motion : 0);
+      const x = vw / 2 + Math.sin(p * Math.PI * 5) * Math.min(vw * 0.04, 64) * settle * enter * motion;
+
       // Comes in banked and smaller (higher up), like the bottle swinging in
       const noseTurn = -turn * 12 - (1 - enter) * 28 * motion;
       const bankY = turn * 26 + (1 - enter) * 20 * motion;
@@ -253,6 +237,36 @@ export default function StudentsSection() {
       className="relative overflow-x-clip bg-[#F1F5F9] pt-20 sm:pt-28 lg:pt-36 pb-24 sm:pb-32 lg:pb-40"
       style={{ "--hp": 0, "--tp": 0, "--plane-size": "100px" } as CSSProperties}
     >
+      {/* ---------------- Sky backdrop: soft wash, drifting clouds, flight routes ---------------- */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,#F1F5F9_0%,#e6f4fb_18%,#eef8fd_50%,#e3f2fb_82%,#F1F5F9_100%)]" />
+        {/* Faint dashed routes curving across the section */}
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none">
+          {[
+            "M-5 12 C 25 6, 40 22, 105 16",
+            "M-5 38 C 30 46, 65 28, 105 40",
+            "M-5 63 C 35 56, 60 72, 105 64",
+            "M-5 86 C 30 92, 70 80, 105 88",
+          ].map((d) => (
+            <path key={d} d={d} stroke="#009cd9" strokeOpacity="0.16" strokeWidth="1.2" strokeDasharray="6 8" vectorEffect="non-scaling-stroke" />
+          ))}
+        </svg>
+        {/* Clouds at the section's edges, clear of the countries */}
+        {[
+          { top: "9%", side: "left-[-6%]", w: "w-[38%] lg:w-[22%]", o: "opacity-70", anim: "animate-[cloud-float-slow_11s_ease-in-out_infinite]" },
+          { top: "24%", side: "right-[-7%]", w: "w-[42%] lg:w-[24%]", o: "opacity-60", anim: "animate-[cloud-float-reverse_13s_ease-in-out_infinite]" },
+          { top: "44%", side: "left-[-8%]", w: "w-[36%] lg:w-[20%]", o: "opacity-55", anim: "animate-[cloud-float-reverse_12s_ease-in-out_infinite]" },
+          { top: "58%", side: "right-[-5%]", w: "w-[34%] lg:w-[19%]", o: "opacity-65", anim: "animate-[cloud-float-slow_10s_ease-in-out_infinite]" },
+          { top: "74%", side: "left-[-5%]", w: "w-[40%] lg:w-[23%]", o: "opacity-60", anim: "animate-[cloud-float-slow_12s_ease-in-out_infinite]" },
+        ].map((c) => (
+          <div key={c.top} className={`absolute ${c.side} ${c.w} ${c.o}`} style={{ top: c.top }}>
+            <div className={c.anim}>
+              <Image src="/images/cloud.png" alt="" width={940} height={503} sizes="25vw" className="w-full h-auto" />
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* ---------------- The flying airplane (fixed overlay) ---------------- */}
       <div
         ref={flyerRef}
@@ -271,7 +285,7 @@ export default function StudentsSection() {
       </div>
 
       {/* ---------------- Header ---------------- */}
-      <div className="max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 lg:text-center mb-14 lg:mb-10">
+      <div className="relative max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 lg:text-center mb-14 lg:mb-10">
         <div className="flex lg:justify-center items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
           <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
           Global reach
@@ -302,70 +316,24 @@ export default function StudentsSection() {
         />
 
         <div className="relative max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pt-[8vh] lg:pt-[28vh]">
-          {/* ---------- 1. Giants: huge names either side of the lane ---------- */}
+          {/* Every tier uses the same floating flag tokens, scaled by offers */}
           <TierLabel>{tierLabel(giants)}</TierLabel>
-          <div className="grid grid-cols-2 lg:grid-cols-[1fr_minmax(380px,30vw)_1fr] gap-x-4 gap-y-10 lg:gap-y-[16vh] mb-[10vh] lg:mb-[26vh]">
-            {giants.map((c, i) => {
-              const left = i % 2 === 0;
-              return (
-                <div
-                  key={c.code}
-                  data-reveal
-                  className={`giant ${left ? "lg:col-start-1 lg:text-right" : "lg:col-start-3"}`}
-                  style={{ "--dir": left ? -1 : 1 } as CSSProperties}
-                >
-                  <div className={`flex items-center gap-3 ${left ? "lg:justify-end" : ""}`}>
-                    <Flag code={c.code} className="w-12 h-8 sm:w-14 sm:h-10 rounded-lg shadow-sm" />
-                    <span className="font-mono text-xs text-slate-400">{String(i + 1).padStart(2, "0")}</span>
-                  </div>
-                  <div className="mt-3 text-[clamp(2rem,9vw,8.5rem)] leading-[0.9] tracking-[-0.05em] text-slate-900">
-                    {c.country}
-                  </div>
-                  <div className="mt-3 text-xl sm:text-2xl lg:text-3xl tracking-tight text-slate-700 tabular-nums">
-                    <Count value={c.offers} /> <span className="text-slate-400 text-base sm:text-lg">offers</span>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="mb-[10vh] lg:mb-[22vh]">
+            <TokenTier list={giants} />
           </div>
 
-          {/* ---------- 2. Orbit: floating flag tokens around the lane ---------- */}
           <TierLabel>{tierLabel(orbit)}</TierLabel>
-          <div className="grid grid-cols-2 lg:grid-cols-[1fr_minmax(380px,30vw)_1fr] gap-x-4 gap-y-10 lg:gap-y-0 mb-[10vh] lg:mb-[26vh]">
-            {[0, 1].map((side) => (
-              <div
-                key={side}
-                className={`contents lg:flex lg:flex-col lg:gap-16 ${side === 0 ? "lg:col-start-1 lg:items-end" : "lg:col-start-3 lg:items-start lg:pt-20"}`}
-              >
-                {orbit.slice(side * 2, side * 2 + 2).map((c, j) => (
-                  <div
-                    key={c.code}
-                    data-reveal
-                    className="orbit-token flex flex-col items-center text-center"
-                    style={{ "--float-delay": `${(side * 2 + j) * -1.4}s` } as CSSProperties}
-                  >
-                    <div className="orbit-token__disc">
-                      <Flag code={c.code} className="w-24 h-24 sm:w-32 sm:h-32 lg:w-44 lg:h-44 rounded-full ring-[6px] ring-white shadow-[0_24px_40px_-18px_rgba(0,80,130,0.45)]" />
-                    </div>
-                    <div className="mt-4 text-xl sm:text-2xl lg:text-3xl tracking-tight text-slate-900">{c.country}</div>
-                    <div className="mt-1 text-sm sm:text-base text-slate-500 tabular-nums">
-                      <Count value={c.offers} /> offers
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
+          <div className="mb-[10vh] lg:mb-[22vh]">
+            <TokenTier list={orbit} />
           </div>
 
-          {/* ---------- 3. Country cards, aligned either side of the lane ---------- */}
           <TierLabel>{tierLabel(cards)}</TierLabel>
-          <div className="mb-[10vh] lg:mb-[20vh]">
-            <CountryColumns list={cards} size="lg" />
+          <div className="mb-[10vh] lg:mb-[22vh]">
+            <TokenTier list={cards} />
           </div>
 
-          {/* ---------- 4. Compact country chips ---------- */}
           <TierLabel>{tierLabel(chips)}</TierLabel>
-          <CountryColumns list={chips} size="sm" />
+          <TokenTier list={chips} />
         </div>
 
         {/* ---------------- Landing panel: scales up, the plane touches down ---------------- */}

@@ -291,15 +291,12 @@ export default function JourneySection() {
               From shortlisting universities to scholarships, visas and your first day abroad, Studwise walks every step of the way with you.
             </p>
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6">
-              <CloudButton href={bookAppointmentHref} variant="white" size="lg" target="_blank" rel="noopener noreferrer">
+              <CloudButton href={bookAppointmentHref} size="lg" target="_blank" rel="noopener noreferrer">
                 Book a free consultation
               </CloudButton>
-              <a
-                href="/universities"
-                className="text-sm sm:text-base text-white underline decoration-white/50 underline-offset-4 hover:decoration-white transition-colors"
-              >
+              <CloudButton href="/universities" variant="white" size="lg">
                 View partner universities
-              </a>
+              </CloudButton>
             </div>
           </div>
         </div>

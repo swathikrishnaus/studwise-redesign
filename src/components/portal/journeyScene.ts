@@ -41,8 +41,9 @@ const CAMERA: [number, V3, V3][] = [
   [0.8, [4, 50, -302], [0, 10, -412]],
   [0.9, [5, 11, -376], [0, 4, -425]],
   [0.96, [1.8, 2.6, -399], [0, 6.2, -432]],
-  // Closes in behind the student so the Studwise logo on the backpack reads
-  [1.0, [0.4, 1.72, -409.6], [0.15, 1.5, -420]],
+  // Settles a comfortable distance behind the student (about 10 m): the
+  // backpack emblem reads, with the avenue and main hall around them
+  [1.0, [1.5, 2.6, -401.5], [0.1, 2.6, -426]],
 ];
 
 // Light keys — night → dawn → daylight
@@ -278,26 +279,21 @@ export function createJourneyScene(
   const pack = new THREE.Mesh(new RoundedBoxGeometry(0.36, 0.44, 0.17, 2, 0.06), mat("#12a4e0", 0.45));
   pack.position.set(0, 1.25, 0.2); // on the back (the student faces -z)
   // Studwise badge: the logo on a white patch on the backpack
-  // Self-lit (unaffected by the warm sun and tone mapping), so the patch
-  // stays pure white and the logo keeps its true brand blue
-  const badge = new THREE.Mesh(
-    new RoundedBoxGeometry(0.3, 0.13, 0.02, 2, 0.008),
-    new THREE.MeshBasicMaterial({ color: "#ffffff", toneMapped: false })
-  );
-  badge.position.set(0, 1.3, 0.292);
-  const logoTex = new THREE.TextureLoader().load("/images/logo.png", () => onAssetLoad?.());
+  // Studwise wings emblem (white, transparent wings) on the blue pack.
+  // Self-lit so the warm sun and tone mapping never tint it cream
+  const logoTex = new THREE.TextureLoader().load("/images/studwise-wings-logo.png", () => onAssetLoad?.());
   logoTex.colorSpace = THREE.SRGBColorSpace;
   logoTex.anisotropy = 8;
-  // Crop the artwork's empty margins (logo.png is 768 × 410)
-  logoTex.repeat.set(664 / 768, 250 / 410);
-  logoTex.offset.set(72 / 768, 1 - 302 / 410);
+  // Crop to the emblem (the 146 × 146 artwork has a ~6px empty margin)
+  logoTex.repeat.set(134 / 146, 134 / 146);
+  logoTex.offset.set(6 / 146, 6 / 146);
   const logo = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.27, 0.27 * (250 / 664)),
+    new THREE.PlaneGeometry(0.22, 0.22),
     new THREE.MeshBasicMaterial({ map: logoTex, transparent: true, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -2 })
   );
-  logo.position.set(0, 1.3, 0.3035);
+  logo.position.set(0, 1.28, 0.287);
   [torso, head, hair, pack].forEach((m) => (m.castShadow = shadows));
-  student.add(legL, legR, torso, armL, armR, head, hair, pack, badge, logo);
+  student.add(legL, legR, torso, armL, armR, head, hair, pack, logo);
   scene.add(student);
 
   const pose = (phase: number, amount: number) => {
