@@ -3,25 +3,94 @@ import type { NavLink } from "@/types";
 /* ==========================================================================
    Navigation Data
    ==========================================================================
-   Centralised navigation links used across the site.
-   Update this file to add, remove, or reorder navigation items.
+   Mirrors the menu on the live studwise.in: Home, Services (nine
+   services), About Us, Testimonials, Blogs and a Contact Us action, with
+   the header phone numbers and email. Services and About Us open mega
+   menus; the rest are plain links.
    ========================================================================== */
 
-export const mainNavLinks: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Study Destinations", href: "/study-destinations" },
-  { label: "Universities", href: "/universities" },
-  { label: "Courses", href: "/courses" },
-  { label: "Services", href: "/services" },
-  { label: "Contact", href: "/contact" },
+export type MegaItem = {
+  label: string;
+  href: string;
+  description: string;
+  /** SVG path (24 × 24, stroked) */
+  icon: string;
+};
+
+export type MegaGroup = { title: string; items: MegaItem[] };
+
+const ICONS = {
+  compass: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm3.5-12.5-2 5-5 2 2-5 5-2Z",
+  cap: "M12 14l9-5-9-5-9 5 9 5zm0 0v6m-6.5-9.4V16c0 1.1 2.9 3 6.5 3s6.5-1.9 6.5-3v-5.4",
+  award: "M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Zm-3.6-1.2L7 21l5-2.5 5 2.5-1.4-7.2",
+  book: "M12 6.5C10.5 5.3 8.4 4.5 6 4.5c-1.1 0-2.1.2-3 .5v14c.9-.3 1.9-.5 3-.5 2.4 0 4.5.8 6 2m0-14c1.5-1.2 3.6-2 6-2 1.1 0 2.1.2 3 .5v14c-.9-.3-1.9-.5-3-.5-2.4 0-4.5.8-6 2m0-14v14",
+  passport: "M6 3h11a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm6 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-3 3.5h6",
+  plane: "M21.5 15.6v-1.8l-8-5V3.3a1.5 1.5 0 0 0-3 0v5.5l-8 5v1.8l8-2.5v5.5l-2 1.5V22l3.5-1 3.5 1v-1.4l-2-1.5v-5.5l8 2.5Z",
+  pin: "M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z",
+  briefcase: "M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1m-11 0h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm-1 6h18",
+  home: "M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z",
+  users: "M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1m20 0v-1a4 4 0 0 0-3-3.9M15 3.1a4 4 0 0 1 0 7.8M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z",
+  building: "M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16m0-11h4a1 1 0 0 1 1 1v10M2 21h20M8 8h3m-3 4h3m-3 4h3",
+  globe: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-9-9h18M12 3c2.5 2.5 3.8 5.5 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3Z",
+  star: "M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L12 3.5Z",
+};
+
+/** The nine services on studwise.in, grouped by stage of the journey */
+export const serviceMenu: MegaGroup[] = [
+  {
+    title: "Plan & apply",
+    items: [
+      { label: "Career Counselling", href: "/services#career-counselling", description: "Find the course and career path that fits you", icon: ICONS.compass },
+      { label: "University Registration", href: "/services#university-registration", description: "Shortlists and applications to the right universities", icon: ICONS.cap },
+      { label: "Scholarship Assistance", href: "/services#scholarship-assistance", description: "Guidance on scholarships universities offer", icon: ICONS.award },
+    ],
+  },
+  {
+    title: "Prepare & travel",
+    items: [
+      { label: "IELTS / TOEFL / EPT Tests", href: "/services#ielts-toefl-ept", description: "Coaching to boost your language test scores", icon: ICONS.book },
+      { label: "Visa Assistance", href: "/services#visa-assistance", description: "Documentation and application support", icon: ICONS.passport },
+      { label: "Pre-Landing Services", href: "/services#pre-landing-services", description: "Everything sorted before you fly", icon: ICONS.plane },
+    ],
+  },
+  {
+    title: "Settle in abroad",
+    items: [
+      { label: "Post-Landing Services", href: "/services#post-landing-services", description: "Help on arrival in your new country", icon: ICONS.pin },
+      { label: "Accommodation Assistance", href: "/services#accommodation-assistance", description: "Safe housing options within your budget", icon: ICONS.home },
+      { label: "Internship Services", href: "/services#internship-services", description: "Internship programmes while you study", icon: ICONS.briefcase },
+    ],
+  },
 ];
 
+export const aboutMenu: MegaItem[] = [
+  { label: "About Studwise", href: "/about", description: "Our story since 2019 and our team", icon: ICONS.users },
+  { label: "Why choose us", href: "/#why-choose-us", description: "What makes Studwise different", icon: ICONS.star },
+  { label: "Our offices", href: "/#offices", description: "Manjeri, Valanchery and Calicut", icon: ICONS.building },
+  { label: "Partner universities", href: "/#universities", description: "Universities we work with", icon: ICONS.cap },
+  { label: "Global reach", href: "/#students", description: "Our students across the globe", icon: ICONS.globe },
+];
+
+export type MainNavItem = NavLink & { mega?: "services" | "about" };
+
+export const mainNavLinks: MainNavItem[] = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services", mega: "services" },
+  { label: "About Us", href: "/about", mega: "about" },
+  { label: "Testimonials", href: "/testimonials" },
+  { label: "Blogs", href: "/blog" },
+];
+
+/** Header contact details, as on studwise.in */
+export const headerContact = {
+  phones: ["+91 91136 50884", "+91 75106 50884"],
+  email: "istudwise@gmail.com",
+};
+
 export const footerNavLinks: NavLink[] = [
-  { label: "About", href: "/about" },
-  { label: "Study Destinations", href: "/study-destinations" },
-  { label: "Universities", href: "/universities" },
-  { label: "Courses", href: "/courses" },
+  { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Contact", href: "/contact" },
+  { label: "Testimonials", href: "/testimonials" },
+  { label: "Blogs", href: "/blog" },
+  { label: "Contact Us", href: "/contact" },
 ];

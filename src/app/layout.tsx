@@ -4,6 +4,7 @@ import { Geist_Mono } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import SmoothScroll from "@/components/layout/SmoothScroll";
+import Footer from "@/components/layout/Footer";
 
 /* --------------------------------------------------------------------------
    Font Configuration
@@ -100,7 +101,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
 
-        {/* Footer will be added during the redesign phase */}
+        <Footer />
       </body>
     </html>
   );

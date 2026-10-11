@@ -11,6 +11,8 @@ import {
   prefersReducedMotion,
   smoothstep,
 } from "@/lib/scroll";
+import { MAX_BANK, NOSE, PLANE_H, PLANE_W, cubicAt, cubicTangent, wrapAngle } from "./flightMath";
+import type { Pt } from "./flightMath";
 
 /* --------------------------------------------------------------------------
    FlightPlane — the hero airplane, flying between sections on scroll
@@ -27,35 +29,8 @@ import {
    and only banks gently, so it keeps the pose it has in the hero.
    -------------------------------------------------------------------------- */
 
-const BASE_W = 410;
-const BASE_H = 207;
-
-// Direction the artwork's nose points (tail → nose), in screen radians
-const NOSE = Math.atan2(-190, -420);
-// Kept small so the plane holds the hero pose instead of spinning round
-const MAX_BANK = (20 * Math.PI) / 180;
-
-type Pt = { x: number; y: number };
-
-function cubicAt(p0: Pt, p1: Pt, p2: Pt, p3: Pt, t: number): Pt {
-  const u = 1 - t;
-  return {
-    x: u * u * u * p0.x + 3 * u * u * t * p1.x + 3 * u * t * t * p2.x + t * t * t * p3.x,
-    y: u * u * u * p0.y + 3 * u * u * t * p1.y + 3 * u * t * t * p2.y + t * t * t * p3.y,
-  };
-}
-
-function cubicTangent(p0: Pt, p1: Pt, p2: Pt, p3: Pt, t: number): Pt {
-  const u = 1 - t;
-  return {
-    x: 3 * u * u * (p1.x - p0.x) + 6 * u * t * (p2.x - p1.x) + 3 * t * t * (p3.x - p2.x),
-    y: 3 * u * u * (p1.y - p0.y) + 6 * u * t * (p2.y - p1.y) + 3 * t * t * (p3.y - p2.y),
-  };
-}
-
-function wrapAngle(a: number): number {
-  return Math.atan2(Math.sin(a), Math.cos(a));
-}
+const BASE_W = PLANE_W;
+const BASE_H = PLANE_H;
 
 export default function FlightPlane() {
   const planeRef = useRef<HTMLDivElement>(null);

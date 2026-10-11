@@ -5,14 +5,13 @@ import { cn } from "@/utils/helpers";
 /* --------------------------------------------------------------------------
    CloudButton — the site's primary call to action
    --------------------------------------------------------------------------
-   A flat-bottomed body with seven overlapping puffs of different sizes
-   along its top, so the silhouette reads as one scalloped cloud. On hover the puffs billow up, wisps drift off the tail and the
-   airplane icon flies out and loops back in. Styles live in globals.css
-   under "Cloud Button".
+   A solid brand-blue pill with the airplane icon in a circle at its right
+   end. On hover it lifts and the plane loops out and back.
+   Styles live in globals.css under "Primary Button".
    -------------------------------------------------------------------------- */
 type CloudButtonBase = {
   children: ReactNode;
-  /** sky: brand-blue cloud for light backgrounds; white: for blue backgrounds */
+  /** sky: brand-blue for light backgrounds; white: for blue backgrounds */
   variant?: "sky" | "white";
   size?: "sm" | "md" | "lg";
   /** Show the airplane icon after the label */
@@ -33,15 +32,6 @@ export type CloudButtonProps = CloudButtonAsLink | CloudButtonAsButton;
 function CloudInner({ children, icon }: { children: ReactNode; icon: boolean }) {
   return (
     <>
-      <span className="cloud-btn__shape" aria-hidden="true">
-        <span className="cloud-btn__base" />
-        {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-          <span key={n} className={`cloud-btn__puff cloud-btn__puff--${n}`} />
-        ))}
-        <span className="cloud-btn__belly" />
-      </span>
-      <span className="cloud-btn__wisp cloud-btn__wisp--1" aria-hidden="true" />
-      <span className="cloud-btn__wisp cloud-btn__wisp--2" aria-hidden="true" />
       <span className="cloud-btn__label">{children}</span>
       {icon && (
         <span className="cloud-btn__icon" aria-hidden="true">

@@ -69,7 +69,6 @@ export default function OfficesSection() {
         <div className="grid lg:grid-cols-12 gap-6 items-end mb-12 sm:mb-16 lg:mb-20">
           <div className="lg:col-span-8">
             <div className="flex items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
-              <span className="font-mono text-slate-400">07</span>
               <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
               Head office &amp; Branch office
             </div>

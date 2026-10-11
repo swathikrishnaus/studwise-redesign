@@ -1,11 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import type { CSSProperties, PointerEvent } from "react";
 import { services, servicesIntro } from "@/data/services";
 import { clamp, easeOutCubic } from "@/lib/scroll";
-import ServiceArt from "./ServiceArt";
 
 const headingWords = ["Our", "Services"];
 
@@ -85,7 +85,6 @@ export default function ServicesSection() {
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-6 items-end mb-14 sm:mb-20 lg:mb-28">
           <div className="lg:col-span-8">
             <div className="flex items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
-              <span className="font-mono text-slate-400">03</span>
               <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
               What we do
             </div>
@@ -121,9 +120,15 @@ export default function ServicesSection() {
                   onPointerMove={handlePointerMove}
                 >
                   <div className="svc-scene absolute inset-0">
-                    <ServiceArt art={service.art} />
+                    <Image
+                      src={`/images/services/${service.art}.jpg`}
+                      alt=""
+                      fill
+                      sizes="(min-width: 768px) 45vw, 100vw"
+                      className="svc-art object-cover"
+                    />
                   </div>
-                  <span className="absolute left-5 top-5 sm:left-6 sm:top-6 font-mono text-xs tracking-widest text-slate-700/70 mix-blend-multiply">
+                  <span className="absolute left-5 top-5 sm:left-6 sm:top-6 rounded-full bg-white/85 backdrop-blur px-2.5 py-1 font-mono text-xs tracking-widest text-slate-700">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="svc-cursor" aria-hidden="true">

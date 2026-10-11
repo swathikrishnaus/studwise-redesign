@@ -7,6 +7,8 @@
 export const servicesIntro =
   "As a leading study abroad education consultancy, we ensure our services cover every nook and hiccup.";
 
+/** Card photo: public/images/services/{key}.jpg — Pexels (Pexels licence) and
+    Wikimedia Commons (CC0, visa), 2000 × 1500 */
 export type ServiceArtKey =
   | "university"
   | "scholarship"

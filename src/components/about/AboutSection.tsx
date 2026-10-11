@@ -195,7 +195,6 @@ export default function AboutSection() {
                 ====================================================== */}
             <div className="shrink-0 lg:order-2 lg:col-span-6 flex flex-col gap-5 sm:gap-7 lg:justify-between p-6 sm:p-9 lg:p-12 xl:p-14 lg:pl-4">
               <div className="flex items-center gap-3 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
-                <span className="font-mono text-slate-400">02</span>
                 <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
                 <h2 id="about-heading">Who We Are</h2>
               </div>
@@ -309,14 +308,6 @@ export default function AboutSection() {
               </div>
 
               <div ref={routeRef} data-flight-route className="relative h-full w-full">
-                {/* Watermark year */}
-                <span
-                  className="absolute right-0 bottom-0 select-none pointer-events-none leading-none text-transparent text-[22vw] lg:text-[11vw] [-webkit-text-stroke:1px_rgba(0,156,217,0.14)]"
-                  aria-hidden="true"
-                >
-                  2019
-                </span>
-
                 <svg
                   className="absolute inset-0 w-full h-full overflow-visible"
                   viewBox={`0 0 ${box.w} ${box.h}`}

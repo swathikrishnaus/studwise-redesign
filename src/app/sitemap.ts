@@ -9,6 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/universities",
     "/courses",
     "/services",
+    "/testimonials",
+    "/blog",
     "/contact",
   ];
 

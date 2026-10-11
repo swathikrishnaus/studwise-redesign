@@ -20,7 +20,6 @@ for (const seg of whySegments) {
   phrases.push({ words, start: wordCount, highlight: !!seg.highlight });
   wordCount += words.length;
 }
-const highlightStarts = phrases.filter((p) => p.highlight).map((p) => p.start);
 
 /* --------------------------------------------------------------------------
    WhyChooseSection — "Why Choose Us"
@@ -38,9 +37,7 @@ export default function WhyChooseSection() {
     const section = sectionRef.current;
     const pin = pinRef.current;
     if (!section || !pin) return;
-    const counter = section.querySelector<HTMLElement>("[data-why-count]");
     const cta = section.querySelector<HTMLElement>(".why-cta");
-    let lastLit = -1;
     let raf = 0;
 
     const tick = () => {
@@ -54,13 +51,6 @@ export default function WhyChooseSection() {
       // Keep the button out of the tab order until it has faded in
       if (cta) cta.style.visibility = ctaIn > 0.01 ? "visible" : "hidden";
 
-      // How many highlighted services have been reached
-      const head = wf * (wordCount + 3);
-      const lit = highlightStarts.filter((s) => head - s >= 1).length;
-      if (lit !== lastLit && counter) {
-        lastLit = lit;
-        counter.textContent = String(lit).padStart(2, "0");
-      }
     };
     const request = () => {
       if (!raf) raf = requestAnimationFrame(tick);
@@ -110,21 +100,8 @@ export default function WhyChooseSection() {
             <div className="lg:col-span-3 flex lg:flex-col justify-between gap-6 lg:py-2">
               <div>
                 <div className="flex items-center gap-3 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
-                  <span className="font-mono text-slate-400">04</span>
                   <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
                   <h2 id="why-heading">Why Choose Us</h2>
-                </div>
-              </div>
-              <div className="text-right lg:text-left" aria-hidden="true">
-                <div className="font-mono text-slate-900 text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-none">
-                  <span data-why-count>00</span>
-                  <span className="text-[#9cc3d6]">/{String(highlightStarts.length).padStart(2, "0")}</span>
-                </div>
-                <div className="mt-2 text-[10px] sm:text-xs uppercase tracking-[0.2em] text-slate-500">
-                  Services covered
-                </div>
-                <div className="hidden lg:block mt-5 h-px w-40 bg-white overflow-hidden">
-                  <div className="h-full bg-[#009cd9] origin-left scale-x-[var(--wf)]" />
                 </div>
               </div>
             </div>

@@ -517,39 +517,50 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   Cloud Button — primary call to action (see components/ui/CloudButton)
+   Primary Button — call to action (see components/ui/CloudButton)
    --------------------------------------------------------------------------
-   The cloud is a flat-bottomed body (.cloud-btn__base) plus seven puffs of
-   varied size spread along its top, overlapping so they merge into one
-   scalloped outline. Everything is one flat colour (per-puff highlights
-   make it read as bubbles); depth comes from a soft underside shade and a
-   single drop-shadow on .cloud-btn__shape.
+   A solid brand-blue pill. The plane icon sits in its own circle at the
+   right end; on hover the button lifts, deepens slightly and the plane
+   takes off and lands again.
    -------------------------------------------------------------------------- */
 @layer components {
   .cloud-btn {
     --h: 3rem;
-    --fill: #12a4e0;
-    --under: rgba(0, 70, 120, 0.22);
+    --fill: #009cd9;
+    --fill-hover: #0089c2;
     --ink: #ffffff;
-    --shadow: rgba(0, 120, 180, 0.32);
+    --chip: #ffffff;
+    --chip-ink: #0080bc;
+    --shadow: rgba(0, 120, 180, 0.38);
     position: relative;
     isolation: isolate;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
+    gap: 0.75rem;
     height: var(--h);
-    padding: 0 calc(var(--h) * 0.75);
-    /* Room for the puffs that rise above the body */
-    margin-top: calc(var(--h) * 0.3);
+    padding: 0 calc(var(--h) * 0.6);
     color: var(--ink);
     font-weight: 400;
-    font-size: calc(var(--h) * 0.31);
+    font-size: calc(var(--h) * 0.3);
     letter-spacing: 0.01em;
     white-space: nowrap;
     border-radius: 9999px;
+    background: var(--fill);
+    box-shadow:
+      0 1px 2px rgba(0, 50, 90, 0.16),
+      0 10px 24px -12px var(--shadow);
     cursor: pointer;
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition:
+      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.4s ease,
+      background-color 0.3s ease;
+  }
+
+  /* With the icon, the circle hugs the right end of the pill */
+  .cloud-btn:has(.cloud-btn__icon) {
+    padding-right: calc(var(--h) * 0.12);
   }
 
   .cloud-btn--sm { --h: 2.5rem; }
@@ -558,132 +569,60 @@ body {
 
   .cloud-btn--white {
     --fill: #ffffff;
-    --under: rgba(0, 90, 140, 0.14);
-    --ink: #0a6c99;
-    --shadow: rgba(0, 90, 140, 0.22);
+    --fill-hover: #f1f8fc;
+    --ink: #075e87;
+    --chip: #0a8fcb;
+    --chip-ink: #ffffff;
+    --shadow: rgba(0, 40, 80, 0.35);
   }
 
-  .cloud-btn__shape {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    filter: drop-shadow(0 8px 14px var(--shadow));
-    transition: filter 0.5s ease;
-  }
-
-  .cloud-btn__base,
-  .cloud-btn__puff {
-    position: absolute;
-    background: var(--fill);
-  }
-
-  /* Flat-ish underside with rounded ends; the shade sits along the bottom
-     like the soft belly of the 3D clouds used across the site */
-  .cloud-btn__base {
-    inset: 0;
-    border-radius: calc(var(--h) * 0.5) calc(var(--h) * 0.5) calc(var(--h) * 0.42) calc(var(--h) * 0.42);
-  }
-
-  /* Belly shade drawn over the puffs, clipped to the body's outline */
-  .cloud-btn__belly {
-    position: absolute;
-    inset: 0;
-    border-radius: calc(var(--h) * 0.5) calc(var(--h) * 0.5) calc(var(--h) * 0.42) calc(var(--h) * 0.42);
-    background: linear-gradient(to top, var(--under), transparent 42%);
-    pointer-events: none;
-  }
-
-  .cloud-btn__puff {
-    aspect-ratio: 1;
-    border-radius: 50%;
-    transform-origin: 50% 100%;
-    transition: transform 0.8s cubic-bezier(0.34, 1.4, 0.64, 1);
-  }
-
-  /* Puffs spread along the top (centres at --x, in % of the cluster),
-     small at the ends and tallest just off-centre. The cluster is capped
-     at 6.5 heights wide so puffs always overlap into one scalloped edge,
-     even on full-width buttons. */
-  .cloud-btn__puff {
-    --span: min(100%, var(--h) * 6.5);
-    left: calc(50% + (var(--x) / 100 - 0.5) * var(--span) - var(--s) * var(--h) / 2);
-    width: calc(var(--s) * var(--h));
-    bottom: calc(var(--b) * var(--h));
-  }
-
-  .cloud-btn__puff--1 { --x: 11; --s: 0.62; --b: 0.3; }
-  .cloud-btn__puff--2 { --x: 24; --s: 0.86; --b: 0.26; transition-delay: 0.03s; }
-  .cloud-btn__puff--3 { --x: 39; --s: 1.12; --b: 0.2; transition-delay: 0.06s; }
-  .cloud-btn__puff--4 { --x: 55; --s: 1.28; --b: 0.18; transition-delay: 0.09s; }
-  .cloud-btn__puff--5 { --x: 70; --s: 0.98; --b: 0.24; transition-delay: 0.12s; }
-  .cloud-btn__puff--6 { --x: 83; --s: 0.76; --b: 0.3; transition-delay: 0.15s; }
-  .cloud-btn__puff--7 { --x: 93; --s: 0.5; --b: 0.36; transition-delay: 0.18s; }
-
-  .cloud-btn__label,
-  .cloud-btn__icon {
+  .cloud-btn__label {
     position: relative;
   }
 
   .cloud-btn__icon {
-    display: inline-flex;
-    width: calc(var(--h) * 0.36);
-    height: calc(var(--h) * 0.36);
-    transform: rotate(45deg);
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: calc(var(--h) - var(--h) * 0.24);
+    height: calc(var(--h) - var(--h) * 0.24);
+    margin-left: calc(var(--h) * 0.1);
+    border-radius: 9999px;
+    background: var(--chip);
+    color: var(--chip-ink);
+    overflow: hidden;
   }
 
   .cloud-btn__icon svg {
-    width: 100%;
-    height: 100%;
+    width: 44%;
+    height: 44%;
+    transform: rotate(45deg);
   }
 
-  /* Wisps that drift off the cloud's tail on hover */
-  .cloud-btn__wisp {
-    position: absolute;
-    z-index: -2;
-    right: 4%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: var(--fill);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .cloud-btn__wisp--1 { width: calc(var(--h) * 0.34); top: 18%; }
-  .cloud-btn__wisp--2 { width: calc(var(--h) * 0.22); bottom: 16%; }
 
   @media (hover: hover) {
     .cloud-btn:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
+      background: var(--fill-hover);
+      box-shadow:
+        0 1px 2px rgba(0, 50, 90, 0.16),
+        0 16px 30px -14px var(--shadow);
     }
 
-    .cloud-btn:hover .cloud-btn__shape {
-      filter: drop-shadow(0 14px 22px var(--shadow));
-    }
 
-    /* The cloud billows: each puff swells upward in a rolling wave */
-    .cloud-btn:hover .cloud-btn__puff--1 { transform: translate(-3px, -2px) scale(1.12); }
-    .cloud-btn:hover .cloud-btn__puff--2 { transform: translateY(-4px) scale(1.12); }
-    .cloud-btn:hover .cloud-btn__puff--3 { transform: translateY(-5px) scale(1.1); }
-    .cloud-btn:hover .cloud-btn__puff--4 { transform: translateY(-6px) scale(1.08); }
-    .cloud-btn:hover .cloud-btn__puff--5 { transform: translateY(-5px) scale(1.1); }
-    .cloud-btn:hover .cloud-btn__puff--6 { transform: translateY(-4px) scale(1.12); }
-    .cloud-btn:hover .cloud-btn__puff--7 { transform: translate(3px, -2px) scale(1.16); }
-
-    .cloud-btn:hover .cloud-btn__wisp--1 { animation: cloud-wisp 1.8s ease-out infinite; }
-    .cloud-btn:hover .cloud-btn__wisp--2 { animation: cloud-wisp 1.8s ease-out 0.6s infinite; }
-
-    .cloud-btn:hover .cloud-btn__icon {
-      animation: cloud-btn-fly 0.9s cubic-bezier(0.5, 0, 0.3, 1);
+    .cloud-btn:hover .cloud-btn__icon svg {
+      animation: cloud-btn-fly 0.7s cubic-bezier(0.5, 0, 0.3, 1);
     }
   }
 
   .cloud-btn:active {
-    transform: translateY(0) scale(0.97);
+    transform: translateY(0) scale(0.98);
   }
 
   .cloud-btn:focus-visible {
     outline: 2px solid #0a6c99;
-    outline-offset: 5px;
+    outline-offset: 3px;
   }
 
   .cloud-btn:disabled {
@@ -692,27 +631,19 @@ body {
   }
 }
 
-@keyframes cloud-wisp {
-  0%   { opacity: 0;   transform: translateX(0) scale(0.6); }
-  25%  { opacity: 0.9; }
-  100% { opacity: 0;   transform: translateX(calc(var(--h) * 0.9)) scale(1.1); }
-}
-
+/* The plane leaves top-right and comes back in from bottom-left */
 @keyframes cloud-btn-fly {
-  0%   { transform: rotate(45deg) translate(0, 0); opacity: 1; }
-  45%  { transform: rotate(45deg) translate(0, -26px); opacity: 0; }
-  46%  { transform: rotate(45deg) translate(0, 20px); opacity: 0; }
-  100% { transform: rotate(45deg) translate(0, 0); opacity: 1; }
+  0%   { transform: rotate(45deg) translateY(0); opacity: 1; }
+  45%  { transform: rotate(45deg) translateY(-180%); opacity: 0; }
+  46%  { transform: rotate(45deg) translateY(180%); opacity: 0; }
+  100% { transform: rotate(45deg) translateY(0); opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloud-btn,
-  .cloud-btn__puff {
+  .cloud-btn {
     transition: none;
   }
-  .cloud-btn:hover .cloud-btn__wisp--1,
-  .cloud-btn:hover .cloud-btn__wisp--2,
-  .cloud-btn:hover .cloud-btn__icon {
+  .cloud-btn:hover .cloud-btn__icon svg {
     animation: none;
   }
 }
@@ -843,7 +774,7 @@ body {
    Our Students — tiered arrangements (see StudentsSection)
    --------------------------------------------------------------------------
    [data-reveal] items get --rv (0→1) from scroll and data-on="true" once
-   they have entered, which starts the one-shot stamp / flap animations.
+   they have entered.
    -------------------------------------------------------------------------- */
 /* Landing panel rises and scales up from its bottom edge as it arrives */
 .landing-panel {
@@ -869,62 +800,20 @@ body {
   animation-delay: var(--float-delay, 0s);
 }
 
-/* Passport stamps thump down when they arrive */
-.stamp__body {
-  color: var(--ink);
-  border: 3px double var(--ink);
-  outline: 1.5px dashed color-mix(in srgb, var(--ink) 45%, transparent);
-  outline-offset: -10px;
-  background: rgba(255, 255, 255, 0.55);
-  mix-blend-mode: multiply;
-  transform: rotate(var(--rot, 0deg));
-  opacity: 0;
+/* Country cards rise in, a beat apart; their bars fill as they arrive */
+.reach-card {
+  opacity: calc(0.1 + var(--rv, 1) * 0.9);
+  transform: translateY(calc((1 - var(--rv, 1)) * 32px));
 }
 
-.stamp[data-on="true"] .stamp__body {
-  animation: stamp-down 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
-}
-
-@keyframes stamp-down {
-  0%   { opacity: 0; transform: rotate(calc(var(--rot) - 8deg)) scale(1.6); }
-  60%  { opacity: 0.95; transform: rotate(var(--rot)) scale(0.94); }
-  100% { opacity: 0.9; transform: rotate(var(--rot)) scale(1); }
-}
-
-/* Departures board: letters flip in one after another */
-.board {
-  opacity: calc(0.15 + var(--rv, 1) * 0.85);
-  transform: translateY(calc((1 - var(--rv, 1)) * 40px));
-}
-
-.flap {
-  display: inline-block;
-  transform: rotateX(90deg);
-  opacity: 0;
-}
-
-.board[data-on="true"] .flap {
-  animation: flap-in 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) forwards;
-  animation-delay: calc(var(--d, 0) * 28ms);
-}
-
-@keyframes flap-in {
-  0%   { opacity: 0; transform: rotateX(90deg); }
-  100% { opacity: 1; transform: rotateX(0deg); }
+.reach-bar {
+  transform: scaleX(var(--rv, 1));
+  transform-origin: left;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .orbit-token__disc {
     animation: none;
-  }
-  .stamp__body,
-  .flap {
-    opacity: 1;
-    transform: none;
-    animation: none !important;
-  }
-  .stamp__body {
-    transform: rotate(var(--rot, 0deg));
   }
 }
 
@@ -939,4 +828,64 @@ body {
 /* Desaturate the Google map slightly so it sits in the light palette */
 .office-map iframe {
   filter: grayscale(0.55) contrast(1.02) brightness(1.03);
+}
+
+/* --------------------------------------------------------------------------
+   Footer (see components/layout/Footer)
+   -------------------------------------------------------------------------- */
+.footer-link {
+  display: inline-block;
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px;
+  transition: color 0.3s, background-size 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.footer-link:hover {
+  background-size: 100% 1px;
+}
+
+/* A small plane crossing the wordmark along its dashed route */
+@keyframes footer-plane-fly {
+  from { transform: translate3d(-10vw, -50%, 0); }
+  to { transform: translate3d(110vw, -50%, 0); }
+}
+.footer-plane {
+  animation: footer-plane-fly 14s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-plane { animation: none; transform: translate3d(48vw, -50%, 0); }
+}
+
+/* After the journey section the footer's rounded top overlaps the last
+   frame, so the campus shows behind its corners: a crisp, clean seam */
+main:has(#get-started) + .site-footer {
+  margin-top: -3rem;
+}
+
+/* Header mega menus (see HeroHeader): fade and drop in; hidden panels are
+   removed from the accessibility tree and from pointer hit-testing */
+.mega-panel {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.22s ease,
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    visibility 0s linear 0.3s;
+}
+
+.mega-panel[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition:
+    opacity 0.22s ease,
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mega-panel {
+    transform: none;
+    transition: none;
+  }
 }

@@ -3,6 +3,9 @@
 import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 
+/* Services offered by Studwise, shown as quick-scan chips under the copy */
+const heroPerks = ["Scholarship guidance", "Visa assistance", "IELTS / TOEFL prep", "Accommodation support"];
+
 export default function SkyInteractiveSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -38,7 +41,9 @@ export default function SkyInteractiveSection() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-full rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden flex flex-col justify-center p-7 pb-36 sm:p-10 sm:pb-52 lg:p-12 xl:p-14 select-none"
+      // Phones get a tall panel: the copy sits on top and the plane and its
+      // cloud bank get a clear stage of their own underneath
+      className="relative w-full h-full min-h-[43rem] sm:min-h-[50rem] lg:min-h-[40rem] rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden flex flex-col justify-start p-7 pt-9 sm:p-10 sm:pt-12 lg:p-12 xl:p-14 select-none"
       style={{
         background: `
           radial-gradient(circle at 85% 20%, rgba(255,255,255,0.25) 0%, transparent 50%),
@@ -51,27 +56,34 @@ export default function SkyInteractiveSection() {
           Atmospheric Lighting
           ------------------------------------------------------------------ */}
       <div
-        className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-white/10 blur-[80px] pointer-events-none"
+        className="absolute -top-20 -right-20 w-[420px] h-[420px] lg:w-[560px] lg:h-[560px] rounded-full bg-white/15 blur-[90px] pointer-events-none"
         aria-hidden="true"
       />
       <div
         className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-[#006da0]/40 blur-[70px] pointer-events-none"
         aria-hidden="true"
       />
+      {/* Sun glow behind the plane */}
+      <div
+        className="absolute bottom-[14%] right-[18%] w-[260px] h-[260px] lg:w-[380px] lg:h-[380px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.45)_0%,rgba(255,255,255,0)_65%)] pointer-events-none"
+        aria-hidden="true"
+      />
 
       {/* Flight Path Trail (Decorative SVG) */}
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-20"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-25"
         viewBox="0 0 800 600"
+        preserveAspectRatio="none"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
         <path
-          d="M -50 550 C 150 500, 300 450, 420 320 C 520 210, 600 150, 850 80"
+          d="M -50 590 C 150 560, 300 520, 430 440 C 540 370, 600 300, 850 220"
           stroke="url(#trailGrad)"
           strokeWidth="2.5"
           strokeDasharray="8 8"
+          vectorEffect="non-scaling-stroke"
         />
         <defs>
           <linearGradient id="trailGrad" x1="0" y1="1" x2="1" y2="0">
@@ -83,10 +95,11 @@ export default function SkyInteractiveSection() {
       </svg>
 
       {/* ------------------------------------------------------------------
-          LAYER 1: Background Cloud (Furthest away, slow parallax)
+          LAYER 1: Far clouds (slow parallax) — one high on the right, one
+          small wisp drifting behind the copy on the left
           ------------------------------------------------------------------ */}
       <div
-        className="absolute top-8 right-0 sm:right-4 w-[220px] sm:w-[300px] lg:w-[360px] pointer-events-none transition-transform duration-300 ease-out opacity-70 blur-[0.5px]"
+        className="absolute top-[42%] sm:top-[40%] lg:top-[30%] right-[-8%] lg:right-[-4%] w-[46%] max-w-[380px] pointer-events-none transition-transform duration-300 ease-out opacity-60 blur-[1px]"
         style={{ transform: `translate3d(${cloudBackX}px, ${cloudBackY}px, 0)` }}
         aria-hidden="true"
       >
@@ -94,19 +107,28 @@ export default function SkyInteractiveSection() {
           <Image
             src="/images/cloud.png"
             alt=""
-            width={360}
-            height={192}
+            width={380}
+            height={203}
             priority
-            className="w-full h-auto object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.1)]"
+            className="w-full h-auto object-contain"
           />
+        </div>
+      </div>
+      <div
+        className="absolute bottom-[26%] lg:bottom-[20%] left-[-10%] lg:left-[-4%] w-[42%] max-w-[300px] pointer-events-none transition-transform duration-300 ease-out opacity-45 blur-[2px]"
+        style={{ transform: `translate3d(${cloudBackX * 1.4}px, ${cloudBackY}px, 0)` }}
+        aria-hidden="true"
+      >
+        <div className="animate-[cloud-float-reverse_13s_ease-in-out_infinite]">
+          <Image src="/images/cloud.png" alt="" width={300} height={160} className="w-full h-auto object-contain" />
         </div>
       </div>
 
       {/* ------------------------------------------------------------------
-          LAYER 2: Middle Cloud Bank (Under the plane)
+          LAYER 2: Cloud bank the plane skims over
           ------------------------------------------------------------------ */}
       <div
-        className="absolute bottom-4 right-0 sm:right-8 lg:right-12 w-[280px] sm:w-[380px] lg:w-[450px] pointer-events-none transition-transform duration-200 ease-out opacity-85"
+        className="absolute -bottom-[6%] right-[-8%] sm:right-[-4%] lg:-right-[8%] w-[88%] sm:w-[72%] lg:w-[58%] max-w-[640px] pointer-events-none transition-transform duration-200 ease-out opacity-90"
         style={{ transform: `translate3d(${cloudAccentX}px, ${cloudAccentY}px, 0)` }}
         aria-hidden="true"
       >
@@ -114,8 +136,8 @@ export default function SkyInteractiveSection() {
           <Image
             src="/images/cloud.png"
             alt=""
-            width={450}
-            height={240}
+            width={640}
+            height={342}
             priority
             className="w-full h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,60,120,0.25)]"
           />
@@ -129,7 +151,7 @@ export default function SkyInteractiveSection() {
           --flight-handoff fades this copy out as the flying copy fades in */}
       <div
         data-flight-start
-        className="absolute bottom-6 sm:bottom-12 lg:bottom-10 right-2 sm:right-8 lg:right-10 w-[190px] sm:w-[280px] lg:w-[340px] xl:w-[380px] pointer-events-none z-20"
+        className="absolute bottom-[12%] sm:bottom-[14%] lg:bottom-[11%] right-[6%] sm:right-[8%] lg:right-[2%] w-[80%] sm:w-[62%] lg:w-[54%] max-w-[620px] pointer-events-none z-20"
         style={{ opacity: "calc(1 - var(--flight-handoff, 0))" }}
         aria-hidden="true"
       >
@@ -141,55 +163,75 @@ export default function SkyInteractiveSection() {
             <Image
               src="/images/airplane.png"
               alt="3D Airplane"
-              width={410}
-              height={207}
+              width={600}
+              height={302}
               priority
-              className="w-full h-auto object-contain drop-shadow-[0_20px_40px_rgba(0,40,90,0.4)]"
+              sizes="(min-width: 1024px) 600px, 80vw"
+              className="w-full h-auto object-contain drop-shadow-[0_28px_48px_rgba(0,40,90,0.45)]"
             />
           </div>
         </div>
       </div>
 
       {/* ------------------------------------------------------------------
-          LAYER 4: Foreground Cloud (Closest, highest parallax)
+          LAYER 4: Foreground clouds (closest, highest parallax) — tucked
+          under the plane's tail and belly so it sits *in* the sky
           ------------------------------------------------------------------ */}
       <div
-        className="absolute -bottom-8 -right-6 sm:-right-2 w-[200px] sm:w-[270px] lg:w-[330px] pointer-events-none transition-transform duration-150 ease-out z-30 opacity-90"
+        className="absolute -bottom-[7%] -right-[10%] sm:-right-[6%] w-[58%] sm:w-[46%] lg:w-[40%] max-w-[460px] pointer-events-none transition-transform duration-150 ease-out z-30 opacity-95"
         style={{ transform: `translate3d(${cloudFrontX}px, ${cloudFrontY}px, 0)` }}
         aria-hidden="true"
       >
         <Image
           src="/images/cloud.png"
           alt=""
-          width={330}
-          height={176}
+          width={460}
+          height={246}
           priority
           className="w-full h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.2)]"
         />
+      </div>
+      <div
+        className="absolute -bottom-[6%] left-[14%] sm:left-[22%] lg:-left-[6%] lg:-bottom-[10%] w-[44%] sm:w-[34%] lg:w-[30%] max-w-[340px] pointer-events-none transition-transform duration-150 ease-out z-30 opacity-90"
+        style={{ transform: `translate3d(${cloudFrontX * 0.8}px, ${cloudFrontY}px, 0)` }}
+        aria-hidden="true"
+      >
+        <Image src="/images/cloud.png" alt="" width={340} height={182} className="w-full h-auto object-contain" />
       </div>
 
       {/* ------------------------------------------------------------------
           CONTENT: Bold Headline & Short Tagline
           ------------------------------------------------------------------ */}
-      <div className="relative z-30 max-w-md lg:max-w-xl">
-        <h1 className="text-[2.6rem] sm:text-5xl md:text-[3.5rem] lg:text-[3.9rem] xl:text-[4.6rem] font-normal text-white leading-[1.04] tracking-tight drop-shadow-md">
+      <div className="relative z-30 max-w-xl lg:max-w-2xl">
+        <h1 className="text-[3.1rem] sm:text-[4.2rem] md:text-[4.6rem] lg:text-[4.6rem] xl:text-[5.4rem] 2xl:text-[6.2rem] font-normal text-white leading-[1.02] tracking-[-0.03em] drop-shadow-md">
           <span className="block">Take flight to</span>
           <span className="block">world-class</span>
           <span className="block">universities.</span>
         </h1>
 
         {/* Three balanced lines from sm up; wraps naturally on phones */}
-        <p className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl xl:text-[1.4rem] text-white leading-relaxed">
+        <p className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl xl:text-[1.35rem] text-white/90 leading-relaxed">
           <span className="sm:block">Your journey to top global universities</span>{" "}
           <span className="sm:block">starts here — personalized mentorship,</span>{" "}
           <span className="sm:block">scholarships, and 100% visa assistance.</span>
         </p>
 
-        {/* Interactive Hint */}
-        <div className="mt-5 inline-flex items-center gap-2 text-xs text-white/80 font-normal bg-white/15 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
-          <span className="animate-bounce">✈</span>
-          <span>Move cursor to navigate the skies</span>
-        </div>
+        {/* What Studwise handles for you */}
+        <ul className="mt-6 flex flex-wrap gap-2 max-w-[22rem] sm:max-w-[30rem]" aria-label="What we help with">
+          {heroPerks.map((perk) => (
+            <li
+              key={perk}
+              className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] text-white bg-white/15 backdrop-blur-md pl-1.5 pr-3 py-1 rounded-full border border-white/25"
+            >
+              <span className="grid place-items-center w-4.5 h-4.5 rounded-full bg-white text-[#0089c2]">
+                <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M5 13l4 4L19 7" />
+                </svg>
+              </span>
+              {perk}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

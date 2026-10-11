@@ -12,19 +12,11 @@ const fmt = (n: number) => n.toLocaleString("en-IN");
 // Tiers by number of offers — each tier gets its own arrangement
 const giants = countryOffers.slice(0, 4); // 7,000 – 2,000
 const orbit = countryOffers.slice(4, 8); // 1,000 – 600
-const stamps = countryOffers.slice(8, 13); // 300 – 30
-const board = countryOffers.slice(13); // 20 – 10
+const cards = countryOffers.slice(8, 13); // 300 – 30
+const chips = countryOffers.slice(13); // 20 – 10
 
 const tierLabel = (list: CountryOffers[]) =>
   `${fmt(list[0].offers)} – ${fmt(list[list.length - 1].offers)} offers`;
-
-const STAMP_STYLES = [
-  { rotate: -10, ink: "#0a7fb3", shape: "rounded-2xl" },
-  { rotate: 7, ink: "#d97706", shape: "rounded-full aspect-square" },
-  { rotate: -4, ink: "#0a7fb3", shape: "rounded-[2rem]" },
-  { rotate: 12, ink: "#be185d", shape: "rounded-full aspect-square" },
-  { rotate: -8, ink: "#0a7fb3", shape: "rounded-2xl" },
-];
 
 function Count({ value }: { value: number }) {
   return (
@@ -52,6 +44,76 @@ function TierLabel({ children }: { children: string }) {
   );
 }
 
+/**
+ * The smaller tiers, as aligned cards either side of the plane's lane.
+ * Countries alternate left / right so both columns stay balanced; "lg"
+ * cards show a bar of each country's share of its tier's top count.
+ */
+function CountryColumns({ list, size }: { list: CountryOffers[]; size: "lg" | "sm" }) {
+  const max = list[0].offers;
+  return (
+    // Below lg the side columns dissolve (display: contents) and `order`
+    // lists the countries in true descending order in one flow
+    <div
+      className={`grid gap-3 sm:gap-4 lg:gap-0 lg:grid-cols-[1fr_minmax(380px,30vw)_1fr] ${size === "sm" ? "sm:grid-cols-2" : ""}`}
+    >
+      {[0, 1].map((side) => (
+        <div
+          key={side}
+          className={`contents lg:grid lg:gap-4 lg:content-start lg:w-full lg:max-w-[30rem] ${size === "sm" ? "lg:grid-cols-2" : "lg:grid-cols-1"} ${
+            side === 0 ? "lg:col-start-1 lg:justify-self-end" : "lg:col-start-3 lg:justify-self-start"
+          }`}
+        >
+          {list
+            .map((c, i) => ({ c, i }))
+            .filter(({ i }) => i % 2 === side)
+            .map(({ c, i }) =>
+              size === "lg" ? (
+                <div
+                  key={c.code}
+                  data-reveal
+                  className="reach-card flex items-center gap-4 rounded-2xl bg-white ring-1 ring-slate-200/80 p-4 sm:p-5 shadow-[0_18px_40px_-28px_rgba(0,80,130,0.35)]"
+                  style={{ "--i": i, order: i } as CSSProperties}
+                >
+                  <Flag code={c.code} className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-3">
+                      <span className="text-lg sm:text-xl tracking-tight text-slate-900 leading-tight">{c.country}</span>
+                      <span className="text-sm sm:text-base text-slate-500 tabular-nums whitespace-nowrap">
+                        <Count value={c.offers} /> offers
+                      </span>
+                    </div>
+                    <div className="mt-3 h-1.5 rounded-full bg-sky-50 overflow-hidden" aria-hidden="true">
+                      <div
+                        className="reach-bar h-full rounded-full bg-[#009cd9]"
+                        style={{ width: `${Math.max(6, (c.offers / max) * 100)}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  key={c.code}
+                  data-reveal
+                  className="reach-card flex items-center gap-3 rounded-2xl bg-white ring-1 ring-slate-200/80 p-3 sm:p-4 shadow-[0_14px_30px_-24px_rgba(0,80,130,0.35)]"
+                  style={{ "--i": i, order: i } as CSSProperties}
+                >
+                  <Flag code={c.code} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full shrink-0" />
+                  <div className="min-w-0">
+                    <div className="text-sm sm:text-base tracking-tight text-slate-900 leading-tight">{c.country}</div>
+                    <div className="text-xs sm:text-sm text-slate-500 tabular-nums">
+                      <Count value={c.offers} /> offers
+                    </div>
+                  </div>
+                </div>
+              )
+            )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* --------------------------------------------------------------------------
    StudentsSection — "Our Students Across The Globe"
    --------------------------------------------------------------------------
@@ -62,8 +124,8 @@ function TierLabel({ children }: { children: string }) {
    lands in the centre of a panel that scales up from the bottom ("Taste
    the Art of Wine" on klimtwine). It is a fixed overlay positioned from
    scroll each frame. Countries are grouped by offers and each group has
-   its own arrangement: giant names, orbiting flag tokens, passport stamps
-   and a split-flap departures board.
+   its own arrangement: giant names, orbiting flag tokens, then aligned
+   country cards and compact chips either side of the lane.
    Scroll sets --rv on each [data-reveal] (reveal 0→1) and flips
    data-on once an item is in view; styles live in globals.css.
    -------------------------------------------------------------------------- */
@@ -122,14 +184,18 @@ export default function StudentsSection() {
       // Exit: once the landing panel's centre climbs past mid-screen, the
       // plane rides along with it (it has touched down)
       const y = Math.min(lerp(-size * 0.75, vh / 2, enter), l.top + l.height / 2);
-      const visible = s.top < vh && l.bottom > 0;
+      // Below lg there is no room for a lane beside the content, so the
+      // plane waits for the landing panel and fades in as it arrives
+      const arrive = desktop ? 1 : clamp((vh * 0.8 - l.top) / (vh * 0.35));
+      const visible = s.top < vh && l.bottom > 0 && arrive > 0;
       flyer.style.visibility = visible ? "visible" : "hidden";
+      flyer.style.opacity = String(arrive);
 
       // Final approach: everything straightens out as the panel arrives
       const settle = 1 - smoothstep(0.35, 1, clamp((vh - l.top) / vh));
       const motion = reduce ? 0 : 1;
       const turn = Math.cos(p * Math.PI * 5) * settle * enter * motion;
-      const laneX = desktop ? vw / 2 : vw - size / 2 - (vw >= 640 ? 24 : 12);
+      const laneX = vw / 2;
       const x = laneX + (desktop ? Math.sin(p * Math.PI * 5) * Math.min(vw * 0.04, 64) * settle * enter * motion : 0);
       // Comes in banked and smaller (higher up), like the bottle swinging in
       const noseTurn = -turn * 12 - (1 - enter) * 28 * motion;
@@ -207,7 +273,6 @@ export default function StudentsSection() {
       {/* ---------------- Header ---------------- */}
       <div className="max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 lg:text-center mb-14 lg:mb-10">
         <div className="flex lg:justify-center items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
-          <span className="font-mono text-slate-400">05</span>
           <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
           Global reach
         </div>
@@ -236,10 +301,10 @@ export default function StudentsSection() {
           aria-hidden="true"
         />
 
-        <div className="relative max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pr-[118px] sm:pr-[170px] lg:pr-12 xl:pr-16 pt-[12vh] lg:pt-[28vh]">
+        <div className="relative max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pt-[8vh] lg:pt-[28vh]">
           {/* ---------- 1. Giants: huge names either side of the lane ---------- */}
           <TierLabel>{tierLabel(giants)}</TierLabel>
-          <div className="grid lg:grid-cols-[1fr_minmax(380px,30vw)_1fr] gap-y-[10vh] lg:gap-y-[16vh] mb-[16vh] lg:mb-[26vh]">
+          <div className="grid grid-cols-2 lg:grid-cols-[1fr_minmax(380px,30vw)_1fr] gap-x-4 gap-y-10 lg:gap-y-[16vh] mb-[10vh] lg:mb-[26vh]">
             {giants.map((c, i) => {
               const left = i % 2 === 0;
               return (
@@ -253,7 +318,7 @@ export default function StudentsSection() {
                     <Flag code={c.code} className="w-12 h-8 sm:w-14 sm:h-10 rounded-lg shadow-sm" />
                     <span className="font-mono text-xs text-slate-400">{String(i + 1).padStart(2, "0")}</span>
                   </div>
-                  <div className="mt-3 text-[clamp(2.8rem,9vw,8.5rem)] leading-[0.9] tracking-[-0.05em] text-slate-900">
+                  <div className="mt-3 text-[clamp(2rem,9vw,8.5rem)] leading-[0.9] tracking-[-0.05em] text-slate-900">
                     {c.country}
                   </div>
                   <div className="mt-3 text-xl sm:text-2xl lg:text-3xl tracking-tight text-slate-700 tabular-nums">
@@ -266,7 +331,7 @@ export default function StudentsSection() {
 
           {/* ---------- 2. Orbit: floating flag tokens around the lane ---------- */}
           <TierLabel>{tierLabel(orbit)}</TierLabel>
-          <div className="grid grid-cols-2 lg:grid-cols-[1fr_minmax(380px,30vw)_1fr] gap-x-4 gap-y-10 lg:gap-y-0 mb-[16vh] lg:mb-[26vh]">
+          <div className="grid grid-cols-2 lg:grid-cols-[1fr_minmax(380px,30vw)_1fr] gap-x-4 gap-y-10 lg:gap-y-0 mb-[10vh] lg:mb-[26vh]">
             {[0, 1].map((side) => (
               <div
                 key={side}
@@ -292,83 +357,15 @@ export default function StudentsSection() {
             ))}
           </div>
 
-          {/* ---------- 3. Stamps: passport stamps scattered on both sides ---------- */}
-          <TierLabel>{tierLabel(stamps)}</TierLabel>
-          <div className="grid lg:grid-cols-[1fr_minmax(380px,30vw)_1fr] mb-[16vh] lg:mb-[26vh]">
-            {[0, 1].map((side) => (
-              <div
-                key={side}
-                className={`flex flex-wrap gap-6 sm:gap-8 ${side === 0 ? "lg:col-start-1 lg:justify-end lg:pr-6" : "lg:col-start-3 lg:pl-6 lg:pt-24 mt-6 lg:mt-0"}`}
-              >
-                {stamps
-                  .map((c, i) => ({ c, i }))
-                  .filter(({ i }) => i % 2 === side)
-                  .map(({ c, i }) => {
-                    const s = STAMP_STYLES[i];
-                    return (
-                      <div
-                        key={c.code}
-                        data-reveal
-                        className="stamp"
-                        style={{ "--rot": `${s.rotate}deg`, "--ink": s.ink } as CSSProperties}
-                      >
-                        <div className={`stamp__body ${s.shape} flex flex-col items-center justify-center text-center px-7 py-6 sm:px-10 sm:py-8`}>
-                          <span className="text-[9px] sm:text-[10px] tracking-[0.3em] uppercase">Admitted</span>
-                          <span className="my-1.5 flex items-center gap-2">
-                            <Flag code={c.code} className="w-7 h-5 sm:w-9 sm:h-6 rounded-sm" />
-                            <span className="text-xl sm:text-3xl uppercase tracking-[0.08em]">{c.country}</span>
-                          </span>
-                          <span className="text-[10px] sm:text-xs tracking-[0.25em] uppercase tabular-nums">
-                            <Count value={c.offers} /> offers
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            ))}
+          {/* ---------- 3. Country cards, aligned either side of the lane ---------- */}
+          <TierLabel>{tierLabel(cards)}</TierLabel>
+          <div className="mb-[10vh] lg:mb-[20vh]">
+            <CountryColumns list={cards} size="lg" />
           </div>
 
-          {/* ---------- 4. Departures board: split-flap rows ---------- */}
-          <TierLabel>{tierLabel(board)}</TierLabel>
-          <div className="grid lg:grid-cols-[1fr_minmax(380px,30vw)_1fr] gap-6">
-            {[0, 1].map((side) => (
-              <div
-                key={side}
-                data-reveal
-                className={`board rounded-3xl bg-white ring-1 ring-slate-200/80 shadow-[0_30px_60px_-30px_rgba(0,80,130,0.3)] overflow-hidden ${side === 0 ? "lg:col-start-1" : "lg:col-start-3"}`}
-              >
-                <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 border-b border-slate-100 font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-slate-400">
-                  <span>Departures</span>
-                  <span>Offers</span>
-                </div>
-                <ul>
-                  {board.slice(side * 4, side * 4 + 4).map((c, ri) => (
-                    <li key={c.code} className="flex items-center gap-3 sm:gap-4 px-5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 last:border-0">
-                      <Flag code={c.code} className="w-8 h-5 sm:w-9 sm:h-6 rounded-[4px] shrink-0" />
-                      <span className="flex-1 min-w-0 font-mono text-xs sm:text-base uppercase tracking-[0.12em] text-slate-900 truncate">
-                        <span className="sr-only">{c.country}</span>
-                        <span aria-hidden="true">
-                          {c.country.split("").map((ch, ci) => (
-                            <span
-                              key={ci}
-                              className="flap"
-                              style={{ "--d": ri * 6 + ci } as CSSProperties}
-                            >
-                              {ch === " " ? " " : ch}
-                            </span>
-                          ))}
-                        </span>
-                      </span>
-                      <span className="font-mono text-xs sm:text-base text-slate-700 tabular-nums">
-                        <Count value={c.offers} />
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {/* ---------- 4. Compact country chips ---------- */}
+          <TierLabel>{tierLabel(chips)}</TierLabel>
+          <CountryColumns list={chips} size="sm" />
         </div>
 
         {/* ---------------- Landing panel: scales up, the plane touches down ---------------- */}
@@ -380,7 +377,7 @@ export default function StudentsSection() {
 
             {/* Touchdown pad, centred under where the plane parks */}
             <div
-              className="absolute top-1/2 -translate-y-1/2 right-0 sm:right-3 lg:right-auto lg:left-1/2 lg:-translate-x-1/2 h-[calc(var(--plane-size)*1.05)] aspect-square rounded-full border-2 border-dashed border-[#009cd9]/40"
+              className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 h-[calc(var(--plane-size)*1.05)] aspect-square rounded-full border-2 border-dashed border-[#009cd9]/40"
               aria-hidden="true"
             >
               <div className="absolute inset-[18%] rounded-full bg-white/50" />

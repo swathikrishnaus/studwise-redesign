@@ -1,29 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import type { CSSProperties } from "react";
 import { partnerUniversities, universitiesIntro } from "@/data/globalReach";
 import { clamp, prefersReducedMotion } from "@/lib/scroll";
 
-const STOP_WORDS = new Set(["of", "the", "university"]);
-
-/** "University of East London" → "EL", "BPP University" → "BPP" */
-function monogram(name: string): string {
-  const words = name.split(" ").filter((w) => !STOP_WORDS.has(w.toLowerCase()));
-  const acronym = words.find((w) => w.length <= 4 && w === w.toUpperCase());
-  if (acronym) return acronym;
-  return words
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("");
-}
-
 // Three marquee rows, like the three rows on the original logo board
+// Each row's set repeats so one copy is wider than the widest screens, then
+// the track holds that copy twice and wraps at half its width
 const rows = [
   partnerUniversities.slice(0, 6),
   partnerUniversities.slice(6, 12),
   partnerUniversities.slice(12),
-];
+].map((row) => [...row, ...row]);
 const ROW_DIRECTION = [-1, 1, -1];
 const BASE_SPEED = 0.45; // px per frame
 
@@ -124,7 +114,6 @@ export default function UniversitiesSection() {
           <div className="px-5 sm:px-8 lg:px-12 xl:px-14 grid lg:grid-cols-12 gap-8 items-end mb-12 sm:mb-16 lg:mb-20">
             <div className="lg:col-span-7">
               <div className="flex items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
-                <span className="font-mono text-slate-400">06</span>
                 <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
                 Partners
               </div>
@@ -148,7 +137,7 @@ export default function UniversitiesSection() {
           {/* ---------------- Marquee rows ---------------- */}
           <ul className="sr-only">
             {partnerUniversities.map((u) => (
-              <li key={u}>{u}</li>
+              <li key={u.name}>{u.name}</li>
             ))}
           </ul>
           <div
@@ -158,17 +147,24 @@ export default function UniversitiesSection() {
             {rows.map((row, ri) => (
               <div key={ri} className="overflow-hidden">
                 <div data-track className="flex w-max gap-3 sm:gap-4 will-change-transform">
-                  {[...row, ...row].map((name, i) => (
+                  {[...row, ...row].map((u, i) => (
                     <div
                       key={i}
-                      className="group flex items-center gap-3 sm:gap-4 rounded-full bg-[#F1F5F9] pl-2 pr-6 sm:pl-2.5 sm:pr-8 py-2 sm:py-2.5 transition-colors duration-300 hover:bg-[#009cd9]"
+                      className="group flex items-center justify-center gap-3 shrink-0 w-[168px] h-[88px] sm:w-[220px] sm:h-[112px] lg:w-[260px] lg:h-[128px] px-6 sm:px-8 rounded-2xl sm:rounded-3xl bg-white transition-all duration-500 hover:shadow-[0_18px_40px_-20px_rgba(0,109,160,0.35)] hover:-translate-y-1"
                     >
-                      <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white text-[#009cd9] text-xs sm:text-sm tracking-wide flex items-center justify-center shadow-sm transition-transform duration-500 group-hover:rotate-[-12deg]">
-                        {monogram(name)}
-                      </span>
-                      <span className="whitespace-nowrap text-base sm:text-xl lg:text-2xl tracking-tight text-slate-800 transition-colors duration-300 group-hover:text-white">
-                        {name}
-                      </span>
+                      <Image
+                        src={u.logo}
+                        alt=""
+                        width={220}
+                        height={80}
+                        sizes="(min-width: 1024px) 220px, (min-width: 640px) 170px, 130px"
+                        className={`w-auto h-auto max-h-[52px] sm:max-h-[64px] lg:max-h-[72px] object-contain transition-transform duration-500 group-hover:scale-105 ${u.showName ? "max-w-[40%]" : "max-w-full"}`}
+                      />
+                      {u.showName && (
+                        <span className="text-[13px] sm:text-[15px] lg:text-base leading-tight tracking-tight text-slate-800">
+                          {u.name}
+                        </span>
+                      )}
                     </div>
                   ))}
                 </div>
