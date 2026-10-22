@@ -20,13 +20,18 @@ function ItemIcon({ d, className = "" }: { d: string; className?: string }) {
   );
 }
 
-/** One row in a mega menu: icon tile, label and a one-line description */
-function MegaLink({ item, onNavigate }: { item: MegaItem; onNavigate: () => void }) {
+/** One row in a mega menu: icon tile, label and a one-line description.
+    `tile` sets it on a soft card that fills its grid cell. */
+function MegaLink({ item, onNavigate, tile = false }: { item: MegaItem; onNavigate: () => void; tile?: boolean }) {
   return (
     <Link
       href={item.href}
       onClick={onNavigate}
-      className="group/item flex items-start gap-3.5 rounded-2xl p-3 -mx-3 transition-colors hover:bg-sky-50/70 focus-visible:bg-sky-50/70 focus-visible:outline-none"
+      className={`group/item flex gap-3.5 rounded-2xl transition-colors focus-visible:outline-none ${
+        tile
+          ? "h-full items-center bg-[#F6F9FC] px-4 py-3 ring-1 ring-slate-900/[0.04] hover:bg-sky-50 hover:ring-sky-100 focus-visible:bg-sky-50"
+          : "items-start p-3 -mx-3 hover:bg-sky-50/70 focus-visible:bg-sky-50/70"
+      }`}
     >
       <span className="shrink-0 grid place-items-center w-10 h-10 rounded-xl bg-sky-50 text-[#009cd9] ring-1 ring-sky-100 transition-colors group-hover/item:bg-[#009cd9] group-hover/item:text-white group-hover/item:ring-[#009cd9]">
         <ItemIcon d={item.icon} className="w-5 h-5" />
@@ -88,7 +93,7 @@ export default function HeroHeader() {
   }, [open, close]);
 
   return (
-    <header ref={headerRef} className="relative z-50 w-full font-sans" onPointerLeave={scheduleClose}>
+    <header ref={headerRef} className="relative z-50 w-full font-sans [font-optical-sizing:none]" onPointerLeave={scheduleClose}>
       {/* Backdrop while a mega menu is open: dims and blurs the page so the
           panel reads cleanly (inside the header's stacking context, so it
           sits above the page but below the header and panels) */}
@@ -108,7 +113,7 @@ export default function HeroHeader() {
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="Studwise Home">
           <div className="relative w-36 h-10 flex items-center">
-            <Image src="/images/logo.png" alt="Studwise Logo" width={130} height={40} priority className="object-contain" />
+            <Image src="/images/studwise-logo-web.png" alt="Studwise Logo" width={122} height={44} priority className="w-[122px] h-auto" />
           </div>
         </Link>
 
@@ -131,7 +136,7 @@ export default function HeroHeader() {
                     aria-expanded={open === mega}
                     aria-controls={`mega-${mega}`}
                     onClick={() => setOpen(open === mega ? null : mega)}
-                    className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full transition-colors hover:text-[#009cd9] ${
+                    className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full transition-all duration-200 hover:text-[#009cd9] hover:bg-white hover:shadow-sm ${
                       open === mega ? "text-[#009cd9] bg-white shadow-sm" : ""
                     }`}
                   >
@@ -149,7 +154,7 @@ export default function HeroHeader() {
                 </li>
               ) : (
                 <li key={link.label} onPointerEnter={scheduleClose}>
-                  <Link href={link.href} className="block px-3.5 py-2 rounded-full transition-colors hover:text-[#009cd9]">
+                  <Link href={link.href} className="block px-3.5 py-2 rounded-full transition-all duration-200 hover:text-[#009cd9] hover:bg-white hover:shadow-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -217,25 +222,18 @@ export default function HeroHeader() {
             data-open={open === "services"}
             className="mega-panel absolute inset-x-6 xl:inset-x-7 top-2 grid grid-cols-12 gap-6 rounded-[1.75rem] bg-white p-6 xl:p-8 ring-1 ring-slate-200/80 shadow-[0_40px_80px_-30px_rgba(0,60,100,0.35)]"
           >
-            <div className="col-span-9 grid grid-cols-3 gap-x-8">
+            <div className="col-span-9 grid grid-cols-3 gap-x-4">
+              {/* Each column's links are tiles sharing three equal rows over the advisory card's height */}
               {serviceMenu.map((group) => (
-                <div key={group.title}>
+                <div key={group.title} className="flex flex-col">
                   <p className="mb-3 text-[11px] uppercase tracking-[0.2em] text-slate-400">{group.title}</p>
-                  <div className="flex flex-col gap-1">
+                  <div className="flex-1 grid grid-rows-3 gap-2">
                     {group.items.map((item) => (
-                      <MegaLink key={item.label} item={item} onNavigate={close} />
+                      <MegaLink key={item.label} item={item} onNavigate={close} tile />
                     ))}
                   </div>
                 </div>
               ))}
-              <Link
-                href="/services"
-                onClick={close}
-                className="col-span-3 mt-4 pt-4 border-t border-slate-100 inline-flex items-center gap-2 text-sm text-[#0078ad] hover:text-[#009cd9]"
-              >
-                View all services
-                <ItemIcon d="M5 12h14m-6-6 6 6-6 6" className="w-4 h-4" />
-              </Link>
             </div>
             <div className="col-span-3 flex flex-col justify-between rounded-3xl bg-[#009cd9] text-white p-6">
               <div>

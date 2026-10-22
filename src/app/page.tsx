@@ -6,7 +6,6 @@ import WhyChooseSection from "@/components/why/WhyChooseSection";
 import StudentsSection from "@/components/students/StudentsSection";
 import UniversitiesSection from "@/components/universities/UniversitiesSection";
 import OfficesSection from "@/components/offices/OfficesSection";
-import JourneySection from "@/components/portal/JourneySection";
 import FlightPlane from "@/components/flight/FlightPlane";
 
 export const metadata: Metadata = {
@@ -25,8 +24,7 @@ export default function HomePage() {
       <StudentsSection />
       <UniversitiesSection />
       <OfficesSection />
-      <JourneySection />
-      {/* Airplane that flies from the hero into the About route on scroll */}
+      {/* Airplane that flies the About route on scroll */}
       <FlightPlane />
     </>
   );

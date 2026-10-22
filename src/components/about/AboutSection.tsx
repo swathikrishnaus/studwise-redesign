@@ -31,8 +31,8 @@ const countries = routeStops.filter((s) => s.kind === "country");
      · the intro paragraph lighting up word by word
      · the flight route drawing itself, stop by stop
      · the countries paragraph, then the stats + CTA
-   The hero airplane (see FlightPlane) flies in and rides the same route,
-   which sits on the left so the plane keeps heading the way it took off.
+   An airplane (see FlightPlane) settles in at the start of the route and
+   rides it as the section scrolls.
    -------------------------------------------------------------------------- */
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -195,7 +195,6 @@ export default function AboutSection() {
                 ====================================================== */}
             <div className="shrink-0 lg:order-2 lg:col-span-6 flex flex-col gap-5 sm:gap-7 lg:justify-between p-6 sm:p-9 lg:p-12 xl:p-14 lg:pl-4">
               <div className="flex items-center gap-3 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
-                <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
                 <h2 id="about-heading">Who We Are</h2>
               </div>
 

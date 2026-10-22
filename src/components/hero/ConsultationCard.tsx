@@ -45,7 +45,7 @@ type FormData = typeof initialData;
 function Step({ n, done, title, children }: { n: number; done: boolean; title: string; children: ReactNode }) {
   return (
     <fieldset>
-      <legend className="flex items-center gap-2.5 text-[13px] sm:text-sm text-slate-800 mb-3">
+      <legend className="flex items-center gap-2.5 text-[13px] sm:text-sm text-slate-800 mb-2 sm:mb-3">
         <span
           className={`grid place-items-center w-6 h-6 rounded-full text-[11px] transition-all duration-300 ${
             done ? "bg-emerald-500 text-white scale-105" : "bg-sky-50 text-[#009cd9] ring-1 ring-sky-100"
@@ -90,7 +90,7 @@ function Chip({
         className="peer sr-only"
       />
       {/* Selection changes colour only — never size — so rows never re-wrap */}
-      <span className="flex items-center justify-center w-full h-9 px-2 rounded-xl bg-slate-50 ring-1 ring-inset ring-slate-200/80 text-[13px] text-slate-700 whitespace-nowrap transition-colors duration-200 hover:bg-white hover:ring-slate-300 hover:text-slate-900 peer-checked:bg-[#e8f6fd] peer-checked:ring-2 peer-checked:ring-[#009cd9] peer-checked:text-[#0078ad] peer-checked:hover:bg-[#e8f6fd] peer-focus-visible:ring-4 peer-focus-visible:ring-[#009cd9]/25">
+      <span className="flex items-center justify-center w-full h-8 sm:h-9 px-2.5 sm:px-2 rounded-xl bg-slate-50 ring-1 ring-inset ring-slate-200/80 text-[13px] text-slate-700 whitespace-nowrap transition-colors duration-200 hover:bg-white hover:ring-slate-300 hover:text-slate-900 peer-checked:bg-[#e8f6fd] peer-checked:ring-2 peer-checked:ring-[#009cd9] peer-checked:text-[#0078ad] peer-checked:hover:bg-[#e8f6fd] peer-focus-visible:ring-4 peer-focus-visible:ring-[#009cd9]/25">
         {value}
       </span>
       <span
@@ -174,10 +174,10 @@ export default function ConsultationCard() {
         />
       </div>
 
-      <div className="flex-1 flex flex-col p-4 sm:p-6">
+      <div className="flex-1 flex flex-col p-3.5 sm:p-6">
         {/* 24/7 help desk — the card's focal point; it grows to take any
             spare height, so the questions below keep even spacing */}
-        <div className="relative flex-1 flex flex-col gap-3.5 min-h-0 rounded-3xl bg-[#009cd9] text-white p-4 sm:p-5 overflow-hidden">
+        <div className="relative sm:flex-1 flex flex-col gap-3 sm:gap-3.5 min-h-0 rounded-[1.25rem] sm:rounded-3xl bg-[#009cd9] text-white p-3.5 sm:p-5 overflow-hidden">
           <svg
             className="absolute -right-5 -bottom-7 w-32 h-32 text-white/10 pointer-events-none"
             fill="none"
@@ -194,36 +194,42 @@ export default function ConsultationCard() {
               </span>
               24/7 help desk
             </span>
-            <p className="mt-2.5 text-lg sm:text-xl leading-tight tracking-tight">Not sure where to study?</p>
-            <p className="mt-1 text-[13px] sm:text-sm text-white/85 leading-snug">
+            <p className="mt-2 sm:mt-2.5 text-[17px] sm:text-xl leading-tight tracking-tight">Not sure where to study?</p>
+            <p className="hidden sm:block mt-1 text-sm text-white/85 leading-snug">
               Talk to a Studwise advisor anytime, free and with no obligation.
             </p>
           </div>
           {/* Contact boxes: icon, title, detail and a status row filling the box */}
-          <div className="relative flex-1 grid grid-cols-2 gap-2.5 sm:gap-3 min-h-[128px]">
+          <div className="relative sm:flex-1 grid grid-cols-2 gap-2 sm:gap-3 sm:min-h-[128px]">
             <a
               href={bookAppointmentHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/box flex flex-col rounded-2xl bg-white p-3.5 sm:p-4 text-slate-900 shadow-[0_10px_24px_-14px_rgba(0,40,80,0.6)] transition-transform duration-300 hover:-translate-y-0.5"
+              className="group/box flex flex-row sm:flex-col items-center sm:items-stretch gap-2.5 sm:gap-0 rounded-2xl bg-white p-2.5 sm:p-4 text-slate-900 shadow-[0_10px_24px_-14px_rgba(0,40,80,0.6)] transition-transform duration-300 hover:-translate-y-0.5"
             >
-              <span className="flex items-start justify-between gap-2">
-                <span className="grid place-items-center w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#25d366] text-white shadow-[0_8px_18px_-8px_rgba(37,211,102,0.8)]">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <span className="shrink-0 sm:shrink flex items-start justify-between gap-2">
+                <span className="grid place-items-center w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#25d366] text-white shadow-[0_8px_18px_-8px_rgba(37,211,102,0.8)]">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3ZM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z" />
                   </svg>
                 </span>
-                <span className="grid place-items-center w-8 h-8 rounded-full bg-slate-100 text-slate-500 transition-colors group-hover/box:bg-[#25d366] group-hover/box:text-white">
+                <span className="hidden sm:grid place-items-center w-8 h-8 rounded-full bg-slate-100 text-slate-500 transition-colors group-hover/box:bg-[#25d366] group-hover/box:text-white">
                   <svg className="w-4 h-4 transition-transform duration-300 group-hover/box:-rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M5 12h14m-6-6 6 6-6 6" />
                   </svg>
                 </span>
               </span>
-              <span className="mt-auto pt-2.5">
-                <span className="block text-[15px] sm:text-base leading-tight">Chat on WhatsApp</span>
-                <span className="block mt-1 text-xs sm:text-[13px] text-slate-500 leading-snug">Quick replies from a real advisor</span>
+              <span className="min-w-0 sm:mt-auto sm:pt-2.5">
+                <span className="block text-[13px] sm:text-base leading-tight">
+                  <span className="sm:hidden">WhatsApp</span>
+                  <span className="hidden sm:inline">Chat on WhatsApp</span>
+                </span>
+                <span className="block mt-0.5 sm:mt-1 text-[11px] sm:text-[13px] text-slate-500 leading-snug">
+                  <span className="sm:hidden">Quick replies</span>
+                  <span className="hidden sm:inline">Quick replies from a real advisor</span>
+                </span>
               </span>
-              <span className="mt-2.5 pt-2 border-t border-slate-100 flex items-center gap-1.5 text-[11px] sm:text-xs text-emerald-600">
+              <span className="hidden mt-2.5 pt-2 border-t border-slate-100 sm:flex items-center gap-1.5 text-[11px] sm:text-xs text-emerald-600">
                 <span className="relative w-1.5 h-1.5 rounded-full bg-emerald-500">
                   <span className="absolute inset-0 rounded-full bg-emerald-500 animate-ping" />
                 </span>
@@ -232,25 +238,31 @@ export default function ConsultationCard() {
             </a>
             <a
               href="tel:+919113650884"
-              className="group/box flex flex-col rounded-2xl bg-[#0a86bd] ring-1 ring-inset ring-white/25 p-3.5 sm:p-4 text-white transition-colors duration-300 hover:bg-[#0b7cad]"
+              className="group/box flex flex-row sm:flex-col items-center sm:items-stretch gap-2.5 sm:gap-0 rounded-2xl bg-[#0a86bd] ring-1 ring-inset ring-white/25 p-2.5 sm:p-4 text-white transition-colors duration-300 hover:bg-[#0b7cad]"
             >
-              <span className="flex items-start justify-between gap-2">
-                <span className="grid place-items-center w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white text-[#009cd9] shadow-[0_8px_18px_-8px_rgba(0,30,60,0.6)]">
-                  <svg className="w-[22px] h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <span className="shrink-0 sm:shrink flex items-start justify-between gap-2">
+                <span className="grid place-items-center w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-[#009cd9] shadow-[0_8px_18px_-8px_rgba(0,30,60,0.6)]">
+                  <svg className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 5a2 2 0 0 1 2-2h2.3a1 1 0 0 1 1 .7l1.1 3.4a1 1 0 0 1-.3 1.1L7.6 9.6a11 11 0 0 0 6.8 6.8l1.4-1.5a1 1 0 0 1 1.1-.3l3.4 1.1a1 1 0 0 1 .7 1V19a2 2 0 0 1-2 2h-1C9.7 21 3 14.3 3 6V5Z" />
                   </svg>
                 </span>
-                <span className="grid place-items-center w-8 h-8 rounded-full bg-white/15 text-white transition-colors group-hover/box:bg-white group-hover/box:text-[#009cd9]">
+                <span className="hidden sm:grid place-items-center w-8 h-8 rounded-full bg-white/15 text-white transition-colors group-hover/box:bg-white group-hover/box:text-[#009cd9]">
                   <svg className="w-4 h-4 transition-transform duration-300 group-hover/box:-rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M5 12h14m-6-6 6 6-6 6" />
                   </svg>
                 </span>
               </span>
-              <span className="mt-auto pt-2.5">
-                <span className="block text-[15px] sm:text-base leading-tight">Call an advisor</span>
-                <span className="block mt-1 text-xs sm:text-[13px] text-white/80 tabular-nums leading-snug">+91 91136 50884</span>
+              <span className="min-w-0 sm:mt-auto sm:pt-2.5">
+                <span className="block text-[13px] sm:text-base leading-tight">
+                  <span className="sm:hidden">Call us</span>
+                  <span className="hidden sm:inline">Call an advisor</span>
+                </span>
+                <span className="block mt-0.5 sm:mt-1 text-[11px] sm:text-[13px] text-white/80 tabular-nums leading-snug">
+                  <span className="sm:hidden">Free guidance</span>
+                  <span className="hidden sm:inline">+91 91136 50884</span>
+                </span>
               </span>
-              <span className="mt-2.5 pt-2 border-t border-white/15 flex items-center gap-1.5 text-[11px] sm:text-xs text-white/80">
+              <span className="hidden mt-2.5 pt-2 border-t border-white/15 sm:flex items-center gap-1.5 text-[11px] sm:text-xs text-white/80">
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v4l3 2" />
                 </svg>
@@ -260,9 +272,9 @@ export default function ConsultationCard() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-5 mt-4 sm:mt-5">
           <Step n={1} done={!!formData.destination} title="Where do you want to study?">
-            <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+            <div className="flex flex-wrap sm:grid sm:grid-cols-7 gap-1.5 sm:gap-2">
               {destinations.map((d) => (
                 <Chip key={d} name="destination" value={d} checked={formData.destination === d} onChange={handleChange} />
               ))}
