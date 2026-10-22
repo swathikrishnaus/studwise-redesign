@@ -32,6 +32,7 @@ const ICONS = {
   users: "M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1m20 0v-1a4 4 0 0 0-3-3.9M15 3.1a4 4 0 0 1 0 7.8M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z",
   building: "M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16m0-11h4a1 1 0 0 1 1 1v10M2 21h20M8 8h3m-3 4h3m-3 4h3",
   globe: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-9-9h18M12 3c2.5 2.5 3.8 5.5 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3Z",
+  person: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8.5a7 7 0 0 1 14 0",
   star: "M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L12 3.5Z",
 };
 
@@ -40,35 +41,38 @@ export const serviceMenu: MegaGroup[] = [
   {
     title: "Plan & apply",
     items: [
-      { label: "Career Counselling", href: "/services#career-counselling", description: "Find the course and career path that fits you", icon: ICONS.compass },
-      { label: "University Registration", href: "/services#university-registration", description: "Shortlists and applications to the right universities", icon: ICONS.cap },
-      { label: "Scholarship Assistance", href: "/services#scholarship-assistance", description: "Guidance on scholarships universities offer", icon: ICONS.award },
+      { label: "Career Counselling", href: "/services/career-counselling", description: "Find the course and career path that fits you", icon: ICONS.compass },
+      { label: "University Registration", href: "/services/university-registration", description: "Shortlists and applications to the right universities", icon: ICONS.cap },
+      { label: "Scholarship Assistance", href: "/services/scholarship-assistance", description: "Guidance on scholarships universities offer", icon: ICONS.award },
     ],
   },
   {
     title: "Prepare & travel",
     items: [
-      { label: "IELTS / TOEFL / EPT Tests", href: "/services#ielts-toefl-ept", description: "Coaching to boost your language test scores", icon: ICONS.book },
-      { label: "Visa Assistance", href: "/services#visa-assistance", description: "Documentation and application support", icon: ICONS.passport },
-      { label: "Pre-Landing Services", href: "/services#pre-landing-services", description: "Everything sorted before you fly", icon: ICONS.plane },
+      { label: "IELTS / TOEFL / EPT Tests", href: "/services/ielts-toefl-ept", description: "Coaching to boost your language test scores", icon: ICONS.book },
+      { label: "Visa Assistance", href: "/services/visa-assistance", description: "Documentation and application support", icon: ICONS.passport },
+      { label: "Pre-Landing Services", href: "/services/pre-landing-services", description: "Everything sorted before you fly", icon: ICONS.plane },
     ],
   },
   {
     title: "Settle in abroad",
     items: [
-      { label: "Post-Landing Services", href: "/services#post-landing-services", description: "Help on arrival in your new country", icon: ICONS.pin },
-      { label: "Accommodation Assistance", href: "/services#accommodation-assistance", description: "Safe housing options within your budget", icon: ICONS.home },
-      { label: "Internship Services", href: "/services#internship-services", description: "Internship programmes while you study", icon: ICONS.briefcase },
+      { label: "Post-Landing Services", href: "/services/post-landing-services", description: "Help on arrival in your new country", icon: ICONS.pin },
+      { label: "Accommodation Assistance", href: "/services/accommodation-assistance", description: "Safe housing options within your budget", icon: ICONS.home },
+      { label: "Internship Services", href: "/services/internship-services", description: "Internship programmes while you study", icon: ICONS.briefcase },
     ],
   },
 ];
 
+/** Each item opens its section of the About page (ids set in components/about-page) */
 export const aboutMenu: MegaItem[] = [
-  { label: "About Studwise", href: "/about", description: "Our story since 2019 and our team", icon: ICONS.users },
-  { label: "Why choose us", href: "/#why-choose-us", description: "What makes Studwise different", icon: ICONS.star },
-  { label: "Our offices", href: "/#offices", description: "Manjeri, Valanchery and Calicut", icon: ICONS.building },
-  { label: "Partner universities", href: "/#universities", description: "Universities we work with", icon: ICONS.cap },
-  { label: "Global reach", href: "/#students", description: "Our students across the globe", icon: ICONS.globe },
+  { label: "Who we are", href: "/about#who-we-are", description: "Our story since 2019", icon: ICONS.users },
+  { label: "Vision & mission", href: "/about#our-purpose", description: "What drives us, every step of the way", icon: ICONS.compass },
+  { label: "Core values", href: "/about#our-values", description: "Excellence, honesty, transparency and more", icon: ICONS.star },
+  { label: "Our approach", href: "/about#our-approach", description: "Led by founder & CEO Mr. P S Mahmood", icon: ICONS.award },
+  { label: "Why choose us", href: "/about#why-choose-us", description: "5+ years, 150+ universities, 24/7 support", icon: ICONS.cap },
+  { label: "Our centres", href: "/about#our-centres", description: "Manjeri, Valanchery and Calicut", icon: ICONS.building },
+  { label: "Our team", href: "/team", description: "The people who guide every student", icon: ICONS.person },
 ];
 
 export type MainNavItem = NavLink & { mega?: "services" | "about" };

@@ -114,7 +114,6 @@ export default function UniversitiesSection() {
           <div className="px-5 sm:px-8 lg:px-12 xl:px-14 grid lg:grid-cols-12 gap-8 items-end mb-12 sm:mb-16 lg:mb-20">
             <div className="lg:col-span-7">
               <div className="flex items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
-                <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
                 Partners
               </div>
               <h2

@@ -113,7 +113,6 @@ export default function ServicesSection() {
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-6 items-end mb-14 sm:mb-20 lg:mb-28">
           <div className="lg:col-span-8">
             <div className="flex items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
-              <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
               What we do
             </div>
             <h2
@@ -141,7 +140,7 @@ export default function ServicesSection() {
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 lg:gap-x-10 xl:gap-x-14 gap-y-14 sm:gap-y-20 lg:gap-y-28">
           {services.map((service, i) => (
             <li key={service.slug} data-svc-card className="svc-card">
-              <Link href={`/services#${service.slug}`} className="group block focus-visible:outline-none">
+              <Link href={service.href} className="group block focus-visible:outline-none">
                 {/* Media: unmasks from below on reveal, bends with scroll speed */}
                 <div className="svc-media relative aspect-[4/3] overflow-hidden" onPointerMove={handlePointerMove}>
                   <div className="svc-scene absolute inset-0">

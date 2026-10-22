@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import type { CSSProperties } from "react";
 import { countryOffers, totalOffers } from "@/data/globalReach";
 import type { CountryOffers } from "@/data/globalReach";
-import { clamp, easeInOutCubic, easeOutCubic, lerp, prefersReducedMotion, smoothstep } from "@/lib/scroll";
+import { clamp, easeInOutCubic, easeOutCubic, prefersReducedMotion, smoothstep } from "@/lib/scroll";
 
 const fmt = (n: number) => n.toLocaleString("en-IN");
 
@@ -103,8 +103,8 @@ function TokenTier({ list }: { list: CountryOffers[] }) {
    StudentsSection — "Our Students Across The Globe"
    --------------------------------------------------------------------------
    A top-down airplane flies the whole section, like the bottle on
-   klimtwine.com: it drops in from above the viewport while the previous
-   section is still on screen (small, angled, high up), settles into the
+   klimtwine.com: it appears at the start of its flight line (small,
+   angled, fading in) and never crosses the section above, settles into the
    centre lane between two columns of countries (at every screen size),
    weaves and banks past them, then
    lands in the centre of a panel that scales up from the bottom ("Taste
@@ -164,16 +164,19 @@ export default function StudentsSection() {
 
       const s = section.getBoundingClientRect();
       const l = landing.getBoundingClientRect();
-      // Entry: drops in from just above the viewport while the section's
-      // top edge travels from the bottom of the screen to the top
-      const enter = easeInOutCubic(clamp(1 - s.top / vh));
+      // Entry: the plane appears at the start of its own flight line (the
+      // top of the track) as that rises into view, fading and growing in,
+      // so it never crosses the section above. It rides up with the line
+      // until mid-screen, then holds there and flies the lane.
+      const rise = clamp((vh - t.top) / (vh * 0.5));
+      const enter = easeInOutCubic(rise);
+      const arrive = smoothstep(0, 0.6, rise);
       // Exit: once the landing panel's centre climbs past mid-screen, the
       // plane rides along with it (it has touched down)
-      const y = Math.min(lerp(-size * 0.75, vh / 2, enter), l.top + l.height / 2);
-      const arrive = 1;
-      const visible = s.top < vh && l.bottom > 0 && arrive > 0;
+      const y = Math.min(Math.max(vh / 2, t.top + size * 0.5), l.top + l.height / 2);
+      const visible = s.top < vh && l.bottom > 0 && arrive > 0.001;
       flyer.style.visibility = visible ? "visible" : "hidden";
-      flyer.style.opacity = String(arrive);
+      flyer.style.opacity = arrive.toFixed(3);
 
       // Final approach: everything straightens out as the panel arrives
       const settle = 1 - smoothstep(0.35, 1, clamp((vh - l.top) / vh));
@@ -287,7 +290,6 @@ export default function StudentsSection() {
       {/* ---------------- Header ---------------- */}
       <div className="relative max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 lg:text-center mb-14 lg:mb-10">
         <div className="flex lg:justify-center items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
-          <span className="h-px w-10 bg-[#009cd9]/40" aria-hidden="true" />
           Global reach
         </div>
         <h2
@@ -337,8 +339,8 @@ export default function StudentsSection() {
         </div>
 
         {/* ---------------- Landing panel: scales up, the plane touches down ---------------- */}
-        <div data-landing className="relative mt-[18vh] px-3 sm:px-4 lg:px-6 xl:px-7">
-          <div className="landing-panel relative h-svh max-w-[1728px] mx-auto overflow-hidden bg-gradient-to-b from-[#d9f0fb] via-[#eaf7fd] to-[#d4eefa]">
+        <div data-landing className="relative mt-[10vh] sm:mt-[18vh] px-3 sm:px-4 lg:px-6 xl:px-7">
+          <div className="landing-panel relative h-[27rem] sm:h-svh max-w-[1728px] mx-auto overflow-hidden bg-gradient-to-b from-[#d9f0fb] via-[#eaf7fd] to-[#d4eefa]">
             <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[620px] h-[420px] rounded-full bg-white/70 blur-[90px]" aria-hidden="true" />
             <Image src="/images/cloud.png" alt="" width={380} height={203} className="absolute -left-16 bottom-[18%] w-[38%] max-w-[420px] h-auto opacity-90 translate-x-[calc((1-var(--lv))*-80px)]" />
             <Image src="/images/cloud.png" alt="" width={340} height={181} className="absolute -right-14 top-[14%] w-[30%] max-w-[340px] h-auto opacity-80 translate-x-[calc((1-var(--lv))*80px)]" />
@@ -351,13 +353,13 @@ export default function StudentsSection() {
               <div className="absolute inset-[18%] rounded-full bg-white/50" />
             </div>
 
-            <div className="relative h-full flex flex-col items-center justify-end text-center pb-[8vh] px-6">
+            <div className="relative h-full flex flex-col items-center justify-end text-center pb-8 sm:pb-[8vh] px-6">
               <div className="text-[clamp(3.4rem,12vw,10rem)] leading-none tracking-[-0.05em] text-slate-900 tabular-nums">
                 <span data-total aria-hidden="true">0</span>
                 <span className="text-[#009cd9]">+</span>
                 <span className="sr-only">{fmt(totalOffers)}+</span>
               </div>
-              <p className="mt-4 text-base sm:text-lg text-slate-600">
+              <p className="mt-3 sm:mt-4 max-w-[18rem] sm:max-w-none text-[15px] sm:text-lg text-slate-600">
                 offers secured for our students across {countryOffers.length} countries
               </p>
             </div>
