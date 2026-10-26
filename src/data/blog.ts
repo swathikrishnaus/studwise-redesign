@@ -10,6 +10,7 @@
 
 import raw from "./blog/posts.json";
 import { slugify } from "@/utils/helpers";
+import { TOPIC_COVER } from "./blogShared";
 import type { PostSummary, Topic } from "./blogShared";
 
 export { TOPICS, formatPostDate } from "./blogShared";
@@ -29,26 +30,29 @@ type RawPost = {
   blocks: Block[];
 };
 
-type PostMeta = Pick<PostSummary, "kicker" | "flag" | "icon" | "sky"> & { topic: Topic };
+/** What each post sets for its card: a topic, the cover word and, optionally, a
+    cover photo. Colours and icon follow the topic. */
+type PostMeta = { topic: Topic; kicker: string; image?: string };
 
 const META: Record<string, PostMeta> = {
-  "ielts-scores-to-study-in-new-ealand": { topic: "Tests & Admissions", kicker: "New Zealand", flag: "nz", icon: "book", sky: ["#2f7fc4", "#68b4e6"] },
-  "best-courses-to-study-in-ireland": { topic: "Destinations", kicker: "Ireland", flag: "ie", icon: "globe", sky: ["#1f8a8a", "#6cc4c0"] },
-  "australia-study-visa-2023": { topic: "Visas", kicker: "Australia", icon: "passport", sky: ["#c9772f", "#f0b46a"] },
-  "study-in-france": { topic: "Destinations", kicker: "France", flag: "fr", icon: "globe", sky: ["#3a5bb8", "#86a3e6"] },
-  "new-rule-on-dependent-visa-uk": { topic: "Visas", kicker: "UK", flag: "gb", icon: "passport", sky: ["#24427a", "#5d7fbf"] },
-  "study-in-canada": { topic: "Destinations", kicker: "Canada", flag: "ca", icon: "globe", sky: ["#b8473f", "#ec8f7d"] },
-  "best-study-abroad-consultants-in-kerala": { topic: "Guides", kicker: "Kerala", flag: "in", icon: "compass", sky: ["#2a8a5c", "#78c79a"] },
-  "study-in-uk-without-ielts": { topic: "Tests & Admissions", kicker: "UK", flag: "gb", icon: "book", sky: ["#3f4fa8", "#8592dc"] },
-  "best-places-to-study-abroad-in-europe": { topic: "Destinations", kicker: "Europe", icon: "globe", sky: ["#2a64b0", "#6fa3dd"] },
-  "best-study-abroad-consultants-in-malappuram": { topic: "Guides", kicker: "Malappuram", flag: "in", icon: "pin", sky: ["#0a7fb3", "#4cb8e6"] },
-  "benefits-of-studying-abroad": { topic: "Guides", kicker: "Abroad", icon: "compass", sky: ["#3a88cf", "#7cc0ec"] },
+  "ielts-scores-to-study-in-new-ealand": { topic: "Tests & Admissions", kicker: "New Zealand" },
+  "best-courses-to-study-in-ireland": { topic: "Destinations", kicker: "Ireland" },
+  "australia-study-visa-2023": { topic: "Visas", kicker: "Australia" },
+  "study-in-france": { topic: "Destinations", kicker: "France" },
+  "new-rule-on-dependent-visa-uk": { topic: "Visas", kicker: "UK" },
+  "study-in-canada": { topic: "Destinations", kicker: "Canada" },
+  "best-study-abroad-consultants-in-kerala": { topic: "Guides", kicker: "Kerala" },
+  "study-in-uk-without-ielts": { topic: "Tests & Admissions", kicker: "UK" },
+  "best-places-to-study-abroad-in-europe": { topic: "Destinations", kicker: "Europe" },
+  "best-study-abroad-consultants-in-malappuram": { topic: "Guides", kicker: "Malappuram" },
+  "benefits-of-studying-abroad": { topic: "Guides", kicker: "Abroad" },
 };
 
 export type Heading = { id: string; text: string; level: 2 | 3 };
 
 export type Post = RawPost &
-  PostMeta & {
+  PostMeta &
+  Pick<PostSummary, "sky" | "icon"> & {
     minutes: number;
     headings: Heading[];
   };
@@ -79,7 +83,8 @@ export const posts: Post[] = (raw as RawPost[])
     const headings: Heading[] = p.blocks.flatMap((b, i) =>
       b.type === "h2" || b.type === "h3" ? [{ id: ids[i]!, text: strip(b.html), level: b.type === "h2" ? 2 : 3 }] : []
     );
-    return { ...p, ...META[p.slug], minutes: Math.max(1, Math.round(p.words / 220)), headings };
+    const meta = META[p.slug];
+    return { ...p, ...meta, ...TOPIC_COVER[meta.topic], minutes: Math.max(1, Math.round(p.words / 220)), headings };
   })
   .sort((a, b) => b.date.localeCompare(a.date));
 
@@ -99,7 +104,7 @@ export const postSummaries: PostSummary[] = posts.map((p) => ({
   minutes: p.minutes,
   topic: p.topic,
   kicker: p.kicker,
-  flag: p.flag,
+  image: p.image,
   icon: p.icon,
   sky: p.sky,
   search: [p.title, p.dek ?? "", p.excerpt, p.kicker, p.topic, ...p.headings.map((h) => h.text)].join(" ").toLowerCase(),

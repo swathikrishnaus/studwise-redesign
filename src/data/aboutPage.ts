@@ -16,7 +16,7 @@ export const aboutHero = {
 export const aboutHighlights = [
   { value: "2019", label: "Founded in Manjeri" },
   { value: "5+", label: "Years of experience" },
-  { value: "1000+", label: "Students placed abroad" },
+  { value: "550+", label: "Students guided abroad" },
   { value: "150+", label: "Universities represented" },
 ];
 
@@ -24,7 +24,7 @@ export const aboutHighlights = [
 export const whoWeAre = {
   lead: "Studwise is the best education consultancy in Malappuram founded in 2019 and headquartered in Manjeri, with its centres in Valanchery and Calicut.",
   paragraphs: [
-    "With over 5+ years of experience, Studwise has successfully placed 1000+ students in different countries. We align with countries like the UK, USA, Canada, Australia, Malta, Singapore, Dubai, and Malaysia. Studwise represents 150+ universities across the globe.",
+    "With over 5+ years of experience, Studwise has guided 550+ students to study in 14+ countries, including the UK, USA, Canada, Australia, Malta, Singapore, Dubai, and Malaysia. Studwise represents 150+ universities across the globe, with 250+ postgraduate courses spanning 30+ unique research areas.",
     "We provide courses like TOEFL, IELTS, and EPT support with career counselling and proper guidance in course selection. It all involves working together closely with students. For them to comply with the cultural and analytical updates brought about by overseas education.",
     "Studwise's comprehensive support services and experienced team of experts help students find the best courses, scholarship assistance, colleges, and universities that perfectly meet their career expectations, and academic and financial background needs on a global scale. This helps them reach their study abroad dream destination.",
   ],
@@ -82,13 +82,13 @@ export const whyChoose = {
       icon: "M4 14v-2a8 8 0 1 1 16 0v2M4 14a2 2 0 0 0 2 2h1v-5H6a2 2 0 0 0-2 2v1Zm16 0a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2v1Zm-3 2v1a3 3 0 0 1-3 3h-2",
     },
     {
-      value: "1000+",
-      label: "Projects Completed",
+      value: "550+",
+      label: "Students Guided",
       icon: "M9 12l2 2 4-4M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z",
     },
     {
       value: "150+",
-      label: "Partnering Universities Worldwide",
+      label: "Universities Represented Worldwide",
       icon: "M12 14l9-5-9-5-9 5 9 5zm0 0v6m-6.5-9.4V16c0 1.1 2.9 3 6.5 3s6.5-1.9 6.5-3v-5.4",
     },
   ],

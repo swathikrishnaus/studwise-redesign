@@ -3,69 +3,38 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import type { CSSProperties } from "react";
-import { countryOffers, totalOffers } from "@/data/globalReach";
-import type { CountryOffers } from "@/data/globalReach";
+import { destinations, reachTotals } from "@/data/globalReach";
+import type { Destination } from "@/data/globalReach";
 import { clamp, easeInOutCubic, easeOutCubic, prefersReducedMotion, smoothstep } from "@/lib/scroll";
 
 const fmt = (n: number) => n.toLocaleString("en-IN");
 
-// Tiers by number of offers — each tier gets its own arrangement
-const giants = countryOffers.slice(0, 4); // 7,000 – 2,000
-const orbit = countryOffers.slice(4, 8); // 1,000 – 600
-const cards = countryOffers.slice(8, 13); // 300 – 30
-const chips = countryOffers.slice(13); // 20 – 10
-
-const tierLabel = (list: CountryOffers[]) =>
-  `${fmt(list[0].offers)} – ${fmt(list[list.length - 1].offers)} offers`;
-
-function Count({ value }: { value: number }) {
-  return (
-    <>
-      <span data-count={value} aria-hidden="true">0</span>
-      <span className="text-[#009cd9]">+</span>
-      <span className="sr-only">{fmt(value)}+</span>
-    </>
-  );
-}
-
-function Flag({ code, className = "" }: { code: string; className?: string }) {
+function Flag({ code, focus, className = "" }: { code: string; focus?: string; className?: string }) {
   return (
     <span className={`relative block overflow-hidden ring-1 ring-slate-900/10 ${className}`}>
-      <Image src={`/flags/${code}.svg`} alt="" fill sizes="220px" className="object-cover" />
+      <Image src={`/flags/${code}.svg`} alt="" fill sizes="220px" className="object-cover" style={focus ? { objectPosition: focus } : undefined} />
     </span>
   );
 }
 
-function TierLabel({ children }: { children: string }) {
-  return (
-    <div className="mb-10 lg:mb-14 flex justify-center">
-      <span className="relative z-40 inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.18em] text-[#0a6c99] ring-1 ring-sky-100 shadow-[0_10px_24px_-16px_rgba(0,80,130,0.45)]">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#009cd9]" aria-hidden="true" />
-        {children}
-      </span>
-    </div>
-  );
-}
-
-// Token size, shared by every tier (phones / tablets / desktop)
+// Token size (phones / tablets / desktop)
 const TOKEN = {
-  disc: "w-20 h-20 sm:w-28 sm:h-28 lg:w-52 lg:h-52",
-  name: "text-lg sm:text-2xl lg:text-[2.6rem]",
-  offers: "text-sm sm:text-base lg:text-lg",
+  disc: "w-20 h-20 sm:w-28 sm:h-28 lg:w-44 lg:h-44",
+  name: "text-lg sm:text-2xl lg:text-[2.3rem]",
 };
 
 /**
- * One tier of countries as floating flag tokens in two columns either
- * side of the plane's lane, the right column staggered lower. The same
- * layout runs at every size; only the lane and tokens scale down.
+ * The destinations as floating flag tokens in two columns either side of
+ * the plane's lane, the right column staggered lower. The same layout runs
+ * at every size; only the lane and tokens scale down.
  */
-function TokenTier({ list }: { list: CountryOffers[] }) {
+function TokenColumns({ list }: { list: Destination[] }) {
   return (
     <div className="grid grid-cols-[1fr_84px_1fr] sm:grid-cols-[1fr_140px_1fr] lg:grid-cols-[1fr_minmax(380px,30vw)_1fr]">
       {[0, 1].map((side) => (
         <div
           key={side}
-          className={`flex flex-col items-center gap-10 sm:gap-14 lg:gap-20 ${
+          className={`flex flex-col items-center gap-10 sm:gap-14 lg:gap-16 ${
             side === 0
               ? "col-start-1 lg:items-end lg:pr-[3vw]"
               : "col-start-3 pt-16 sm:pt-20 lg:items-start lg:pl-[3vw] lg:pt-28"
@@ -84,13 +53,11 @@ function TokenTier({ list }: { list: CountryOffers[] }) {
                 <div className="orbit-token__disc">
                   <Flag
                     code={c.code}
+                    focus={c.focus}
                     className={`${TOKEN.disc} rounded-full ring-4 lg:ring-[6px] ring-white shadow-[0_24px_40px_-18px_rgba(0,80,130,0.45)]`}
                   />
                 </div>
                 <div className={`mt-3 lg:mt-4 ${TOKEN.name} leading-tight tracking-tight text-slate-900`}>{c.country}</div>
-                <div className={`mt-1 ${TOKEN.offers} text-slate-500 tabular-nums`}>
-                  <Count value={c.offers} /> offers
-                </div>
               </div>
             ))}
         </div>
@@ -109,9 +76,8 @@ function TokenTier({ list }: { list: CountryOffers[] }) {
    weaves and banks past them, then
    lands in the centre of a panel that scales up from the bottom ("Taste
    the Art of Wine" on klimtwine). It is a fixed overlay positioned from
-   scroll each frame. Countries are grouped by offers and each group has
-   the same floating flag tokens, sized by offer count, either side of
-   the lane.
+   scroll each frame. The destinations float as flag tokens either side
+   of the lane, and the landing panel counts up the students guided.
    Scroll sets --rv on each [data-reveal] (reveal 0→1) and flips
    data-on once an item is in view; styles live in globals.css.
    -------------------------------------------------------------------------- */
@@ -204,9 +170,6 @@ export default function StudentsSection() {
         const rv = easeOutCubic(clamp((vh * 0.92 - r.top) / (vh * 0.35)));
         el.style.setProperty("--rv", rv.toFixed(4));
         if (rv > 0.35) el.dataset.on = "true";
-        el.querySelectorAll<HTMLElement>("[data-count]").forEach((c) => {
-          c.textContent = fmt(Math.round(Number(c.dataset.count) * rv));
-        });
       });
 
       landing.style.setProperty("--lv", easeOutCubic(clamp((vh - l.top) / vh)).toFixed(4));
@@ -215,7 +178,7 @@ export default function StudentsSection() {
         const r = total.getBoundingClientRect();
         // Finishes counting by the time the plane touches down
         const k = easeOutCubic(clamp((vh - r.top) / (vh * 0.28)));
-        total.textContent = fmt(Math.round(totalOffers * k));
+        total.textContent = fmt(Math.round(reachTotals.students * k));
       }
     };
     const request = () => {
@@ -318,24 +281,7 @@ export default function StudentsSection() {
         />
 
         <div className="relative max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pt-[8vh] lg:pt-[28vh]">
-          {/* Every tier uses the same floating flag tokens, scaled by offers */}
-          <TierLabel>{tierLabel(giants)}</TierLabel>
-          <div className="mb-[10vh] lg:mb-[22vh]">
-            <TokenTier list={giants} />
-          </div>
-
-          <TierLabel>{tierLabel(orbit)}</TierLabel>
-          <div className="mb-[10vh] lg:mb-[22vh]">
-            <TokenTier list={orbit} />
-          </div>
-
-          <TierLabel>{tierLabel(cards)}</TierLabel>
-          <div className="mb-[10vh] lg:mb-[22vh]">
-            <TokenTier list={cards} />
-          </div>
-
-          <TierLabel>{tierLabel(chips)}</TierLabel>
-          <TokenTier list={chips} />
+          <TokenColumns list={destinations} />
         </div>
 
         {/* ---------------- Landing panel: scales up, the plane touches down ---------------- */}
@@ -357,10 +303,10 @@ export default function StudentsSection() {
               <div className="text-[clamp(3.4rem,12vw,10rem)] leading-none tracking-[-0.05em] text-slate-900 tabular-nums">
                 <span data-total aria-hidden="true">0</span>
                 <span className="text-[#009cd9]">+</span>
-                <span className="sr-only">{fmt(totalOffers)}+</span>
+                <span className="sr-only">{fmt(reachTotals.students)}+</span>
               </div>
               <p className="mt-3 sm:mt-4 max-w-[18rem] sm:max-w-none body-lead text-slate-600">
-                offers secured for our students across {countryOffers.length} countries
+                students guided to study across {reachTotals.countries} countries
               </p>
             </div>
           </div>

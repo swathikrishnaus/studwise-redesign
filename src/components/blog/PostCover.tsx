@@ -10,7 +10,7 @@ const ICONS: Record<CoverIcon, string> = {
   pin: "M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z",
 };
 
-type CoverProps = Pick<PostSummary, "kicker" | "flag" | "icon" | "sky" | "topic"> & {
+type CoverProps = Pick<PostSummary, "kicker" | "icon" | "sky" | "topic" | "image"> & {
   className?: string;
   /** Larger corner details for hero-sized covers */
   large?: boolean;
@@ -20,10 +20,18 @@ type CoverProps = Pick<PostSummary, "kicker" | "flag" | "icon" | "sky" | "topic"
 
 /* --------------------------------------------------------------------------
    PostCover — a designed cover in the site's sky style: the post's country
-   or theme set big over a tinted sky and soft clouds, with its flag and a
+   or theme set big over a tinted sky and soft clouds, with its topic and a
    line icon. Sized by its box; type scales with the box (container units).
+   A post with its own cover photo shows that instead.
    -------------------------------------------------------------------------- */
-export default function PostCover({ kicker, flag, icon, sky, topic, className = "", large = false, scale = 1 }: CoverProps) {
+export default function PostCover({ kicker, icon, sky, topic, image, className = "", large = false, scale = 1 }: CoverProps) {
+  if (image)
+    return (
+      <div className={`relative overflow-hidden bg-slate-100 ${className}`} aria-hidden="true">
+        <Image src={image} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+      </div>
+    );
+
   // Long words get smaller type so every kicker fits on one line
   const size = Math.min(24, 140 / Math.max(kicker.length, 4)) * scale;
 
@@ -45,11 +53,6 @@ export default function PostCover({ kicker, flag, icon, sky, topic, className = 
             large ? "px-3 py-1.5 text-xs" : "px-2.5 py-1 text-[11px]"
           }`}
         >
-          {flag && (
-            <span className="relative block w-4 h-4 overflow-hidden rounded-full ring-1 ring-white/50">
-              <Image src={`/flags/${flag}.svg`} alt="" fill sizes="16px" className="object-cover" />
-            </span>
-          )}
           {topic}
         </span>
         <svg

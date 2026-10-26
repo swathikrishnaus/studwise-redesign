@@ -2,11 +2,11 @@ export default function MarqueeTicker() {
   const tickerItems = [
     { text: "Fall 2026 Priority Intakes Open" },
     { text: "Imperial College London — £12,000 Scholarship Secured" },
-    { text: "99.2% Visa Approval Track Record" },
+    { text: "Above 90% Visa Success Rate" },
     { text: "University of Toronto — Data Science & CS Admits" },
     { text: "Complimentary 1-on-1 Profile Assessment & Shortlist" },
     { text: "University of Melbourne — Direct Offers Issued" },
-    { text: "500+ Direct University Partnerships Across 18 Countries" },
+    { text: "Representative of 150+ Universities Across 14+ Countries" },
     { text: "National University of Singapore — Merit Grant Awarded" },
     { text: "End-to-End SOP, Visa, & Financial Documentation Support" },
   ];

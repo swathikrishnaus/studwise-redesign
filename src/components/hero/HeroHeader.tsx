@@ -256,7 +256,7 @@ export default function HeroHeader() {
         <div className="relative max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7 h-20 grid grid-cols-[1fr_auto] lg:grid-cols-[auto_1fr_auto] items-center gap-4 xl:gap-6">
           {/* Brand logo (left) */}
           <Link href="/" onPointerEnter={scheduleClose} className="justify-self-start flex items-center shrink-0" aria-label="Studwise Home">
-            <Image src="/images/studwise-logo-web.png" alt="Studwise Logo" width={122} height={44} priority className="w-[112px] lg:w-[122px] h-auto" />
+            <Image src="/images/studwise-new-logo.png" alt="Studwise Logo" width={3350} height={1209} sizes="122px" priority className="w-[112px] lg:w-[122px] h-auto" />
           </Link>
 
           {/* Desktop navigation (centre) */}

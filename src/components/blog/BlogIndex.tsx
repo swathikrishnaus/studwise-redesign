@@ -13,20 +13,24 @@ import CloudButton from "@/components/ui/CloudButton";
 const PAGE_SIZE = 9;
 
 const SEARCH = "M21 21l-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z";
-const ARROW = "M5 12h14m-6-6 6 6-6 6";
 const CLOSE = "M6 18 18 6M6 6l12 12";
 
+/** The date (the topic is already on the cover; a photo cover shows it here instead) */
 function Meta({ post }: { post: PostSummary }) {
   return (
     <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500">
-      <span className="text-[#0a7fb3]">{post.topic}</span>
-      <span aria-hidden="true">·</span>
+      {post.image && (
+        <>
+          <span className="text-[#0a7fb3]">{post.topic}</span>
+          <span aria-hidden="true">·</span>
+        </>
+      )}
       <time dateTime={post.date}>{formatPostDate(post.date)}</time>
     </p>
   );
 }
 
-/** Article card, the same for every post: cover, meta, title, excerpt */
+/** Article card, the same for every post: cover, date, title, excerpt (the whole card links) */
 function PostCard({ post }: { post: PostSummary }) {
   return (
     <article className="tm-enter group relative flex flex-col">
@@ -45,10 +49,6 @@ function PostCard({ post }: { post: PostSummary }) {
           </Link>
         </h3>
         <p className="mt-2 body-text text-slate-600 line-clamp-2">{post.excerpt}</p>
-        <span className="mt-4 inline-flex items-center gap-2 text-sm text-slate-900" aria-hidden="true">
-          Read article
-          <Icon d={ARROW} className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-        </span>
       </div>
     </article>
   );
@@ -56,7 +56,9 @@ function PostCard({ post }: { post: PostSummary }) {
 
 /* --------------------------------------------------------------------------
    BlogIndex — topic filters and search over one uniform grid of article
-   cards, newest first, nine per page with numbered pagination. Filters
+   cards, newest first, nine per page with numbered pagination (shown only
+   when there is more than one page). Topic filters list only the topics
+   that have posts. Filters
    and search apply first, then paging (a change returns to page 1). The
    page number is kept in the URL (?page=2), and page links are real
    links, so every page can be bookmarked and followed by crawlers.
@@ -120,7 +122,8 @@ export default function BlogIndex({ posts }: { posts: PostSummary[] }) {
     gridRef.current?.focus({ preventScroll: true });
   }, [current]);
 
-  const counts = useMemo(() => Object.fromEntries(TOPICS.map((t) => [t, posts.filter((p) => p.topic === t).length])), [posts]);
+  // A topic only gets a filter once it has a post, so an empty topic never shows
+  const usedTopics = useMemo(() => TOPICS.filter((t) => posts.some((p) => p.topic === t)), [posts]);
 
   const tab = (active: boolean) =>
     `inline-flex items-center gap-1.5 h-11 px-4 rounded-full text-sm ring-1 transition-colors ${
@@ -140,7 +143,7 @@ export default function BlogIndex({ posts }: { posts: PostSummary[] }) {
       <div>
         <div className="flex flex-col lg:flex-row lg:items-center gap-4">
           <div role="group" aria-label="Filter by topic" className="flex flex-wrap items-center gap-2">
-            {(["All", ...TOPICS] as const).map((t) => (
+            {(["All", ...usedTopics] as const).map((t) => (
               <button
                 key={t}
                 type="button"
@@ -149,9 +152,6 @@ export default function BlogIndex({ posts }: { posts: PostSummary[] }) {
                 className={tab(topic === t)}
               >
                 {t === "All" ? "All articles" : t}
-                <span className={`text-xs tabular-nums ${topic === t ? "text-white/60" : "text-slate-400"}`}>
-                  {t === "All" ? posts.length : counts[t]}
-                </span>
               </button>
             ))}
           </div>
@@ -208,12 +208,11 @@ export default function BlogIndex({ posts }: { posts: PostSummary[] }) {
             ))}
           </div>
 
-          <div className="mt-14 sm:mt-16 flex flex-col sm:flex-row items-center justify-between gap-5 border-t border-slate-200 pt-6">
-            <p className="text-sm text-slate-500 tabular-nums">
-              Showing {first + 1}–{first + visible.length} of {shown.length} {shown.length === 1 ? "article" : "articles"}
-            </p>
-            {pageCount > 1 && <Pagination current={current} count={pageCount} onChange={goTo} basePath="/blog" />}
-          </div>
+          {pageCount > 1 && (
+            <div className="mt-14 sm:mt-16 flex justify-center border-t border-slate-200 pt-6">
+              <Pagination current={current} count={pageCount} onChange={goTo} basePath="/blog" />
+            </div>
+          )}
         </div>
       )}
     </div>

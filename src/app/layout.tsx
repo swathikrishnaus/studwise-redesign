@@ -8,6 +8,7 @@ import Footer from "@/components/layout/Footer";
 import MobileTabBar from "@/components/navigation/MobileTabBar";
 import FloatingDock from "@/components/layout/FloatingDock";
 import AdvisorDialog from "@/components/shared/AdvisorDialog";
+import PageLoader from "@/components/layout/PageLoader";
 
 /* --------------------------------------------------------------------------
    Font Configuration
@@ -94,6 +95,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Brand intro on every full load and refresh */}
+        <PageLoader />
+        <noscript>
+          <style>{`.page-loader{display:none}`}</style>
+        </noscript>
+
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>
