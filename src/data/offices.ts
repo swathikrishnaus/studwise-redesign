@@ -20,7 +20,7 @@ export const offices: Office[] = [
   {
     kind: "Head office",
     city: "Manjeri",
-    address: "Rajiv Gandhi Bypass, near Malabar Hospital, Melakkam, Manjeri, Kerala 676121",
+    address: "Happy Arcade, 1st Floor, Rajiv Gandhi Bypass, near Malabar Hospital, Melakkam, Manjeri, Kerala 676121",
     phones: ["+91 91136 50884"],
     emails: ["info@studwise.in", "istudwise@gmail.com"],
     mapQuery: "studwise",
@@ -28,7 +28,7 @@ export const offices: Office[] = [
   {
     kind: "Branch office",
     city: "Valanchery",
-    address: "Konnakkattil Towers 2nd Floor Calicut road Valanchery Kerala",
+    address: "Konnakkattil Tower, 2nd Floor, Calicut Road, Valanchery, Kerala",
     phones: ["+91 75106 50884"],
     emails: ["istudwise@gmail.com"],
     mapQuery: "studwise valanchery",

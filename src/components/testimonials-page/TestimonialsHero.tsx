@@ -79,7 +79,7 @@ export default function TestimonialsHero() {
                 <span className="block text-white">
                   {testimonials.length} student stories · {universities} universities
                 </span>
-                <span className="text-white/75">UK &amp; Germany · 1000+ students placed</span>
+                <span className="text-white/75">UK &amp; Germany · 550+ students guided</span>
               </p>
             </div>
 

@@ -11,7 +11,7 @@ import AboutCtaSection from "@/components/about-page/AboutCtaSection";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Studwise is a study abroad education consultancy founded in 2019, headquartered in Manjeri with centres in Valanchery and Calicut. 1000+ students placed, 150+ universities represented.",
+    "Studwise is a study abroad education consultancy founded in 2019, headquartered in Manjeri with centres in Valanchery and Calicut. 550+ students guided, 150+ universities represented.",
   alternates: { canonical: "/about" },
 };
 

@@ -8,7 +8,7 @@ import ConsultationDialog from "@/components/shared/ConsultationDialog";
 import RevealRoot from "@/components/shared/RevealRoot";
 import ScrollWords from "@/components/shared/ScrollWords";
 import FlightLane from "@/components/flight/FlightLane";
-import { Eyebrow, Icon, gutter, toneAt } from "@/components/shared/PageKit";
+import { Eyebrow, Icon, StatCards, gutter, toneAt } from "@/components/shared/PageKit";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { serviceMenu } from "@/data/navigation";
 import { getServiceDetail, serviceDetails } from "@/data/serviceDetails";
@@ -146,6 +146,27 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
                 </p>
               ))}
             </div>
+
+            {(service.figures || service.fields) && (
+              <div className="mt-10 sm:mt-12 grid lg:grid-cols-12 gap-6 lg:gap-12 items-start">
+                {service.figures && (
+                  <StatCards reveal className={`grid-cols-2 gap-2.5 sm:gap-3 ${service.fields ? "lg:col-span-5" : "lg:col-span-12 sm:grid-cols-4"}`} items={service.figures} />
+                )}
+                {service.fields && (
+                  <div data-reveal className={service.figures ? "lg:col-span-7" : "lg:col-span-12"}>
+                    <h3 className="text-lg sm:text-xl tracking-tight text-slate-900">{service.fields.heading}</h3>
+                    <ul className="mt-4 flex flex-wrap gap-2">
+                      {service.fields.items.map((f) => (
+                        <li key={f} className="rounded-full bg-white px-4 py-2 text-[14px] sm:text-[15px] text-slate-700 ring-1 ring-slate-900/[0.06]">
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-4 text-sm text-slate-500">{service.fields.note}</p>
+                  </div>
+                )}
+              </div>
+            )}
           </section>
 
           {/* ---------------- Benefits ---------------- */}

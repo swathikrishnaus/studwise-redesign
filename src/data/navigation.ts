@@ -58,7 +58,7 @@ export const serviceMenu: MegaGroup[] = [
     title: "Prepare & travel",
     items: [
       { label: "IELTS / TOEFL / EPT Tests", href: "/services/ielts-toefl-ept", description: "Coaching to boost your language test scores", icon: ICONS.book },
-      { label: "Visa Assistance", href: "/services/visa-assistance", description: "Documentation and application support", icon: ICONS.passport },
+      { label: "Visa Assistance", href: "/services/visa-assistance", description: "Visa processing and document support", icon: ICONS.passport },
       { label: "Pre-Landing Services", href: "/services/pre-landing-services", description: "Everything sorted before you fly", icon: ICONS.plane },
     ],
   },
@@ -66,7 +66,7 @@ export const serviceMenu: MegaGroup[] = [
     title: "Settle in abroad",
     items: [
       { label: "Post-Landing Services", href: "/services/post-landing-services", description: "Help on arrival in your new country", icon: ICONS.pin },
-      { label: "Accommodation Assistance", href: "/services/accommodation-assistance", description: "Safe housing options within your budget", icon: ICONS.home },
+      { label: "Accommodation Assistance", href: "/services/accommodation-assistance", description: "Housing within your budget, and part-time work guidance", icon: ICONS.home },
       { label: "Internship Services", href: "/services/internship-services", description: "Internship programmes while you study", icon: ICONS.briefcase },
     ],
   },

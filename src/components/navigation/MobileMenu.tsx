@@ -89,7 +89,7 @@ export default function MobileMenu({ open, onClose }: { open: boolean; onClose: 
         {/* Top bar */}
         <div className="flex items-center justify-between h-14">
           <Link href="/" onClick={onClose} aria-label="Studwise Home">
-            <Image src="/images/studwise-logo-web.png" alt="Studwise" width={122} height={44} className="w-[112px] h-auto" />
+            <Image src="/images/studwise-new-logo.png" alt="Studwise" width={3350} height={1209} sizes="112px" className="w-[112px] h-auto" />
           </Link>
           <MenuToggle open onClick={onClose} />
         </div>

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { aboutMenu, headerContact, serviceMenu, socialLinks } from "@/data/navigation";
 import { bookAppointmentHref } from "@/data/whyChooseUs";
-import FooterClock from "./FooterClock";
 import ScrollWords from "@/components/shared/ScrollWords";
 
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
@@ -137,7 +136,7 @@ export default function Footer() {
           <div className="md:text-right">
             <p className="inline-flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
-              Manjeri, Kerala · <FooterClock />
+              Manjeri, Kerala
             </p>
           </div>
         </div>

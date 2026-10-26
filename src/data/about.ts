@@ -10,10 +10,11 @@ export const aboutIntro =
 export const aboutTagline =
   "We are relaying quality education equivalence to the dreams of students.";
 
+/** Client-provided figures (Studwise fact sheet, October 2026): confirm before launch */
 export const aboutStats = [
   { value: 5, suffix: "+", label: "Years of Experience" },
-  { value: 1000, suffix: "+", label: "Happy Students" },
-  { value: 100, suffix: "%", label: "Satisfaction" },
+  { value: 550, suffix: "+", label: "Students Guided" },
+  { value: 14, suffix: "+", label: "Countries" },
 ];
 
 export const branches = ["Manjeri", "Valanchery", "Calicut"];

@@ -17,6 +17,10 @@ export type ServiceDetail = {
   hero: { heading: string; accent: string; lead: string; image: string; alt: string; focus: string };
   /** Opening statement, its second half in brand blue, then supporting copy */
   overview: { heading: string; accent: string; paragraphs: string[] };
+  /** Key figures shown under the overview (client-provided: confirm before launch) */
+  figures?: { value: string; label: string; icon: string }[];
+  /** Fields of study shown under the overview, as an illustrative (not complete) list */
+  fields?: { heading: string; items: string[]; note: string };
   benefits: { heading: string; text: string; items: { title: string; text: string; icon: string }[] };
   quote: string;
   process: {
@@ -83,6 +87,25 @@ export const serviceDetails: ServiceDetail[] = [
         "Let’s explore how free study abroad career counseling can unlock your global potential and open doors to a world of opportunities.",
       ],
     },
+    figures: [
+      { value: "250+", label: "PG courses", icon: ICON.cap },
+      { value: "30+", label: "Unique research areas", icon: ICON.search },
+    ],
+    fields: {
+      heading: "Fields our students have explored",
+      items: [
+        "MBA & Business",
+        "Accounting & Finance",
+        "Marketing",
+        "Human Resource Management",
+        "Project Management",
+        "Health-related fields",
+        "Journalism",
+        "Photography",
+        "Sports",
+      ],
+      note: "A few of the fields students have chosen with us. Course availability depends on the university and your profile.",
+    },
     benefits: {
       heading: "Make Informed Decisions About Your Future",
       text: "With expert guidance and personalized support, you can make informed decisions that align with your goals, ensuring a successful and rewarding international experience.",
@@ -109,7 +132,7 @@ export const serviceDetails: ServiceDetail[] = [
     process: {
       heading: "How counselling works",
       paragraphs: [
-        "With 4+ years of experience in counseling, Studwise International is the best study-abroad consultant in Kerala, Malappuram, and can guide you toward a brilliant future overseas.",
+        "With 5+ years of experience in counseling, Studwise International is the best study-abroad consultant in Kerala, Malappuram, and can guide you toward a brilliant future overseas.",
         "Experts at Studwise have in-depth knowledge of different study destinations, universities, and courses and can offer valuable insights and recommendations tailored to your specific academic and career goals.",
       ],
       steps: [
@@ -151,6 +174,10 @@ export const serviceDetails: ServiceDetail[] = [
         "With our comprehensive guide, you’ll gain the confidence and knowledge to embark on this life-changing experience. So, grab your passport and get ready to make unforgettable memories as we guide you toward your dream study abroad program.",
       ],
     },
+    figures: [
+      { value: "150+", label: "Universities represented", icon: ICON.cap },
+      { value: "14+", label: "Countries", icon: ICON.globe },
+    ],
     benefits: {
       heading: "A Smooth and Successful Registration",
       text: "From choosing the right program to understanding the registration requirements and submitting your application, our guide will cover all the essential aspects of studying abroad.",
@@ -201,7 +228,7 @@ export const serviceDetails: ServiceDetail[] = [
     legacyPath: "/visa-application-assistance",
     title: "Visa Assistance",
     metaDescription:
-      "With our guidance, you can navigate the visa application process with ease and confidence. Around 1000+ students received our help with effortlessly obtaining their visas.",
+      "With our guidance, you can navigate the visa application process with ease and confidence. Studwise has supported 550+ students with their student visa applications.",
     hero: {
       heading: "Visa",
       accent: "Assistance",
@@ -223,8 +250,8 @@ export const serviceDetails: ServiceDetail[] = [
       text: "Understanding the visa requirements, gathering the necessary documents, and avoiding common mistakes are key steps to ensuring a successful visa application.",
       items: [
         {
-          title: "1000+ students helped",
-          text: "Around 1000+ students received our help with effortlessly obtaining their visas.",
+          title: "90% visa success rate",
+          text: "Above 90% of the student visa applications we have supported have been approved. Every decision rests with the immigration authorities.",
           icon: ICON.passport,
         },
         {
@@ -243,7 +270,7 @@ export const serviceDetails: ServiceDetail[] = [
     process: {
       heading: "How visa assistance works",
       paragraphs: [
-        "Studwise International provides a certified visa and helps over 1000+ students to obtain their student visas.",
+        "Studwise International has supported 550+ students through the student visa process, from choosing the right visa category to preparing for the interview.",
         "Understanding the timeline of the visa application process is also essential.",
       ],
       steps: [
@@ -620,7 +647,7 @@ export const serviceDetails: ServiceDetail[] = [
     hero: {
       heading: "Accommodation",
       accent: "Assistance",
-      lead: "We assist you in locating the best accommodation options under your budget with basic infrastructure facilities of the student’s choice.",
+      lead: "We assist you in locating the best accommodation options under your budget with basic infrastructure facilities of the student’s choice, and share guidance on part-time work while you study.",
       image: "/images/services/accommodation-room.jpg",
       alt: "A bright bedroom in calm blue tones",
       focus: "60% 60%",
@@ -631,6 +658,7 @@ export const serviceDetails: ServiceDetail[] = [
       paragraphs: [
         "Are you dreaming of studying abroad? One of the most crucial aspects of your international education journey is finding the perfect accommodation.",
         "Choosing the right study-abroad accommodation is a vital decision that can greatly impact your overall experience. By choosing the right accommodation, you can lay the foundation for a truly unforgettable international education journey.",
+        "We can also share information about part-time work opportunities while you study, so you understand the options and rules in your destination. Whether and how much you can work depends on the country, your visa and your institution.",
       ],
     },
     benefits: {
