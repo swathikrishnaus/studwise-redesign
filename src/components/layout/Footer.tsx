@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { aboutMenu, headerContact, serviceMenu, socialLinks } from "@/data/navigation";
-import { offices } from "@/data/offices";
 import { bookAppointmentHref } from "@/data/whyChooseUs";
 import FooterClock from "./FooterClock";
 import ScrollWords from "@/components/shared/ScrollWords";
@@ -65,7 +64,6 @@ const ext = (external?: boolean) => (external ? { target: "_blank", rel: "noopen
    -------------------------------------------------------------------------- */
 export default function Footer() {
   const year = new Date().getFullYear();
-  const hq = offices.find((o) => o.kind === "Head office");
 
   return (
     <footer className="site-footer relative z-10 overflow-hidden text-white bg-[#0b2a45] rounded-t-[2rem] lg:rounded-t-[3rem]">
@@ -125,21 +123,18 @@ export default function Footer() {
 
         {/* ---------------- Legal line ---------------- */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-8 sm:pb-10 text-xs leading-relaxed text-white/50">
-          <div>
-            <p>Studwise International · Study abroad education consultants, Malappuram, Kerala. Since 2019.</p>
-            {hq?.address && (
-              <p>
-                Head office: {hq.address}. Branches in{" "}
-                {offices
-                  .filter((o) => o !== hq)
-                  .map((o) => (o.comingSoon ? `${o.city} (coming soon)` : o.city))
-                  .join(" and ")}
-                .
-              </p>
-            )}
-          </div>
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span>© {year} All rights reserved Studwise Pvt Ltd</span>
+            <span className="text-white/25" aria-hidden="true">·</span>
+            <Link href="/privacy-policy" className="footer-link hover:text-white">
+              Privacy Policy
+            </Link>
+            <span className="text-white/25" aria-hidden="true">·</span>
+            <Link href="/terms-and-conditions" className="footer-link hover:text-white">
+              Terms and Conditions
+            </Link>
+          </p>
           <div className="md:text-right">
-            <p>© {year} All rights reserved Studwise Pvt Ltd</p>
             <p className="inline-flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
               Manjeri, Kerala · <FooterClock />

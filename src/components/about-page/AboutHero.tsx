@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import HeroHeader from "@/components/hero/HeroHeader";
-import CloudButton from "@/components/ui/CloudButton";
 import { aboutHero, aboutHighlights } from "@/data/aboutPage";
-import { StatCards, gutter } from "@/components/shared/PageKit";
+import { Icon, StatCards, gutter } from "@/components/shared/PageKit";
+import CloudButton from "@/components/ui/CloudButton";
 
 /* One icon per highlight: founded, experience, students, universities */
 const HIGHLIGHT_ICONS = [
@@ -13,95 +13,78 @@ const HIGHLIGHT_ICONS = [
   "M12 14l9-5-9-5-9 5 9 5zm0 0v6m-6.5-9.4V16c0 1.1 2.9 3 6.5 3s6.5-1.9 6.5-3v-5.4",
 ];
 
+/* Soft sky wash behind the copy, as on the service pages' hero */
+const HERO_WASH =
+  "radial-gradient(ellipse at 0% 0%, #bfe3f7 0%, rgba(191,227,247,0) 55%), radial-gradient(ellipse at 100% 0%, #d9effb 0%, rgba(217,239,251,0) 50%), radial-gradient(ellipse at 100% 100%, #c6e6f8 0%, rgba(198,230,248,0) 60%), radial-gradient(ellipse at 0% 100%, #dceefa 0%, rgba(220,238,250,0) 55%), #eef7fd";
+
 /* --------------------------------------------------------------------------
-   AboutHero — site header, then a rounded photo panel with the headline
-   and a quote card, and a row of highlight figures below it
+   AboutHero — site header, then a two-column first screen on the
+   homepage's grid (7/12 + 5/12, 8/12 + 4/12 from 2xl), styled like the
+   service pages' hero: breadcrumb, headline, intro and actions on a soft
+   sky panel on the left, the graduate photo on the right; the highlight
+   figures follow below the banner. The consultation form lives in the
+   closing "Start your journey" section.
    -------------------------------------------------------------------------- */
 export default function AboutHero() {
   return (
     <section aria-labelledby="about-hero-heading" className="relative bg-[#F1F5F9]">
-      <HeroHeader />
+      {/* Header and banner fill the first screen, as on the homepage */}
+      <div className="flex flex-col min-h-svh">
+        <HeroHeader />
 
-      <div className={`${gutter} pb-3 sm:pb-4 lg:pb-6`}>
-        <div className="relative isolate overflow-hidden rounded-3xl min-h-[36rem] lg:min-h-[calc(100svh-12.5rem)] flex flex-col justify-end text-white">
-          <Image
-            src="/images/about/study-abroad-hero.webp"
-            alt="Studwise counsellors working with students at the Manjeri office"
-            fill
-            priority
-            sizes="(min-width: 1728px) 1680px, 100vw"
-            className="about-hero-img -z-10 object-cover object-[60%_30%]"
-          />
-          {/* Deep-blue wash, heavier at the foot where the copy sits */}
-          <span
-            className="absolute inset-0 -z-10 bg-gradient-to-t from-[#042a46] via-[#043656]/70 to-[#043656]/10"
-            aria-hidden="true"
-          />
-          <span
-            className="absolute inset-0 -z-10 bg-gradient-to-r from-[#042a46]/70 via-transparent to-transparent"
-            aria-hidden="true"
-          />
+        <div className={`${gutter} w-full flex-1 flex flex-col pb-3 sm:pb-4 lg:pb-6`}>
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 xl:gap-6 items-stretch">
+            {/* ============== LEFT: copy ============== */}
+            <div
+              style={{ background: HERO_WASH }}
+              className="lg:col-span-7 xl:col-span-7 2xl:col-span-8 flex flex-col rounded-3xl lg:rounded-[2rem] ring-1 ring-slate-900/5 px-6 pt-6 pb-10 sm:px-10 sm:pt-8 sm:pb-14 lg:px-14 lg:pt-10 lg:pb-14 min-h-[30rem]"
+            >
 
-          {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="absolute top-5 left-6 sm:top-7 sm:left-9 lg:left-12 xl:left-14">
-            <ol className="flex items-center gap-2 rounded-full bg-white/12 backdrop-blur-md ring-1 ring-white/20 px-3.5 py-1.5 text-xs text-white/85">
-              <li>
-                <Link href="/" className="hover:text-white">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden="true" className="text-white/40">/</li>
-              <li aria-current="page" className="text-white">About Us</li>
-            </ol>
-          </nav>
-
-          <div className="relative grid lg:grid-cols-12 gap-8 lg:gap-6 items-end p-6 pt-24 sm:p-9 sm:pt-28 lg:p-12 xl:p-14">
-            <div className="lg:col-span-8">
-              <p className="flex items-center gap-3 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-sky-100/90">
-                {aboutHero.eyebrow}
-              </p>
-              <h1
-                id="about-hero-heading"
-                className="mt-5 font-normal tracking-[-0.04em] leading-[0.98] text-[clamp(2.3rem,8.4vw,3.4rem)] sm:text-[clamp(3rem,6.4vw,4.6rem)] lg:text-[min(4.7vw,8.2vh)] text-balance"
-              >
-                {aboutHero.titleLead}
-                <span className="block text-[#7fd6f7]">{aboutHero.titleRest}</span>
-              </h1>
-              <p className="mt-6 max-w-xl text-[15px] sm:text-lg leading-relaxed text-white/85">{aboutHero.text}</p>
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <CloudButton href="#consultation-panel" variant="white">
-                  Book Free Advisory
-                </CloudButton>
-                <a
-                  href="#who-we-are"
-                  className="inline-flex items-center gap-2 h-12 px-5 rounded-full ring-1 ring-white/35 text-sm text-white/90 hover:bg-white/10 hover:text-white transition-colors"
+              <div className="flex-1 flex flex-col justify-center">
+                <p className="text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">{aboutHero.eyebrow}</p>
+                <h1
+                  id="about-hero-heading"
+                  className="banner-title mt-4 text-slate-900"
                 >
-                  Our story
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m-6-6 6 6 6-6" />
-                  </svg>
-                </a>
+                  <span className="block text-balance">{aboutHero.titleLead}</span>
+                  <span className="block mt-1 text-balance text-[#0a7fb3]">{aboutHero.titleRest}</span>
+                </h1>
+                <p className="mt-6 sm:mt-8 max-w-[34rem] body-lead text-slate-600">{aboutHero.text}</p>
+                <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3">
+                  <CloudButton href="#who-we-are" className="mt-0">
+                    Our story
+                  </CloudButton>
+                  <Link
+                    href="/team"
+                    className="inline-flex items-center justify-center gap-2 min-h-12 px-6 rounded-full bg-white ring-1 ring-slate-900/5 text-[15px] text-slate-800 transition-colors hover:ring-[#009cd9] hover:text-[#0a7fb3]"
+                  >
+                    Meet the team
+                    <Icon d="M5 12h14m-6-6 6 6-6 6" className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
             </div>
 
-            {/* Quote card */}
-            <figure className="lg:col-span-4 lg:justify-self-end max-w-sm rounded-2xl bg-white/12 backdrop-blur-xl ring-1 ring-white/20 p-5 sm:p-6">
-              <svg className="w-8 h-8 text-[#7fd6f7]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M9.6 6C6.5 7.3 4.5 10 4.5 13.4V18h6v-6H7.6c.2-1.9 1.4-3.4 3.2-4.2L9.6 6Zm9 0c-3.1 1.3-5.1 4-5.1 7.4V18h6v-6h-2.9c.2-1.9 1.4-3.4 3.2-4.2L18.6 6Z" />
-              </svg>
-              <blockquote className="mt-3 text-lg sm:text-xl leading-snug tracking-tight">{aboutHero.quote}</blockquote>
-              <figcaption className="mt-4 flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-white/70">
-                <Image src="/images/studwise-wings-logo.png" alt="" width={28} height={28} className="rounded-full bg-[#009cd9] p-1" />
-                Team Studwise
-              </figcaption>
-            </figure>
+            {/* ============== RIGHT: photo ============== */}
+            <div className="relative lg:col-span-5 xl:col-span-5 2xl:col-span-4 min-h-[22rem] sm:min-h-[30rem] overflow-hidden rounded-3xl lg:rounded-[2rem] bg-slate-200">
+              <Image
+                src="/images/services/about-banner.jpg"
+                alt="A Studwise graduate in cap and gown holding her degree outside a university building"
+                fill
+                priority
+                sizes="(min-width: 1536px) 34vw, (min-width: 1024px) 42vw, 100vw"
+                className="about-hero-img object-cover object-[34%_30%]"
+              />
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Highlights */}
+      {/* Highlights, just below the banner */}
+      <div className={`${gutter} pb-3 sm:pb-4 lg:pb-6`}>
         <StatCards
           reveal
-          className="mt-3 sm:mt-4 grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3"
+          className="grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3"
           items={aboutHighlights.map((h, i) => ({ ...h, icon: HIGHLIGHT_ICONS[i] }))}
         />
       </div>

@@ -71,17 +71,22 @@ export function StatCards({
   size = "md",
   className = "",
   reveal = false,
+  cardClassName = "",
 }: {
   items: Stat[];
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "row";
   /** Grid columns and gaps for the list */
   className?: string;
   /** Stagger the cards in with the page's scroll reveal */
   reveal?: boolean;
+  /** Extra classes for each card (e.g. an outline on a tinted panel) */
+  cardClassName?: string;
 }) {
   const s = {
-    sm: { card: "px-3.5 pb-3.5 sm:px-4 sm:pb-4", tile: "w-7 h-7", icon: "w-4 h-4", value: "text-xl sm:text-2xl", label: "text-[11px] sm:text-xs", gap: "pt-10 sm:pt-11" },
-    md: { card: "px-4 pb-4 sm:px-5 sm:pb-5", tile: "w-8 h-8 sm:w-9 sm:h-9", icon: "w-4 h-4 sm:w-[18px] sm:h-[18px]", value: "text-2xl sm:text-[2rem]", label: "text-xs sm:text-[13px]", gap: "pt-10 sm:pt-12" },
+    sm: { card: "px-3.5 pb-3.5 sm:px-4 sm:pb-4", tile: "w-7 h-7", icon: "w-4 h-4", value: "text-[1.75rem] sm:text-[2.1rem]", label: "text-[11px] sm:text-xs", gap: "pt-10 sm:pt-12" },
+    md: { card: "px-4 pb-4 sm:px-5 sm:pb-5 lg:px-6 lg:pb-6", tile: "w-8 h-8 sm:w-9 sm:h-9", icon: "w-4 h-4 sm:w-[18px] sm:h-[18px]", value: "text-[2.4rem] sm:text-5xl lg:text-[3.5rem]", label: "text-xs sm:text-sm", gap: "pt-12 sm:pt-16" },
+    // Compact row for pinned scenes, which must fit short screens
+    row: { card: "px-3 pb-3 sm:px-5 sm:pb-5", tile: "w-7 h-7 sm:w-8 sm:h-8", icon: "w-4 h-4", value: "text-[1.3rem] sm:text-4xl lg:text-[min(2.6rem,5.2vh)]", label: "text-[11px] sm:text-[13px]", gap: "pt-10 sm:pt-12 lg:pt-[min(3.5rem,6vh)]" },
     lg: { card: "px-6 pb-6 sm:px-7 sm:pb-7", tile: "w-10 h-10 sm:w-11 sm:h-11", icon: "w-5 h-5", value: "text-5xl sm:text-6xl", label: "text-sm sm:text-base", gap: "pt-16 sm:pt-24" },
   }[size];
 
@@ -93,10 +98,10 @@ export function StatCards({
           <div
             key={item.label}
             {...(reveal ? { "data-reveal": true, style: { "--d": `${i * 0.08}s` } as CSSProperties } : {})}
-            className={`relative flex flex-col-reverse rounded-2xl ${tone.bg} ${s.card} ${s.gap}`}
+            className={`relative flex flex-col-reverse rounded-2xl ${tone.bg} ${s.card} ${s.gap} ${cardClassName}`}
           >
-            <dt className={`mt-1.5 ${s.label} text-slate-600 leading-tight`}>{item.label}</dt>
-            <dd className={`${s.value} tracking-[-0.03em] leading-none text-slate-900 tabular-nums`}>
+            <dt className={`mt-2 ${s.label} text-slate-600 leading-tight`}>{item.label}</dt>
+            <dd className={`${s.value} tracking-[-0.03em] leading-none text-slate-900 tabular-nums whitespace-nowrap`}>
               <span
                 className={`absolute top-3 right-3 sm:top-4 sm:right-4 grid place-items-center ${s.tile} rounded-lg bg-white/80 ${tone.ink}`}
                 aria-hidden="true"

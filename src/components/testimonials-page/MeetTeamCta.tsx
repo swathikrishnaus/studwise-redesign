@@ -22,7 +22,7 @@ export default function MeetTeamCta() {
           <h2 id="meet-team-heading" className="text-2xl sm:text-[1.75rem] tracking-[-0.03em] leading-tight text-slate-900">
             Meet the People Behind Studwise
           </h2>
-          <p className="mt-1.5 text-[15px] text-slate-600">Get to know the team supporting students throughout their journey.</p>
+          <p className="mt-1.5 body-text text-slate-600">Get to know the team supporting students throughout their journey.</p>
         </div>
       </div>
       <CloudButton href="/team" className="self-start md:self-auto shrink-0">

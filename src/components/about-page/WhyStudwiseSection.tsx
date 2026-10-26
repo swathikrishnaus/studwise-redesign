@@ -18,7 +18,7 @@ export default function WhyStudwiseSection() {
             </div>
             <ScrollWords
               text={whyChoose.text}
-              className="lg:col-span-9 tracking-[-0.02em] leading-[1.2] text-slate-900 text-[clamp(1.35rem,5.4vw,1.9rem)] sm:text-[clamp(1.7rem,3.4vw,2.4rem)] lg:text-[min(2.5vw,2.6rem)]"
+              className="lead-statement lg:col-span-9 text-slate-900"
             />
           </div>
 

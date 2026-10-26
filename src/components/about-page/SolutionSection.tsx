@@ -20,12 +20,12 @@ export default function SolutionSection() {
               <Eyebrow>Our Approach</Eyebrow>
               <h2
                 id="solution-heading"
-                className="mt-5 font-normal tracking-[-0.04em] leading-[1.02] text-slate-900 text-[clamp(2rem,7vw,2.8rem)] sm:text-[clamp(2.4rem,5vw,3.6rem)] text-balance"
+                className="section-title mt-5 text-slate-900"
               >
                 A Comprehensive Solution <span className="text-[#0a7fb3]">for Your Dreams</span>
               </h2>
             </div>
-            <ScrollWords text={solution.text} className="mt-6 max-w-xl text-[15px] sm:text-base leading-relaxed text-slate-600" />
+            <ScrollWords text={solution.text} className="mt-6 max-w-xl body-text text-slate-600" />
 
             {/* Founder */}
             <figure
@@ -33,7 +33,7 @@ export default function SolutionSection() {
               style={{ "--d": "0.16s" } as CSSProperties}
               className="mt-8 max-w-xl rounded-2xl bg-white ring-1 ring-slate-900/5 p-5 sm:p-6"
             >
-              <blockquote className="text-[15px] sm:text-base leading-relaxed text-slate-700">
+              <blockquote className="body-text text-slate-700">
                 All of this has been made possible by{" "}
                 <strong className="font-medium text-slate-900">{solution.founder}</strong>, the company&apos;s{" "}
                 <em>Founder</em> and <em>CEO</em>, and his visionary leadership.

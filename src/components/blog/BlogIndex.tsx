@@ -7,6 +7,7 @@ import Pagination, { usePageParam, writePage } from "@/components/shared/Paginat
 import { TOPICS, formatPostDate } from "@/data/blogShared";
 import type { PostSummary, Topic } from "@/data/blogShared";
 import PostCover from "./PostCover";
+import CloudButton from "@/components/ui/CloudButton";
 
 /* Articles per page: three rows of the three-column desktop grid */
 const PAGE_SIZE = 9;
@@ -43,7 +44,7 @@ function PostCard({ post }: { post: PostSummary }) {
             {post.title}
           </Link>
         </h3>
-        <p className="mt-2 text-[15px] leading-relaxed text-slate-600 line-clamp-2">{post.excerpt}</p>
+        <p className="mt-2 body-text text-slate-600 line-clamp-2">{post.excerpt}</p>
         <span className="mt-4 inline-flex items-center gap-2 text-sm text-slate-900" aria-hidden="true">
           Read article
           <Icon d={ARROW} className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -190,13 +191,9 @@ export default function BlogIndex({ posts }: { posts: PostSummary[] }) {
         <div className="mt-10 rounded-3xl bg-white ring-1 ring-slate-900/5 px-6 py-16 text-center">
           <p className="text-xl tracking-tight text-slate-900">No articles match “{query}”.</p>
           <p className="mt-2 text-slate-500">Try another word, or browse every article.</p>
-          <button
-            type="button"
-            onClick={reset}
-            className="mt-6 inline-flex h-11 items-center rounded-full bg-slate-900 px-5 text-sm text-white hover:bg-[#009cd9]"
-          >
+          <CloudButton onClick={reset} className="mt-6">
             Show all articles
-          </button>
+          </CloudButton>
         </div>
       ) : (
         <div key={`${topic}-${q}-${current}`}>

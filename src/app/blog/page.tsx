@@ -23,13 +23,13 @@ export default function BlogPage() {
           <div className="grid lg:grid-cols-12 gap-8 items-end">
             <div className="lg:col-span-8">
               <Eyebrow>The Studwise Journal</Eyebrow>
-              <h1 className="mt-6 font-normal tracking-[-0.05em] leading-[0.92] text-slate-900 text-[clamp(3rem,13vw,4.5rem)] sm:text-[clamp(4.5rem,10vw,7rem)] lg:text-[min(8vw,8.5rem)]">
+              <h1 className="banner-title mt-6 text-slate-900">
                 Study abroad,
                 <span className="block text-[#0a7fb3]">explained.</span>
               </h1>
             </div>
             <div className="lg:col-span-4 lg:pb-3">
-              <p className="text-[15px] sm:text-lg leading-relaxed text-slate-600">
+              <p className="body-lead text-slate-600">
                 Destination guides, visa updates and admissions advice from the Studwise counselling team.
               </p>
             </div>

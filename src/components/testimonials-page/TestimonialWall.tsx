@@ -32,7 +32,7 @@ function StoryCard({ t, id: cardId }: { t: Testimonial; id?: string }) {
 
       <blockquote
         id={id}
-        className={`mt-5 text-base sm:text-[1.0625rem] leading-[1.6] tracking-[-0.01em] text-slate-800 ${long && !open ? "line-clamp-7" : ""}`}
+        className={`mt-5 body-text tracking-[-0.01em] text-slate-800 ${long && !open ? "line-clamp-7" : ""}`}
       >
         {t.quote}
       </blockquote>
@@ -128,7 +128,7 @@ export default function TestimonialWall() {
       <Eyebrow>Student stories</Eyebrow>
       <h2
         id="stories-heading"
-        className="mt-5 font-normal tracking-[-0.04em] leading-[1.02] text-slate-900 text-[clamp(2rem,7vw,2.8rem)] sm:text-[clamp(2.4rem,5vw,3.6rem)]"
+        className="section-title mt-5 text-slate-900"
       >
         In their own <span className="text-[#0a7fb3]">words.</span>
       </h2>

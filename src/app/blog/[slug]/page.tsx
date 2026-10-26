@@ -66,7 +66,7 @@ export default async function ArticlePage(props: PageProps<"/blog/[slug]">) {
             <h1 className="mt-6 max-w-5xl font-normal tracking-[-0.045em] leading-[1.02] text-slate-900 text-[clamp(2.3rem,9vw,3.2rem)] sm:text-[clamp(3rem,6.4vw,4.8rem)] text-balance">
               {post.title}
             </h1>
-            {post.dek && <p className="mt-5 max-w-3xl text-lg sm:text-xl leading-relaxed text-slate-600">{post.dek}</p>}
+            {post.dek && <p className="mt-5 max-w-3xl body-lead text-slate-600">{post.dek}</p>}
             <div className="mt-8 flex flex-wrap items-center justify-between gap-5">
               <div className="flex items-center gap-3">
                 <span className="grid place-items-center w-11 h-11 rounded-full bg-sky-50 text-[#0a7fb3] ring-1 ring-sky-100 text-sm">SW</span>
@@ -111,7 +111,7 @@ export default async function ArticlePage(props: PageProps<"/blog/[slug]">) {
                 Free advisory
               </span>
               <p className="mt-4 text-xl leading-snug tracking-tight">Planning to study {destination}?</p>
-              <p className="mt-2 text-sm leading-relaxed text-white/70">
+              <p className="mt-2 text-[15px] sm:text-base leading-relaxed text-white/70">
                 Get a free one-to-one session with a Studwise counsellor about courses, universities and visas.
               </p>
               <CloudButton href={bookAppointmentHref} variant="white" size="sm" className="mt-6" target="_blank" rel="noopener noreferrer">

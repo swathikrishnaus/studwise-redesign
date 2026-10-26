@@ -1,10 +1,11 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import ConsultationCard from "@/components/hero/ConsultationCard";
+import AdvisorForm from "@/components/shared/AdvisorForm";
 import SoftCloud, { CLOUD_PUFF } from "@/components/hero/SoftCloud";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { aboutCta, centres } from "@/data/aboutPage";
 import { headerContact, socialLinks } from "@/data/navigation";
+import { SocialBadge } from "@/components/ui/SocialLinks";
 import { Eyebrow, gutter } from "@/components/shared/PageKit";
 
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
@@ -30,25 +31,14 @@ export default function AboutCtaSection() {
               <div>
                 <div data-reveal>
                   <Eyebrow tone="light">Start your journey</Eyebrow>
-                  <h2
-                    id="about-cta-heading"
-                    className="mt-5 font-normal tracking-[-0.04em] leading-[1] text-[clamp(2.1rem,8vw,3rem)] sm:text-[clamp(2.6rem,5.6vw,4rem)] lg:text-[min(4.2vw,4.4rem)] text-balance"
-                  >
+                  <h2 id="about-cta-heading" className="section-title mt-5">
                     {aboutCta.title}
                   </h2>
                 </div>
-                <p
-                  data-reveal
-                  style={{ "--d": "0.08s" } as CSSProperties}
-                  className="mt-6 max-w-lg text-[15px] sm:text-lg leading-relaxed text-white/85"
-                >
+                <p data-reveal style={{ "--d": "0.08s" } as CSSProperties} className="mt-6 max-w-lg body-lead text-white/85">
                   {aboutCta.text}
                 </p>
-                <div
-                  data-reveal
-                  style={{ "--d": "0.16s" } as CSSProperties}
-                  className="mt-8 flex flex-wrap items-center gap-3"
-                >
+                <div data-reveal style={{ "--d": "0.16s" } as CSSProperties} className="mt-8 flex flex-wrap items-center gap-3">
                   <WhatsAppButton>Let&apos;s get started</WhatsAppButton>
                   <Link
                     href={aboutCta.moreInfoHref}
@@ -71,11 +61,9 @@ export default function AboutCtaSection() {
                           href={sl.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 h-10 pl-3 pr-4 rounded-full bg-white/10 ring-1 ring-white/30 text-sm text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-[#0a7fb3]"
+                          className="inline-flex items-center gap-2 h-10 pl-1.5 pr-4 rounded-full bg-white/10 ring-1 ring-white/30 text-sm text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-[#0a7fb3]"
                         >
-                          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path fillRule="evenodd" d={sl.icon} />
-                          </svg>
+                          <SocialBadge s={sl} />
                           {sl.label}
                         </a>
                       </li>
@@ -120,7 +108,7 @@ export default function AboutCtaSection() {
               style={{ "--d": "0.2s" } as CSSProperties}
               className="lg:col-span-6 xl:col-span-5 flex text-slate-900 w-full max-w-md mx-auto lg:max-w-none"
             >
-              <ConsultationCard />
+              <AdvisorForm id="consultation-panel" />
             </div>
           </div>
         </div>

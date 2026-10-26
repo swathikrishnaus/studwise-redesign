@@ -11,7 +11,7 @@ export default function RelatedPosts({ posts }: { posts: Post[] }) {
   return (
     <section aria-labelledby="related-heading">
       <div className="flex items-end justify-between gap-6">
-        <h2 id="related-heading" className="text-[clamp(1.9rem,6vw,2.6rem)] tracking-[-0.04em] leading-none text-slate-900">
+        <h2 id="related-heading" className="section-title text-slate-900">
           Keep reading
         </h2>
         <Link href="/blog" className="hidden sm:inline-flex items-center gap-2 text-sm text-slate-700 hover:text-[#0a7fb3]">

@@ -11,7 +11,10 @@ const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
    -------------------------------------------------------------------------- */
 export default function BlogCta() {
   return (
-    <section aria-labelledby="blog-cta-heading" className="relative isolate overflow-hidden rounded-3xl bg-gradient-to-br from-[#0aa6e3] via-[#009cd9] to-[#0a7fb3] text-white px-6 py-12 sm:px-10 sm:py-16 lg:px-14 lg:py-20">
+    <section
+      aria-labelledby="blog-cta-heading"
+      className="relative isolate overflow-hidden rounded-3xl bg-gradient-to-br from-[#0aa6e3] via-[#009cd9] to-[#0a7fb3] text-white px-6 py-12 sm:px-10 sm:py-16 lg:px-14 lg:py-20"
+    >
       <div className="absolute -top-32 -left-24 -z-10 w-[520px] h-[520px] rounded-full bg-white/20 blur-[110px]" aria-hidden="true" />
       <div className="absolute -right-16 -bottom-10 -z-10 w-[380px] sm:w-[560px] opacity-30" aria-hidden="true">
         <SoftCloud shape={CLOUD_PUFF} seed={23} className="w-full h-auto" />
@@ -19,13 +22,10 @@ export default function BlogCta() {
       <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
         <div className="lg:col-span-7">
           <Eyebrow tone="light">Still have questions?</Eyebrow>
-          <h2
-            id="blog-cta-heading"
-            className="mt-5 font-normal tracking-[-0.04em] leading-[1] text-[clamp(2.1rem,8vw,3rem)] sm:text-[clamp(2.6rem,5.2vw,4rem)] text-balance"
-          >
+          <h2 id="blog-cta-heading" className="section-title mt-5">
             Ask a counsellor, not a search engine.
           </h2>
-          <p className="mt-5 max-w-lg text-[15px] sm:text-lg leading-relaxed text-white/85">
+          <p className="mt-5 max-w-lg body-lead text-white/85">
             Every student&apos;s route is different. Tell us your plans and a Studwise advisor will guide you, free.
           </p>
         </div>

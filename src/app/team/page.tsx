@@ -24,14 +24,14 @@ export default function TeamPage() {
           <div className="grid lg:grid-cols-12 gap-8 items-end">
             <div className="lg:col-span-8">
               <Eyebrow>The people behind Studwise</Eyebrow>
-              <h1 className="mt-6 font-normal tracking-[-0.045em] leading-[0.98] text-slate-900 text-[clamp(2.4rem,10vw,3.4rem)] sm:text-[clamp(3.2rem,7vw,5rem)] text-balance">
+              <h1 className="banner-title mt-6 text-slate-900">
                 Meet the team that <span className="text-[#0a7fb3]">supports your journey</span>
               </h1>
             </div>
             <div className="lg:col-span-4 lg:pb-2">
-              <p className="text-[15px] sm:text-lg leading-relaxed text-slate-600">
-                Get to know the people who help students navigate their study-abroad journey, from applications and guidance
-                to the next steps toward their goals.
+              <p className="body-lead text-slate-600">
+                Get to know the people who help students navigate their study-abroad journey, from applications and guidance to the next
+                steps toward their goals.
               </p>
             </div>
           </div>
@@ -64,10 +64,10 @@ export default function TeamPage() {
           <div className="grid lg:grid-cols-12 gap-8 items-end">
             <div className="lg:col-span-7">
               <Eyebrow tone="light">Talk to us</Eyebrow>
-              <h2 id="team-cta-heading" className="mt-5 font-normal tracking-[-0.04em] leading-[1] text-[clamp(2rem,7.5vw,2.8rem)] sm:text-[clamp(2.4rem,4.6vw,3.6rem)] text-balance">
+              <h2 id="team-cta-heading" className="section-title mt-5">
                 Ready to plan your next step?
               </h2>
-              <p className="mt-5 max-w-lg text-[15px] sm:text-lg leading-relaxed text-white/85">
+              <p className="mt-5 max-w-lg body-lead text-white/85">
                 Book a free advisory session and a Studwise counsellor will guide you through your options.
               </p>
             </div>

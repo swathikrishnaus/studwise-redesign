@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { Eyebrow, Icon } from "@/components/shared/PageKit";
+import FlightLane from "@/components/flight/FlightLane";
 import { featuredTestimonials } from "@/data/testimonials";
 import type { Testimonial } from "@/data/testimonials";
 
@@ -52,13 +53,13 @@ export default function FeaturedStories() {
           <Eyebrow>Featured stories</Eyebrow>
           <h2
             id="featured-heading"
-            className="mt-5 font-normal tracking-[-0.04em] leading-[1.02] text-slate-900 text-[clamp(2rem,7vw,2.8rem)] sm:text-[clamp(2.4rem,5vw,3.6rem)]"
+            className="section-title mt-5 text-slate-900"
           >
             Now studying <span className="text-[#0a7fb3]">in the UK.</span>
           </h2>
         </div>
         <div className="flex items-end gap-6">
-          <p className="max-w-sm text-[15px] leading-relaxed text-slate-600">
+          <p className="max-w-sm body-text text-slate-600">
             Two of our students on their journey with Studwise, in their own words.
           </p>
           <div className="hidden sm:flex shrink-0 gap-2">
@@ -78,12 +79,23 @@ export default function FeaturedStories() {
         </div>
       </div>
 
+      {/* From Manjeri to each featured student's university */}
+      <FlightLane
+        label="From Studwise to the UK"
+        className="mt-8 sm:mt-10 pb-6"
+        gridClassName={featuredTestimonials.length >= 2 ? "grid-cols-3 gap-4 sm:gap-5" : "grid-cols-2 gap-4 sm:gap-5"}
+        stops={[
+          { label: "Studwise, Manjeri", sub: "Where it began" },
+          ...featuredTestimonials.slice(0, 2).map((t) => ({ label: t.university.name, sub: t.name })),
+        ]}
+      />
+
       <div
         ref={rowRef}
         onScroll={onScroll}
         aria-label="Featured stories"
         data-reveal
-        className="mt-10 sm:mt-14 -mx-2 sm:-mx-5 lg:-mx-8 px-2 sm:px-5 lg:px-8 flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-px-2 sm:scroll-px-5 lg:scroll-px-8 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="mt-4 sm:mt-6 -mx-2 sm:-mx-5 lg:-mx-8 px-2 sm:px-5 lg:px-8 flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-px-2 sm:scroll-px-5 lg:scroll-px-8 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {featuredTestimonials.map((t, i) => {
           const last = i === featuredTestimonials.length - 1;
@@ -126,7 +138,7 @@ export default function FeaturedStories() {
                   <span className="flex min-w-0 items-center gap-3.5">
                     <span className="min-w-0">
                       <span className="block text-lg sm:text-xl tracking-[-0.02em] text-slate-900">{t.name}</span>
-                      <span className="block text-[13px] sm:text-sm text-slate-500">{t.course}</span>
+                      <span className="block text-sm sm:text-[15px] text-slate-500">{t.course}</span>
                     </span>
                   </span>
                   <span className="flex items-center gap-3 sm:ml-auto">
@@ -141,7 +153,7 @@ export default function FeaturedStories() {
                         />
                       </span>
                     )}
-                    <span className="text-[13px] sm:text-sm leading-snug text-slate-700 max-w-[11rem]">
+                    <span className="text-sm sm:text-[15px] leading-snug text-slate-700 max-w-[11rem]">
                       <span className="sr-only">University: </span>
                       {t.university.name}
                     </span>

@@ -1,13 +1,25 @@
 import { socialLinks } from "@/data/navigation";
 
+type Social = (typeof socialLinks)[number];
+
+/** A social profile's glyph in white on its own brand colour */
+export function SocialBadge({ s, className = "w-6 h-6", glyph = "w-3.5 h-3.5" }: { s: Social; className?: string; glyph?: string }) {
+  return (
+    <span className={`grid place-items-center shrink-0 rounded-full text-white ${s.brand} ${className}`} aria-hidden="true">
+      <svg className={glyph} viewBox="0 0 24 24" fill="currentColor">
+        <path fillRule="evenodd" d={s.icon} />
+      </svg>
+    </span>
+  );
+}
+
 /* --------------------------------------------------------------------------
-   SocialLinks — round icon links to Studwise's social profiles
+   SocialLinks — round links to Studwise's social profiles, each in its
+   own brand colour (Instagram's gradient, WhatsApp green). `tone` only
+   sets the ring, to sit on a dark or a light background.
    -------------------------------------------------------------------------- */
 export default function SocialLinks({ tone = "dark", className = "" }: { tone?: "dark" | "light"; className?: string }) {
-  const style =
-    tone === "dark"
-      ? "bg-white/[0.08] text-white ring-white/15 hover:bg-white hover:text-[#0b2a45]"
-      : "bg-white text-[#0a7fb3] ring-slate-200 hover:bg-[#009cd9] hover:text-white hover:ring-[#009cd9]";
+  const ring = tone === "dark" ? "ring-white/25" : "ring-white";
   return (
     <ul className={`flex items-center gap-2.5 ${className}`} aria-label="Studwise on social media">
       {socialLinks.map((s) => (
@@ -17,11 +29,9 @@ export default function SocialLinks({ tone = "dark", className = "" }: { tone?: 
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Studwise on ${s.label}`}
-            className={`grid place-items-center w-10 h-10 rounded-full ring-1 transition-all duration-300 hover:-translate-y-0.5 ${style}`}
+            className={`grid place-items-center w-10 h-10 rounded-full ring-2 ${ring} shadow-[0_8px_18px_-10px_rgba(0,0,0,0.45)] transition-transform duration-300 hover:-translate-y-0.5 hover:scale-105`}
           >
-            <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path fillRule="evenodd" d={s.icon} />
-            </svg>
+            <SocialBadge s={s} className="w-full h-full" glyph="w-[18px] h-[18px]" />
           </a>
         </li>
       ))}

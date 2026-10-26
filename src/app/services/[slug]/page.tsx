@@ -7,7 +7,8 @@ import HeroHeader from "@/components/hero/HeroHeader";
 import ConsultationDialog from "@/components/shared/ConsultationDialog";
 import RevealRoot from "@/components/shared/RevealRoot";
 import ScrollWords from "@/components/shared/ScrollWords";
-import { Icon, gutter, toneAt } from "@/components/shared/PageKit";
+import FlightLane from "@/components/flight/FlightLane";
+import { Eyebrow, Icon, gutter, toneAt } from "@/components/shared/PageKit";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { serviceMenu } from "@/data/navigation";
 import { getServiceDetail, serviceDetails } from "@/data/serviceDetails";
@@ -38,7 +39,7 @@ const ARROW = "M5 12h14m-6-6 6 6-6 6";
 /* Benefit cards sit in one row when they fit; longer lists wrap in threes */
 const BENEFIT_COLS: Record<number, string> = { 2: "", 3: "lg:grid-cols-3", 4: "xl:grid-cols-4" };
 
-const h2 = "font-normal tracking-[-0.04em] leading-[1.02] text-slate-900 text-[clamp(2rem,7vw,2.8rem)] sm:text-[clamp(2.4rem,5vw,3.6rem)] text-balance";
+const h2 = "section-title text-slate-900";
 
 export default async function ServiceDetailPage(props: PageProps<"/services/[slug]">) {
   const { slug } = await props.params;
@@ -92,11 +93,11 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
               <div className="flex-1 flex flex-col justify-center pt-12 lg:pt-8">
                 <h1
                   id="service-heading"
-                  className="font-normal tracking-[-0.045em] leading-[0.98] text-slate-900 text-[clamp(2.5rem,10vw,3.4rem)] sm:text-[clamp(3.4rem,7vw,4.8rem)] lg:text-[min(4.9vw,5.6rem)]"
+                  className="banner-title text-slate-900"
                 >
                   <span className="block">{service.hero.heading}</span> <span className="text-[#0a7fb3]">{service.hero.accent}</span>
                 </h1>
-                <p className="mt-6 sm:mt-8 max-w-[34rem] text-base sm:text-lg leading-relaxed text-slate-600">{service.hero.lead}</p>
+                <p className="mt-6 sm:mt-8 max-w-[34rem] body-lead text-slate-600">{service.hero.lead}</p>
                 <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3">
                   <WhatsAppButton size="md">{service.cta.button}</WhatsAppButton>
                   <a
@@ -124,28 +125,26 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
           </section>
 
           {/* ---------------- Overview ---------------- */}
+          {/* The live page's opening sentence reads as an editorial statement
+              (not a section title), with its paragraphs in columns below */}
           <section aria-labelledby="overview-heading" className="px-3 sm:px-6 lg:px-14 py-16 sm:py-20 lg:py-24">
-            <div className="grid lg:grid-cols-12 gap-x-12 gap-y-8 items-end">
-              <div data-reveal className="lg:col-span-7">
-                <h2
-                  id="overview-heading"
-                  className="font-normal tracking-[-0.035em] leading-[1.1] text-slate-900 text-[clamp(1.75rem,6.6vw,2.3rem)] sm:text-[clamp(2.2rem,4.4vw,2.9rem)] lg:text-[min(3vw,3.2rem)] text-balance"
+            <div data-reveal className="max-w-5xl">
+              <Eyebrow>Overview</Eyebrow>
+              <h2 id="overview-heading" className="lead-statement mt-5 text-slate-900 text-balance">
+                {service.overview.heading} <span className="text-[#0a7fb3]">{service.overview.accent}</span>
+              </h2>
+            </div>
+            <div className="mt-10 sm:mt-12 pt-8 sm:pt-10 border-t border-slate-200 grid md:grid-cols-2 gap-x-12 gap-y-4">
+              {service.overview.paragraphs.map((p, i) => (
+                <p
+                  key={i}
+                  data-reveal
+                  style={{ "--d": `${(i + 1) * 0.06}s` } as CSSProperties}
+                  className="body-text text-slate-600"
                 >
-                  {service.overview.heading} <span className="text-[#0a7fb3]">{service.overview.accent}</span>
-                </h2>
-              </div>
-              <div className="lg:col-span-5 space-y-4">
-                {service.overview.paragraphs.map((p, i) => (
-                  <p
-                    key={i}
-                    data-reveal
-                    style={{ "--d": `${(i + 1) * 0.06}s` } as CSSProperties}
-                    className="text-[15px] sm:text-base leading-[1.7] text-slate-600"
-                  >
-                    {p}
-                  </p>
-                ))}
-              </div>
+                  {p}
+                </p>
+              ))}
             </div>
           </section>
 
@@ -155,7 +154,7 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
               <h2 id="benefits-heading" data-reveal className={`lg:col-span-7 ${h2}`}>
                 {service.benefits.heading}
               </h2>
-              <p data-reveal className="lg:col-span-5 text-[15px] sm:text-lg leading-relaxed text-slate-600">
+              <p data-reveal className="lg:col-span-5 body-lead text-slate-600">
                 {service.benefits.text}
               </p>
             </div>
@@ -174,7 +173,7 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
                       <Icon d={item.icon} />
                     </span>
                     <h3 className="text-[1.4rem] sm:text-[1.6rem] leading-[1.1] tracking-[-0.03em] text-slate-900 text-balance">{item.title}</h3>
-                    <p className="mt-3 text-[15px] leading-relaxed text-slate-700">{item.text}</p>
+                    <p className="mt-3 body-text text-slate-700">{item.text}</p>
                   </li>
                 );
               })}
@@ -189,7 +188,7 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
             <ScrollWords
               as="blockquote"
               text={service.quote}
-              className="mt-8 max-w-5xl tracking-[-0.03em] leading-[1.18] text-[clamp(1.6rem,6vw,2.2rem)] sm:text-[clamp(2rem,4vw,3rem)] lg:text-[min(3.4vw,3.6rem)]"
+              className="lead-statement mt-8 max-w-5xl"
             />
           </section>
 
@@ -200,12 +199,12 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
               <h2
                 id="process-heading"
                 data-reveal
-                className="xl:col-span-6 font-normal tracking-[-0.045em] leading-[0.98] text-slate-900 text-[clamp(2.2rem,8vw,3rem)] sm:text-[clamp(2.8rem,6vw,4rem)] lg:text-[min(5.6vw,5.2rem)] max-w-[11ch]"
+                className="section-title xl:col-span-6 text-slate-900 max-w-[14ch]"
               >
                 {service.process.heading}
               </h2>
               {service.process.paragraphs.length > 0 && (
-                <div className="xl:col-span-6 max-w-[52rem] space-y-4 text-[15px] sm:text-[1.0625rem] leading-[1.7] text-slate-600">
+                <div className="xl:col-span-6 max-w-[52rem] space-y-4 body-text text-slate-600">
                   {service.process.paragraphs.map((p, i) => (
                     <p key={i} data-reveal style={{ "--d": `${i * 0.06}s` } as CSSProperties}>
                       {p}
@@ -215,7 +214,16 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
               )}
             </div>
 
-            <ol className={`mt-12 sm:mt-16 grid gap-2.5 sm:gap-3 ${service.process.steps.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>
+            {/* The plane flies the steps in order */}
+            <FlightLane
+              label="Process steps, in order"
+              showLabels={false}
+              className="mt-8 sm:mt-12 pb-6"
+              gridClassName={`gap-2.5 sm:gap-3 ${service.process.steps.length >= 3 ? "grid-cols-3" : "grid-cols-2"}`}
+              stops={service.process.steps.map((step) => ({ label: step.title }))}
+            />
+
+            <ol className={`grid gap-2.5 sm:gap-3 ${service.process.steps.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>
               {service.process.steps.map((step, i) => (
                 <li
                   key={step.title}
@@ -224,7 +232,7 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
                   className="flex flex-col rounded-2xl px-6 py-7 sm:px-8 sm:py-8 bg-white ring-1 ring-slate-900/5"
                 >
                   <h3 className="text-[1.25rem] sm:text-[1.5rem] leading-[1.15] tracking-[-0.03em] text-slate-900">{step.title}</h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-slate-600">{step.text}</p>
+                  <p className="mt-3 body-text text-slate-600">{step.text}</p>
                 </li>
               ))}
             </ol>
@@ -259,7 +267,7 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
                   </div>
                   <div className="flex flex-1 flex-col p-6 sm:p-7">
                     <h3 className="text-xl sm:text-[1.4rem] leading-snug tracking-[-0.02em] text-slate-900">{r.label}</h3>
-                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-slate-600 line-clamp-3">{r.text}</p>
+                    <p className="mt-3 flex-1 body-text text-slate-600 line-clamp-3">{r.text}</p>
                     <Link
                       href={r.href}
                       className="mt-6 inline-flex items-center gap-2 text-[15px] text-[#0a7fb3] after:absolute after:inset-0 after:rounded-2xl"
@@ -313,12 +321,12 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
                 <h2
                   id="service-cta-heading"
                   data-reveal
-                  className="lg:col-span-7 font-normal tracking-[-0.04em] leading-[1] text-[clamp(2.3rem,9vw,3.2rem)] sm:text-[clamp(3rem,6vw,4.4rem)] lg:text-[min(5vw,5.4rem)] text-balance"
+                  className="section-title lg:col-span-7"
                 >
                   {service.cta.heading}
                 </h2>
                 <div data-reveal style={{ "--d": "0.08s" } as CSSProperties} className="lg:col-span-5">
-                  <p className="max-w-[30rem] text-[15px] sm:text-lg leading-relaxed text-white/90">{service.cta.text}</p>
+                  <p className="max-w-[30rem] body-lead text-white/90">{service.cta.text}</p>
                   <div className="mt-7 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3">
                     <WhatsAppButton size="md">{service.cta.button}</WhatsAppButton>
                     <ConsultationDialog className="inline-flex items-center justify-center gap-2 min-h-12 px-6 rounded-full bg-white/10 backdrop-blur-md ring-1 ring-white/40 text-[15px] text-white transition-colors hover:bg-white hover:text-[#0a7fb3]">

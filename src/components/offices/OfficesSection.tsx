@@ -76,7 +76,7 @@ export default function OfficesSection() {
             <h2
               id="offices-heading"
               data-heading
-              className="font-normal tracking-[-0.04em] leading-[0.95] text-slate-900 text-[clamp(2.8rem,11vw,8.5rem)]"
+              className="section-title text-slate-900"
             >
               <span className="svc-word-mask">
                 <span className="svc-word" style={{ "--i": 0 } as CSSProperties}>Visit</span>
@@ -153,11 +153,11 @@ export default function OfficesSection() {
                     <div className="overflow-hidden" inert={!open}>
                       <div className="pb-7 pl-[2.5rem] sm:pl-[3.5rem] space-y-4">
                         {office.address ? (
-                          <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-md">
+                          <p className="body-lead text-slate-600 max-w-md">
                             {office.address}
                           </p>
                         ) : (
-                          <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-md">
+                          <p className="body-lead text-slate-600 max-w-md">
                             Our Calicut branch is opening soon.
                           </p>
                         )}
@@ -286,7 +286,10 @@ function OfficeDrawer({ index, onClose }: { index: number | null; onClose: () =>
   }, [open, onClose]);
 
   return (
-    <div className={`lg:hidden fixed inset-0 z-[70] ${open ? "" : "pointer-events-none"}`} aria-hidden={!open}>
+    <div
+      className={`lg:hidden fixed inset-0 z-[70] transition-[visibility] duration-500 ${open ? "visible" : "invisible pointer-events-none"}`}
+      aria-hidden={!open}
+    >
       <div
         onClick={onClose}
         className={`absolute inset-0 bg-[#0b2a45]/45 backdrop-blur-[2px] transition-opacity duration-500 ${open ? "opacity-100" : "opacity-0"}`}
@@ -342,7 +345,7 @@ function OfficeDrawer({ index, onClose }: { index: number | null; onClose: () =>
           <p className="text-base text-slate-600 leading-relaxed">
             {office.address ?? `Our ${office.city} branch is opening soon.`}
           </p>
-          <dl className="grid grid-cols-[4.5rem_1fr] gap-y-2 text-[15px]">
+          <dl className="grid grid-cols-[4.5rem_1fr] gap-y-2 text-base">
             <dt className="text-slate-400">Phone</dt>
             <dd className="flex flex-wrap gap-x-4">
               {office.phones.map((p) => (
