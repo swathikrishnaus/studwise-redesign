@@ -123,7 +123,11 @@ export default function AboutSection() {
           el.dataset.active = String(Number(el.dataset.stopLabel) <= reached);
         });
         const stop = routeStops[Math.max(0, reached)];
-        if (readoutName) readoutName.textContent = reached < 0 ? "Departing" : stop.name;
+        if (readoutName) {
+          readoutName.textContent = reached < 0 ? "Departing" : stop.name;
+          // A small lift as each new country comes in
+          if (!reduce) readoutName.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: "ease-out" });
+        }
         if (readoutCoords) readoutCoords.textContent = stop.coords;
       }
 
@@ -162,7 +166,7 @@ export default function AboutSection() {
       id="about"
       data-flight-section
       aria-labelledby="about-heading"
-      className="relative h-[320vh] bg-[#F1F5F9]"
+      className="relative h-[420vh] lg:h-[320vh] bg-[#F1F5F9]"
       style={
         { "--pb": 0, "--r1": 0, "--m1": 1, "--m2": 0, "--m3": 0 } as CSSProperties
       }
@@ -202,7 +206,7 @@ export default function AboutSection() {
               <div className="grid lg:flex-1 lg:content-center lg:gap-10">
                 {/* Block 1 — intro, revealed word by word */}
                 <p
-                  className="[grid-area:1/1] opacity-[var(--m1)] lg:opacity-100 font-normal tracking-tight leading-[1.2] text-slate-900 text-[clamp(1.3rem,5.4vw,1.85rem)] sm:text-[clamp(1.6rem,3.6vw,2.4rem)] lg:text-[min(3vw,5vh)]"
+                  className="lead-statement lead-statement--fit [grid-area:1/1] opacity-[var(--m1)] lg:opacity-100 text-slate-900"
                   style={{ "--n": introWords.length } as CSSProperties}
                 >
                   {introWords.map((word, i) => (
@@ -225,7 +229,7 @@ export default function AboutSection() {
                       universities across the globe
                     </span>
                   </div>
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                  <p className="body-text text-slate-600">
                     Aligning with countries like the{" "}
                     {countries.map((c, i) => (
                       <span key={c.name}>
@@ -276,7 +280,7 @@ export default function AboutSection() {
                     ))}
                   </dl>
                   <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
-                    <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-sm">
+                    <p className="body-text text-slate-600 max-w-sm">
                       {aboutTagline}
                     </p>
                     <CloudButton href="/about" className="self-start shrink-0">
@@ -300,10 +304,39 @@ export default function AboutSection() {
                 ====================================================== */}
             <div className="relative flex-1 min-h-0 lg:order-1 lg:col-span-6 px-5 pb-6 sm:px-9 sm:pb-9 lg:py-12 lg:pl-12 lg:pr-4 xl:py-14 xl:pl-14">
               {/* Live readout */}
-              <div className="hidden sm:block absolute z-10 left-9 lg:left-12 xl:left-14 top-0 lg:top-12 xl:top-14 font-mono" aria-hidden="true">
-                <div className="text-[10px] uppercase tracking-[0.25em] text-slate-400">Now flying over</div>
-                <div data-readout-name className="text-base text-slate-900 font-sans">Departing</div>
-                <div data-readout-coords className="text-[11px] text-[#0a7fb3]">{routeStops[0].coords}</div>
+              <div
+                className="hidden sm:flex absolute z-10 left-9 lg:left-12 xl:left-14 top-0 lg:top-12 xl:top-14 items-center gap-3.5 rounded-2xl bg-white/90 backdrop-blur-md ring-1 ring-sky-100 shadow-[0_18px_40px_-20px_rgba(0,90,150,0.45)] pl-2.5 pr-5 py-2.5"
+                aria-hidden="true"
+              >
+                {/* A glossy map pin on a sky tile, rippling where it meets the ground */}
+                <span className="relative grid place-items-center w-12 h-12 overflow-hidden rounded-xl bg-gradient-to-br from-[#e6f5fc] to-[#bfe3f7] ring-1 ring-white">
+                  <span className="absolute left-1/2 bottom-[9px] w-6 h-2 -ml-3 rounded-[50%] bg-[#009cd9]/25" />
+                  <span className="absolute left-1/2 bottom-[9px] w-6 h-2 -ml-3 rounded-[50%] ring-1 ring-[#009cd9]/60 animate-ping [animation-duration:2.4s] motion-reduce:animate-none" />
+                  <svg className="relative -mt-1.5 w-7 h-7 drop-shadow-[0_4px_4px_rgba(0,70,120,0.35)]" viewBox="0 0 24 24">
+                    <defs>
+                      <linearGradient id="readout-pin" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#38bdf8" />
+                        <stop offset="100%" stopColor="#0a6fa3" />
+                      </linearGradient>
+                    </defs>
+                    <path fill="url(#readout-pin)" d="M12 22s-7.5-6.6-7.5-12.4a7.5 7.5 0 0 1 15 0C19.5 15.4 12 22 12 22Z" />
+                    <path fill="#fff" fillOpacity={0.28} d="M7.2 8.4A5.2 5.2 0 0 1 12 4.6c.5 0 .6.6.1.8a6.4 6.4 0 0 0-4 3.6c-.3.6-1 .2-.9-.6Z" />
+                    <circle cx="12" cy="9.6" r="3" fill="#fff" />
+                    <circle cx="12" cy="9.6" r="1.3" fill="#009cd9" />
+                  </svg>
+                </span>
+                <span className="min-w-[8.5rem]">
+                  <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.22em] text-[#0a7fb3]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    Now flying over
+                  </span>
+                  <span data-readout-name className="block mt-0.5 text-xl leading-tight tracking-[-0.02em] text-slate-900">
+                    Departing
+                  </span>
+                  <span data-readout-coords className="block font-mono text-[11px] text-slate-400">
+                    {routeStops[0].coords}
+                  </span>
+                </span>
               </div>
 
               <div ref={routeRef} data-flight-route className="relative h-full w-full">

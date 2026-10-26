@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import type { CSSProperties } from "react";
 import CloudButton from "@/components/ui/CloudButton";
-import { bookAppointmentHref, whySegments } from "@/data/whyChooseUs";
+import { StatCards } from "@/components/shared/PageKit";
+import { bookAppointmentHref, whySegments, whyStats } from "@/data/whyChooseUs";
 import { clamp, pinnedProgress, smoothstep } from "@/lib/scroll";
 
 /* --------------------------------------------------------------------------
@@ -26,7 +27,8 @@ for (const seg of whySegments) {
    --------------------------------------------------------------------------
    A pinned statement on a soft sky panel: the paragraph fills in word by
    word as you scroll while the services it names sweep into highlights
-   (--wf), then the "Book appointment" button rises in (--cta).
+   (--wf), then the "Book appointment" button and key figures rise in
+   (--cta).
    Styles live in globals.css under "Why Choose Us".
    -------------------------------------------------------------------------- */
 export default function WhyChooseSection() {
@@ -74,7 +76,7 @@ export default function WhyChooseSection() {
       className="relative bg-[#F1F5F9]"
       style={{ "--wp": 0, "--wf": 0, "--cta": 0, "--n": wordCount } as CSSProperties}
     >
-      <div ref={pinRef} className="relative h-[280vh]">
+      <div ref={pinRef} className="relative h-[380vh] lg:h-[280vh]">
         <div className="sticky top-0 h-svh p-3 sm:p-4 lg:p-6 xl:p-7">
           <div className="relative h-full max-w-[1728px] mx-auto flex items-center overflow-hidden rounded-[2rem] lg:rounded-[2.5rem] bg-gradient-to-br from-[#d9f0fb] via-[#e8f6fd] to-[#d2edfa]">
           {/* ---------------- Sky atmosphere ---------------- */}
@@ -107,7 +109,7 @@ export default function WhyChooseSection() {
 
             {/* Statement */}
             <div className="lg:col-span-9">
-              <p className="tracking-[-0.02em] leading-[1.16] text-[clamp(1.45rem,6.2vw,2.4rem)] sm:text-[clamp(1.9rem,4.6vw,3rem)] lg:text-[min(3.3vw,6.2vh)]">
+              <p className="lead-statement lead-statement--fit lg:text-[min(clamp(1.6rem,1.1rem+2.1vw,3rem),4.6vh)]">
                 {phrases.map((phrase, pi) => {
                   const words = phrase.words.map((word, wi) => (
                     <span
@@ -137,10 +139,12 @@ export default function WhyChooseSection() {
                 })}
               </p>
 
-              <div className="why-cta mt-8 sm:mt-10">
-                <CloudButton href={bookAppointmentHref} size="lg" target="_blank" rel="noopener noreferrer">
+              <div className="why-cta mt-7 sm:mt-9 lg:mt-[min(2.25rem,4vh)] flex flex-col items-start gap-5 sm:gap-7 lg:gap-[min(1.75rem,3.2vh)]">
+                <CloudButton href={bookAppointmentHref} size="lg" target="_blank" rel="noopener noreferrer" className="mt-0">
                   Book appointment
                 </CloudButton>
+                {/* Key figures: pastel stat cards, as on the About page */}
+                <StatCards size="row" className="w-full grid-cols-3 gap-2 sm:gap-3" cardClassName="ring-1 ring-white" items={whyStats} />
               </div>
             </div>
           </div>

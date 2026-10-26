@@ -41,3 +41,16 @@ export function pinnedProgress(section: Element): number {
 export function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
+
+/**
+ * While a scripted scroll runs (e.g. jumping to a student in the
+ * spotlight), the site header stays hidden instead of sliding back in
+ * on the upward movement (see HeroHeader).
+ */
+export function lockNav(): void {
+  document.documentElement.dataset.navLock = "true";
+}
+
+export function unlockNav(): void {
+  delete document.documentElement.dataset.navLock;
+}

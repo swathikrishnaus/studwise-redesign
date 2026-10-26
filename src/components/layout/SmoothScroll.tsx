@@ -10,6 +10,11 @@ import Lenis from "lenis";
    positioning and every scroll-driven scene keep working unchanged.
    Lenis honours prefers-reduced-motion by itself (scroll tracks 1:1).
    -------------------------------------------------------------------------- */
+let instance: Lenis | null = null;
+
+/** The site's Lenis instance, for programmatic smooth scrolls */
+export const getLenis = () => instance;
+
 export default function SmoothScroll() {
   useEffect(() => {
     const lenis = new Lenis({
@@ -18,7 +23,11 @@ export default function SmoothScroll() {
       anchors: true,
       autoRaf: true,
     });
-    return () => lenis.destroy();
+    instance = lenis;
+    return () => {
+      instance = null;
+      lenis.destroy();
+    };
   }, []);
 
   return null;

@@ -5,6 +5,7 @@ import type { ChangeEvent, FormEvent } from "react";
 import { Icon } from "@/components/shared/PageKit";
 import { contactEmail } from "@/data/contact";
 import { bookAppointmentHref } from "@/data/whyChooseUs";
+import CloudButton from "@/components/ui/CloudButton";
 
 type Field = "firstName" | "lastName" | "email" | "phone" | "message";
 type Values = Record<Field, string>;
@@ -47,6 +48,24 @@ const compose = (v: Values) =>
     v.message.trim(),
   ].join("\n");
 
+/** Numbered label with a tick once the field is done (as in AdvisorForm) */
+function FieldLabel({ f, n, label, done }: { f: Field; n: number; label: string; done: boolean }) {
+  return (
+    <label htmlFor={`contact-${f}`} className="flex items-center gap-2.5 mb-1.5 sm:mb-2.5">
+      <span className="text-[11px] tabular-nums tracking-[0.12em] text-slate-400">0{n}</span>
+      <span className="flex-1 text-[15px] sm:text-base leading-tight tracking-[-0.01em] text-slate-900">{label}</span>
+      <span
+        className={`grid place-items-center w-5 h-5 rounded-full bg-emerald-500 text-white transition-all duration-300 ${
+          done ? "opacity-100 scale-100" : "opacity-0 scale-50"
+        }`}
+        aria-hidden="true"
+      >
+        <Icon d={CHECK} className="w-3 h-3" />
+      </span>
+    </label>
+  );
+}
+
 export default function ContactForm() {
   const [values, setValues] = useState<Values>(empty);
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
@@ -82,39 +101,40 @@ export default function ContactForm() {
     send("whatsapp");
   };
 
-  const input = (bad: boolean) =>
-    `peer w-full rounded-xl bg-slate-50 px-4 pt-6 pb-2 text-[15px] text-slate-900 outline-none focus-visible:outline-none ring-1 transition placeholder-transparent focus:bg-white focus:ring-2 ${
-      bad ? "ring-rose-300 focus:ring-rose-400" : "ring-slate-200 hover:ring-slate-300 focus:ring-[#009cd9]/60"
+  // Ticks and the progress meter: a field counts once it is filled in validly
+  const check = validate(values);
+  const fieldDone = (f: Field) => Boolean(values[f].trim()) && !check[f];
+  const doneCount = (["firstName", "lastName", "email", "phone", "message"] as Field[]).filter(fieldDone).length;
+
+  const shell = "relative flex flex-col rounded-[2rem] bg-white ring-1 ring-slate-900/[0.06] text-slate-900";
+  const field = (bad: boolean) =>
+    `w-full rounded-2xl bg-slate-50 px-4 text-base text-slate-900 outline-none focus-visible:outline-none ring-1 ring-inset transition-[background-color,box-shadow] focus:bg-white focus:ring-2 ${
+      bad ? "ring-rose-300 focus:ring-rose-400" : "ring-slate-200 hover:ring-slate-300 focus:ring-[#009cd9]"
     }`;
-  const floating =
-    "pointer-events-none absolute left-4 top-4 text-[15px] text-slate-500 transition-all peer-focus:top-2 peer-focus:text-[11px] peer-focus:text-[#0a7fb3] peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-[11px]";
 
   if (sent) {
     return (
-      <div className="flex h-full flex-col items-start justify-center rounded-3xl bg-white p-8 sm:p-10 ring-1 ring-slate-900/5" role="status">
-        <span className="grid place-items-center w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600">
-          <Icon d={CHECK} className="w-7 h-7" />
+      <div className={`${shell} h-full items-center justify-center text-center p-8 sm:p-12`} role="status">
+        <span className="relative grid place-items-center w-20 h-20 rounded-full bg-emerald-50">
+          <span className="absolute inset-0 rounded-full bg-emerald-100 animate-ping opacity-40 motion-reduce:animate-none" aria-hidden="true" />
+          <span className="relative grid place-items-center w-12 h-12 rounded-full bg-emerald-500 text-white">
+            <Icon d={CHECK} className="w-6 h-6" />
+          </span>
         </span>
-        <h3 className="mt-6 text-2xl sm:text-3xl tracking-[-0.03em] text-slate-900">
-          Your message is ready, {values.firstName.trim()}.
-        </h3>
-        <p className="mt-3 max-w-md text-[15px] leading-relaxed text-slate-600">
+        <h3 className="mt-7 text-[1.9rem] leading-tight tracking-[-0.035em]">Your message is ready, {values.firstName.trim()}.</h3>
+        <p className="mt-3 max-w-md body-text text-slate-500">
           {sent === "whatsapp"
             ? "We've opened WhatsApp with your message filled in. Press send there and a Studwise advisor will reply."
             : "We've opened your email app with your message filled in. Press send there and a Studwise advisor will reply."}
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <button
-            type="button"
-            onClick={() => send(sent)}
-            className="inline-flex items-center gap-2 h-11 px-5 rounded-full bg-slate-900 text-sm text-white hover:bg-[#009cd9] transition-colors"
-          >
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <CloudButton onClick={() => send(sent)} size="sm" className="mt-0 h-11">
             Open {sent === "whatsapp" ? "WhatsApp" : "email"} again
-          </button>
+          </CloudButton>
           <button
             type="button"
             onClick={() => setSent(null)}
-            className="inline-flex items-center h-11 px-5 rounded-full ring-1 ring-slate-200 text-sm text-slate-700 hover:ring-[#009cd9] hover:text-[#0a7fb3] transition-colors"
+            className="inline-flex items-center h-11 px-5 rounded-full ring-1 ring-slate-200 text-sm text-slate-700 transition-colors hover:ring-[#009cd9] hover:text-[#0a7fb3]"
           >
             Edit message
           </button>
@@ -124,40 +144,53 @@ export default function ContactForm() {
   }
 
   return (
-    <form
-      ref={formRef}
-      onSubmit={onSubmit}
-      noValidate
-      aria-labelledby="contact-form-heading"
-      className="rounded-3xl bg-white p-6 sm:p-8 lg:p-10 ring-1 ring-slate-900/5 shadow-[0_30px_60px_-45px_rgba(15,23,42,0.35)]"
-    >
-      <h2 id="contact-form-heading" className="text-2xl sm:text-[1.75rem] tracking-[-0.03em] text-slate-900">
+    <form ref={formRef} onSubmit={onSubmit} noValidate aria-labelledby="contact-form-heading" className={`${shell} p-5 sm:p-7 lg:p-8`}>
+      {/* On phones the form stays compact: names side by side, shorter fields and message box */}
+      {/* ---------------- Header: required note + progress ---------------- */}
+      <div className="flex items-center justify-between gap-4">
+        <span className="inline-flex items-center gap-2 rounded-full bg-slate-50 ring-1 ring-slate-900/5 pl-2.5 pr-3 py-1 text-[11px] uppercase tracking-[0.18em] text-slate-600">
+          <span className="w-2 h-2 rounded-full bg-[#009cd9]" aria-hidden="true" />
+          All fields are required
+        </span>
+        <span className="flex items-center gap-2.5" aria-label={`${doneCount} of 5 fields completed`}>
+          <span className="flex gap-1" aria-hidden="true">
+            {Array.from({ length: 5 }, (_, i) => (
+              <span key={i} className={`h-1 w-5 rounded-full transition-colors duration-500 ${i < doneCount ? "bg-[#009cd9]" : "bg-slate-200"}`} />
+            ))}
+          </span>
+          <span className="text-[11px] tabular-nums text-slate-400" aria-hidden="true">
+            {doneCount}/5
+          </span>
+        </span>
+      </div>
+
+      <h2 id="contact-form-heading" className="mt-5 sm:mt-6 text-[1.6rem] sm:text-[2rem] leading-[1.05] tracking-[-0.04em]">
         Send us a message
       </h2>
-      <p className="mt-2 text-[15px] text-slate-500">All fields are required.</p>
+      <p className="mt-1.5 sm:mt-2 max-sm:text-[15px] max-sm:leading-snug body-text text-slate-500">
+        Your message opens in WhatsApp (or your email app) ready to send to the Studwise team.
+      </p>
 
-      <div className="mt-8 grid sm:grid-cols-2 gap-4">
-        {FIELDS.map((f) => (
-          <div key={f.name}>
-            <div className="relative">
-              <input
-                id={`contact-${f.name}`}
-                name={f.name}
-                type={f.type}
-                inputMode={f.inputMode}
-                autoComplete={f.autoComplete}
-                value={values[f.name]}
-                onChange={onChange}
-                placeholder={f.label}
-                required
-                aria-invalid={Boolean(errors[f.name])}
-                aria-describedby={errors[f.name] ? `contact-${f.name}-error` : undefined}
-                className={input(Boolean(errors[f.name]))}
-              />
-              <label htmlFor={`contact-${f.name}`} className={floating}>
-                {f.label}
-              </label>
-            </div>
+      <div className="my-5 sm:my-6 h-px bg-slate-200" aria-hidden="true" />
+
+      {/* ---------------- Fields ---------------- */}
+      <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-y-5">
+        {FIELDS.map((f, i) => (
+          <div key={f.name} className={i < 2 ? "" : "col-span-2 sm:col-span-1"}>
+            <FieldLabel f={f.name} n={i + 1} label={f.label} done={fieldDone(f.name)} />
+            <input
+              id={`contact-${f.name}`}
+              name={f.name}
+              type={f.type}
+              inputMode={f.inputMode}
+              autoComplete={f.autoComplete}
+              value={values[f.name]}
+              onChange={onChange}
+              required
+              aria-invalid={Boolean(errors[f.name])}
+              aria-describedby={errors[f.name] ? `contact-${f.name}-error` : undefined}
+              className={`${field(Boolean(errors[f.name]))} h-12 sm:h-14`}
+            />
             {errors[f.name] && (
               <p id={`contact-${f.name}-error`} className="mt-1.5 text-[13px] text-rose-600">
                 {errors[f.name]}
@@ -165,24 +198,19 @@ export default function ContactForm() {
             )}
           </div>
         ))}
-        <div className="sm:col-span-2">
-          <div className="relative">
-            <textarea
-              id="contact-message"
-              name="message"
-              rows={5}
-              value={values.message}
-              onChange={onChange}
-              placeholder="Message"
-              required
-              aria-invalid={Boolean(errors.message)}
-              aria-describedby={errors.message ? "contact-message-error" : undefined}
-              className={`${input(Boolean(errors.message))} resize-y min-h-[9rem]`}
-            />
-            <label htmlFor="contact-message" className={floating}>
-              Message
-            </label>
-          </div>
+        <div className="col-span-2">
+          <FieldLabel f="message" n={5} label="Message" done={fieldDone("message")} />
+          <textarea
+            id="contact-message"
+            name="message"
+            rows={3}
+            value={values.message}
+            onChange={onChange}
+            required
+            aria-invalid={Boolean(errors.message)}
+            aria-describedby={errors.message ? "contact-message-error" : undefined}
+            className={`${field(Boolean(errors.message))} py-3 sm:py-4 resize-y min-h-[6.5rem] sm:min-h-[9rem]`}
+          />
           {errors.message && (
             <p id="contact-message-error" className="mt-1.5 text-[13px] text-rose-600">
               {errors.message}
@@ -191,28 +219,28 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3">
+      {/* ---------------- Send ---------------- */}
+      <div className="mt-5 sm:mt-7 grid sm:grid-cols-[1fr_auto] gap-2 sm:gap-2.5">
         <button
           type="submit"
-          className="inline-flex items-center justify-center gap-2.5 h-12 px-6 rounded-full bg-[#009cd9] text-[15px] text-white shadow-[0_12px_24px_-14px_rgba(0,120,180,0.8)] transition-colors hover:bg-[#0b2a45]"
+          className="group flex items-center justify-between w-full h-14 rounded-full bg-[#009cd9] pl-6 pr-2 text-base text-white shadow-[0_14px_28px_-16px_rgba(0,120,180,0.85)] transition-colors duration-300 hover:bg-[#0b2a45] focus-visible:outline-offset-4"
         >
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path fillRule="evenodd" d={WHATSAPP} />
-          </svg>
           Get in touch now
+          <span className="grid place-items-center w-10 h-10 rounded-full bg-white text-[#009cd9] transition-colors duration-300 group-hover:text-[#0b2a45]">
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path fillRule="evenodd" d={WHATSAPP} />
+            </svg>
+          </span>
         </button>
         <button
           type="button"
           onClick={() => send("email")}
-          className="inline-flex items-center justify-center gap-2 h-12 px-5 rounded-full ring-1 ring-slate-200 text-[15px] text-slate-700 transition-colors hover:ring-[#009cd9] hover:text-[#0a7fb3]"
+          className="inline-flex items-center justify-center gap-2 h-11 sm:h-14 px-6 rounded-full ring-1 ring-inset ring-slate-200 text-[15px] sm:text-base text-slate-700 transition-colors hover:ring-[#009cd9] hover:text-[#0a7fb3]"
         >
           <Icon d={MAIL} className="w-[18px] h-[18px]" />
           Send by email instead
         </button>
       </div>
-      <p className="mt-4 text-[13px] leading-relaxed text-slate-500">
-        Your message opens in WhatsApp (or your email app) ready to send to the Studwise team.
-      </p>
     </form>
   );
 }

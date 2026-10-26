@@ -63,11 +63,11 @@ export default function WhoWeAreSection() {
               </Eyebrow>
               <ScrollWords
                 text={whoWeAre.lead}
-                className="mt-6 font-normal tracking-[-0.03em] leading-[1.15] text-slate-900 text-[clamp(1.5rem,5.6vw,2rem)] sm:text-[clamp(1.8rem,3.6vw,2.6rem)] lg:text-[min(2.6vw,2.75rem)]"
+                className="lead-statement mt-6 text-slate-900"
               />
             </div>
 
-            <div className="mt-7 grid gap-4 text-[15px] sm:text-base leading-relaxed text-slate-600 max-w-2xl">
+            <div className="mt-7 grid gap-4 body-text text-slate-600 max-w-2xl">
               {whoWeAre.paragraphs.map((p, i) => (
                 <p key={i} data-reveal style={{ "--d": `${0.08 * (i + 1)}s` } as CSSProperties}>
                   {p}
@@ -115,10 +115,10 @@ export default function WhoWeAreSection() {
                         <Icon d={PIN} className="w-4 h-4 text-[#009cd9]" />
                         {o.city}
                       </h3>
-                      <p className="mt-1.5 text-[13px] leading-snug text-slate-500 line-clamp-3">
+                      <p className="mt-1.5 text-sm leading-snug text-slate-500 line-clamp-3">
                         {o.address ?? "Calicut, Kerala"}
                       </p>
-                      <div className="mt-auto pt-4 flex items-center justify-between gap-2 text-[13px]">
+                      <div className="mt-auto pt-4 flex items-center justify-between gap-2 text-sm">
                         <a href={tel(o.phones[0])} className="inline-flex items-center gap-1.5 tabular-nums text-slate-700 hover:text-[#0a7fb3]">
                           <Icon d={PHONE} className="w-3.5 h-3.5" />
                           {o.phones[0]}

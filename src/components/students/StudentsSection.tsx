@@ -295,7 +295,7 @@ export default function StudentsSection() {
         <h2
           id="students-heading"
           data-heading
-          className="font-normal tracking-[-0.045em] leading-[0.95] text-[clamp(2.6rem,10vw,8rem)]"
+          className="section-title"
         >
           <span className="svc-word-mask">
             <span className="svc-word text-slate-900" style={{ "--i": 0 } as CSSProperties}>Our Students</span>
@@ -359,7 +359,7 @@ export default function StudentsSection() {
                 <span className="text-[#009cd9]">+</span>
                 <span className="sr-only">{fmt(totalOffers)}+</span>
               </div>
-              <p className="mt-3 sm:mt-4 max-w-[18rem] sm:max-w-none text-[15px] sm:text-lg text-slate-600">
+              <p className="mt-3 sm:mt-4 max-w-[18rem] sm:max-w-none body-lead text-slate-600">
                 offers secured for our students across {countryOffers.length} countries
               </p>
             </div>

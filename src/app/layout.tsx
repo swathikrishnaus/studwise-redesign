@@ -5,6 +5,9 @@ import "lenis/dist/lenis.css";
 import "./globals.css";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import Footer from "@/components/layout/Footer";
+import MobileTabBar from "@/components/navigation/MobileTabBar";
+import FloatingDock from "@/components/layout/FloatingDock";
+import AdvisorDialog from "@/components/shared/AdvisorDialog";
 
 /* --------------------------------------------------------------------------
    Font Configuration
@@ -77,6 +80,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  // Lets the tab bar sit above the iPhone home indicator
+  viewportFit: "cover",
 };
 
 /* --------------------------------------------------------------------------
@@ -102,6 +107,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
 
         <Footer />
+
+        {/* Room under the footer for the phone tab bar, in the footer's colour */}
+        <div className="lg:hidden h-[calc(5rem+env(safe-area-inset-bottom))] bg-[#0b2a45]" aria-hidden="true" />
+        <MobileTabBar />
+        <FloatingDock />
+        <AdvisorDialog />
       </body>
     </html>
   );

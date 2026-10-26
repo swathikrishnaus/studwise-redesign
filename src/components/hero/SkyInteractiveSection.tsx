@@ -1,73 +1,12 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import type { ReactNode } from "react";
 import Image from "next/image";
 import SoftCloud, { CLOUD_BANK, CLOUD_PUFF, CLOUD_TOWER } from "./SoftCloud";
+import { Books, Cap, Globe, Sparks } from "@/components/shared/Doodles";
 
 /* Services offered by Studwise, shown as quick-scan chips under the copy */
 const heroPerks = ["Scholarship guidance", "Visa assistance", "IELTS / TOEFL prep", "Accommodation support"];
-
-/* --------------------------------------------------------------------------
-   Line icons floating around the student (64 × 64, white strokes)
-   -------------------------------------------------------------------------- */
-function Doodle({ children, className }: { children: ReactNode; className: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 64 64"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.4}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      {children}
-    </svg>
-  );
-}
-
-/** Mortarboard with a hanging tassel */
-const Cap = ({ className }: { className: string }) => (
-  <Doodle className={className}>
-    <path d="M32 12 60 24 32 36 4 24 32 12Z" />
-    <path d="M15 29v10c0 4 7.6 8 17 8s17-4 17-8V29" />
-    <circle cx="32" cy="24" r="1.6" fill="currentColor" />
-    <path d="M32 24 52 29v13" />
-    <path d="M50 42h4l-.6 7h-2.8L50 42Z" />
-  </Doodle>
-);
-
-/** Desk globe on its stand */
-const Globe = ({ className }: { className: string }) => (
-  <Doodle className={className}>
-    <circle cx="32" cy="26" r="17" />
-    <ellipse cx="32" cy="26" rx="7.5" ry="17" />
-    <path d="M15 26h34M18 17h28M18 35h28" />
-    <path d="M10.5 23.5A22 22 0 0 0 49 41" />
-    <path d="M32 48v6M24 56h16" />
-  </Doodle>
-);
-
-/** A small stack of books */
-const Books = ({ className }: { className: string }) => (
-  <Doodle className={className}>
-    <g transform="rotate(-10 32 36)">
-      <rect x="8" y="42" width="48" height="10" rx="2" />
-      <rect x="12" y="32" width="42" height="10" rx="2" />
-      <rect x="6" y="22" width="44" height="10" rx="2" />
-      <path d="M14 42v10M18 32v10M12 22v10M46 45h6M46 49h6M44 25h4M44 29h4" />
-    </g>
-  </Doodle>
-);
-
-/** Three little "idea" strokes */
-const Sparks = ({ className }: { className: string }) => (
-  <Doodle className={className}>
-    <path d="M40 8l-6 12M26 24l-14-6M28 36l-16 3" strokeWidth={2} />
-  </Doodle>
-);
 
 /* --------------------------------------------------------------------------
    SkyInteractiveSection — the homepage banner panel
@@ -218,7 +157,7 @@ export default function SkyInteractiveSection() {
           CONTENT: Bold Headline & Short Tagline
           ------------------------------------------------------------------ */}
       <div className="relative z-30 max-w-xl lg:max-w-2xl">
-        <h1 className="text-[3.1rem] sm:text-[4.2rem] md:text-[4.6rem] lg:text-[4.6rem] xl:text-[4.9rem] 2xl:text-[6rem] font-normal text-white leading-[1.02] tracking-[-0.03em] [text-shadow:0_2px_24px_rgba(10,60,120,0.25)]">
+        <h1 className="banner-title text-white [text-shadow:0_2px_24px_rgba(10,60,120,0.25)]">
           <span className="block">Take flight to</span>
           <span className="block">world-class</span>
           <span className="block">universities.</span>
@@ -232,17 +171,12 @@ export default function SkyInteractiveSection() {
         </p>
 
         {/* What Studwise handles for you */}
-        <ul className="mt-6 sm:mt-8 flex flex-wrap gap-2 max-w-[22rem] sm:max-w-[30rem] xl:max-w-[23rem] 2xl:max-w-[26rem]" aria-label="What we help with">
+        <ul className="mt-6 sm:mt-8 flex flex-wrap gap-2 max-w-[24rem] sm:max-w-[32rem] xl:max-w-[26rem] 2xl:max-w-[30rem]" aria-label="What we help with">
           {heroPerks.map((perk) => (
             <li
               key={perk}
-              className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] text-white bg-white/15 backdrop-blur-md pl-1.5 pr-3 py-1 rounded-full border border-white/30 shadow-[0_6px_16px_-10px_rgba(10,60,120,0.5)]"
+              className="inline-flex items-center text-sm sm:text-[15px] text-white bg-white/15 backdrop-blur-md px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/30 shadow-[0_4px_12px_-10px_rgba(10,60,120,0.25)]"
             >
-              <span className="grid place-items-center w-4.5 h-4.5 rounded-full bg-white text-[#3a88cf]">
-                <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M5 13l4 4L19 7" />
-                </svg>
-              </span>
               {perk}
             </li>
           ))}

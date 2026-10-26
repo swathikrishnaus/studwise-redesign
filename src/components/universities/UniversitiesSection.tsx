@@ -105,7 +105,7 @@ export default function UniversitiesSection() {
       ref={sectionRef}
       id="universities"
       aria-labelledby="universities-heading"
-      className="relative bg-[#F1F5F9] pb-24 sm:pb-32 lg:pb-40"
+      className="relative bg-[#F1F5F9] pb-6 sm:pb-16 lg:pb-24"
       style={{ "--hp": 0 } as CSSProperties}
     >
       <div className="max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7">
@@ -119,7 +119,7 @@ export default function UniversitiesSection() {
               <h2
                 id="universities-heading"
                 data-heading
-                className="font-normal tracking-[-0.04em] leading-[0.95] text-slate-900 text-[clamp(2.8rem,11vw,8.5rem)]"
+                className="section-title text-slate-900"
               >
                 <span className="svc-word-mask">
                   <span className="svc-word" style={{ "--i": 0 } as CSSProperties}>
@@ -128,7 +128,7 @@ export default function UniversitiesSection() {
                 </span>
               </h2>
             </div>
-            <p className="svc-intro lg:col-span-5 text-base sm:text-lg lg:text-xl text-slate-600 leading-relaxed max-w-md lg:justify-self-end">
+            <p className="svc-intro lg:col-span-5 body-lead text-slate-600 max-w-md lg:justify-self-end">
               {universitiesIntro}
             </p>
           </div>

@@ -12,19 +12,25 @@ export default function MarqueeTicker() {
   ];
 
   return (
-    <aside
-      className="w-full bg-[#081736] text-slate-200 border-t border-white/10 overflow-hidden select-none py-3.5 relative z-20"
-      aria-label="Latest university admits and announcements"
-    >
-      <div className="animate-marquee flex items-center whitespace-nowrap gap-8 text-xs sm:text-[13px] font-normal tracking-wide uppercase">
-        {/* Render twice for continuous smooth loop */}
-        {[...tickerItems, ...tickerItems].map((item, idx) => (
-          <div key={idx} className="flex items-center gap-4">
-            <span className="text-slate-300 font-normal">{item.text}</span>
-            <span className="text-[#38BDF8] font-normal text-sm select-none">✦</span>
+    // Inset by the same gutter as the panels above it, with rounded ends
+    <div className="w-full max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7 pb-3 sm:pb-4 lg:pb-6 relative z-20">
+      <aside
+        className="w-full rounded-2xl lg:rounded-3xl bg-[#081736] text-slate-200 overflow-hidden select-none py-3.5 sm:py-4"
+        aria-label="Latest university admits and announcements"
+      >
+        {/* Text fades out at both ends, inside the rounded bar */}
+        <div className="[mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]">
+          <div className="animate-marquee flex items-center whitespace-nowrap gap-8 text-xs sm:text-[13px] font-normal tracking-wide uppercase">
+            {/* Render twice for continuous smooth loop */}
+            {[...tickerItems, ...tickerItems].map((item, idx) => (
+              <div key={idx} className="flex items-center gap-4">
+                <span className="text-slate-300 font-normal">{item.text}</span>
+                <span className="text-[#38BDF8] font-normal text-sm select-none">✦</span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </aside>
+        </div>
+      </aside>
+    </div>
   );
 }

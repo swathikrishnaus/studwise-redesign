@@ -6,7 +6,9 @@ import WhyChooseSection from "@/components/why/WhyChooseSection";
 import StudentsSection from "@/components/students/StudentsSection";
 import UniversitiesSection from "@/components/universities/UniversitiesSection";
 import OfficesSection from "@/components/offices/OfficesSection";
+import HomeTestimonials from "@/components/testimonials/HomeTestimonials";
 import FlightPlane from "@/components/flight/FlightPlane";
+import StudentSpotlight from "@/components/spotlight/StudentSpotlight";
 
 export const metadata: Metadata = {
   title: "Studwise — Study Abroad Consultants",
@@ -23,6 +25,8 @@ export default function HomePage() {
       <WhyChooseSection />
       <StudentsSection />
       <UniversitiesSection />
+      <StudentSpotlight />
+      <HomeTestimonials />
       <OfficesSection />
       {/* Airplane that flies the About route on scroll */}
       <FlightPlane />

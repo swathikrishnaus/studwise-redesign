@@ -6,8 +6,10 @@ import { Eyebrow, Icon, gutter, toneAt } from "@/components/shared/PageKit";
 import ContactForm from "@/components/contact-page/ContactForm";
 import { contactEmail, contactIntro, faqIntro, faqs } from "@/data/contact";
 import { headerContact, socialLinks } from "@/data/navigation";
+import { SocialBadge } from "@/components/ui/SocialLinks";
 import { directionsUrl, mapEmbedUrl, offices } from "@/data/offices";
 import { bookAppointmentHref } from "@/data/whyChooseUs";
+import CloudButton from "@/components/ui/CloudButton";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -59,10 +61,10 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-12 gap-10 items-end">
             <div className="lg:col-span-7">
               <Eyebrow>Contact us</Eyebrow>
-              <h1 className="mt-6 font-normal tracking-[-0.045em] leading-[0.98] text-slate-900 text-[clamp(2.5rem,10vw,3.6rem)] sm:text-[clamp(3.4rem,7vw,5.4rem)] text-balance">
+              <h1 className="banner-title mt-6 text-slate-900">
                 Dreaming to go abroad <span className="text-[#0a7fb3]">for your studies?</span>
               </h1>
-              <p className="mt-6 max-w-lg text-[15px] sm:text-lg leading-relaxed text-slate-600">{contactIntro.text}</p>
+              <p className="mt-6 max-w-lg body-lead text-slate-600">{contactIntro.text}</p>
             </div>
             <ul className="lg:col-span-5 grid gap-2.5">
               {channels.map((c, i) => {
@@ -113,7 +115,7 @@ export default function ContactPage() {
                     </span>
                     <span>
                       <span className="block text-lg tracking-tight">{s.title}</span>
-                      <span className="mt-1 block text-sm leading-relaxed text-white/65">{s.text}</span>
+                      <span className="mt-1 block text-[15px] sm:text-base leading-relaxed text-white/65">{s.text}</span>
                     </span>
                   </li>
                 ))}
@@ -154,11 +156,9 @@ export default function ContactPage() {
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 h-10 pl-3 pr-4 rounded-full ring-1 ring-slate-200 text-sm text-slate-700 transition-colors hover:bg-[#009cd9] hover:text-white hover:ring-[#009cd9]"
+                      className="inline-flex items-center gap-2 h-10 pl-1.5 pr-4 rounded-full ring-1 ring-slate-200 text-sm text-slate-700 transition-colors hover:bg-[#009cd9] hover:text-white hover:ring-[#009cd9]"
                     >
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path fillRule="evenodd" d={s.icon} />
-                      </svg>
+                      <SocialBadge s={s} />
                       {s.label}
                     </a>
                   </li>
@@ -175,17 +175,17 @@ export default function ContactPage() {
               <Eyebrow>Our offices</Eyebrow>
               <h2
                 id="offices-heading"
-                className="mt-5 font-normal tracking-[-0.04em] leading-[1.02] text-slate-900 text-[clamp(2rem,7vw,2.8rem)] sm:text-[clamp(2.4rem,5vw,3.6rem)]"
+                className="section-title mt-5 text-slate-900"
               >
                 Visit us <span className="text-[#0a7fb3]">in person.</span>
               </h2>
             </div>
-            <p className="max-w-sm text-[15px] leading-relaxed text-slate-600">
+            <p className="max-w-sm body-text text-slate-600">
               Meet a counsellor at our head office in Manjeri or our branch in Valanchery. Calicut is opening soon.
             </p>
           </div>
 
-          <ul className="mt-10 sm:mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          <ul className="mt-8 sm:mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {offices.map((o) => (
               <li key={o.city} className="flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-slate-900/5">
                 <div className="relative aspect-[16/10] bg-slate-100">
@@ -219,8 +219,8 @@ export default function ContactPage() {
                       {o.comingSoon ? "Coming soon" : o.kind}
                     </span>
                   </div>
-                  {o.address && <p className="mt-3 text-[15px] leading-relaxed text-slate-600">{o.address}</p>}
-                  <div className="mt-auto pt-6 space-y-1.5 text-[15px]">
+                  {o.address && <p className="mt-3 body-text text-slate-600">{o.address}</p>}
+                  <div className="mt-auto pt-6 space-y-1.5 text-base">
                     {o.phones.map((ph) => (
                       <a key={ph} href={tel(ph)} className="flex items-center gap-2.5 text-slate-800 hover:text-[#0a7fb3] tabular-nums">
                         <Icon d={ICON.phone} className="w-4 h-4 text-slate-400" />
@@ -235,15 +235,9 @@ export default function ContactPage() {
                     ))}
                   </div>
                   {o.mapQuery && (
-                    <a
-                      href={directionsUrl(o.mapQuery)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-6 inline-flex items-center justify-center gap-2 h-11 rounded-full bg-slate-900 text-sm text-white transition-colors hover:bg-[#009cd9]"
-                    >
+                    <CloudButton href={directionsUrl(o.mapQuery)} target="_blank" rel="noopener noreferrer" className="mt-6 w-full">
                       Get directions
-                      <Icon d={ICON.arrow} className="w-4 h-4" />
-                    </a>
+                    </CloudButton>
                   )}
                 </div>
               </li>
@@ -260,11 +254,11 @@ export default function ContactPage() {
             <Eyebrow>FAQ</Eyebrow>
             <h2
               id="faq-heading"
-              className="mt-5 font-normal tracking-[-0.04em] leading-[1.02] text-slate-900 text-[clamp(2rem,7vw,2.8rem)] sm:text-[clamp(2.4rem,4.4vw,3.4rem)] text-balance"
+              className="section-title mt-5 text-slate-900"
             >
               Frequently asked <span className="text-[#0a7fb3]">questions</span>
             </h2>
-            <p className="mt-5 max-w-md text-[15px] sm:text-base leading-relaxed text-slate-600">{faqIntro}</p>
+            <p className="mt-5 max-w-md body-text text-slate-600">{faqIntro}</p>
             <Link
               href="/blog"
               className="mt-6 inline-flex items-center gap-2 h-11 px-5 rounded-full ring-1 ring-slate-200 text-sm text-slate-800 transition-colors hover:ring-[#009cd9] hover:text-[#0a7fb3]"
@@ -282,7 +276,7 @@ export default function ContactPage() {
                     <Icon d={ICON.plus} className="w-4 h-4" />
                   </span>
                 </summary>
-                <p className="pb-5 pr-12 text-[15px] sm:text-base leading-relaxed text-slate-600">{f.a}</p>
+                <p className="pb-5 pr-12 body-text text-slate-600">{f.a}</p>
               </details>
             ))}
           </div>

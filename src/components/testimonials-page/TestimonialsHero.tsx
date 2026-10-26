@@ -57,14 +57,14 @@ export default function TestimonialsHero() {
             </p>
             <h1
               id="tm-hero-heading"
-              className="mt-6 font-normal tracking-[-0.045em] leading-[0.95] text-[clamp(3rem,13vw,4.5rem)] sm:text-[clamp(4.5rem,10vw,6.5rem)] lg:text-[min(7.4vw,12vh)] [text-shadow:0_2px_24px_rgba(10,60,120,0.2)]"
+              className="banner-title mt-6 [text-shadow:0_2px_24px_rgba(10,60,120,0.2)]"
             >
               Check out
               <span className="block">
                 what <em className="not-italic text-[#d7f1ff]">clients</em> say
               </span>
             </h1>
-            <p className="mt-6 max-w-md text-[15px] sm:text-lg leading-relaxed text-white/90">{testimonialsIntro.text}</p>
+            <p className="mt-6 max-w-md body-lead text-white/90">{testimonialsIntro.text}</p>
 
             {/* Social proof */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
