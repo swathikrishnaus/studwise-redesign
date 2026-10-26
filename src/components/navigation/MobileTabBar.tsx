@@ -47,7 +47,7 @@ export default function MobileTabBar() {
           aria-label={t.label}
           aria-current={active ? "page" : undefined}
           className={`tabbar__tab relative flex h-16 flex-col items-center justify-center transition-colors duration-300 ${
-            active ? "text-[#009cd9]" : "text-slate-400 active:text-slate-600"
+            active ? "text-[#009cd9]" : "text-slate-500 active:text-slate-700"
           }`}
         >
           <Stroke d={ICONS[t.href]} />
@@ -69,7 +69,7 @@ export default function MobileTabBar() {
         {/* A soft glow beneath (a real shadow would stop the glass blurring the page) */}
         <span className="absolute inset-x-6 -bottom-1 h-8 rounded-full bg-[#0b2a45]/15 blur-xl" aria-hidden="true" />
         {/* The glass, cut to the notched shape */}
-        <div className="tabbar__glass absolute inset-0 rounded-[1.4rem] bg-white/60 backdrop-blur-xl backdrop-saturate-150" aria-hidden="true" />
+        <div className="tabbar__glass absolute inset-0 rounded-[1.4rem] bg-white/88 backdrop-blur-xl backdrop-saturate-150" aria-hidden="true" />
         {/* Its light edge, notch included */}
         <div className="absolute inset-0 flex pointer-events-none" aria-hidden="true">
           <span className="flex-1 rounded-l-[1.4rem] border border-r-0 border-white/80" />
