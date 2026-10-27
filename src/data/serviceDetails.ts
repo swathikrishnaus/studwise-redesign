@@ -132,7 +132,7 @@ export const serviceDetails: ServiceDetail[] = [
     process: {
       heading: "How counselling works",
       paragraphs: [
-        "With 5+ years of experience in counseling, Studwise International is the best study-abroad consultant in Kerala, Malappuram, and can guide you toward a brilliant future overseas.",
+        "With 7+ years of experience in counseling, Studwise International is the best study-abroad consultant in Kerala, Malappuram, and can guide you toward a brilliant future overseas.",
         "Experts at Studwise have in-depth knowledge of different study destinations, universities, and courses and can offer valuable insights and recommendations tailored to your specific academic and career goals.",
       ],
       steps: [
@@ -500,76 +500,11 @@ export const serviceDetails: ServiceDetail[] = [
         },
       ],
     },
-    related: ["internship-services", "accommodation-assistance", "pre-landing-services"],
+    related: ["accommodation-assistance", "pre-landing-services", "visa-assistance"],
     cta: CTA,
   },
 
   /* ---------------------------------------------------------------- 07 */
-  {
-    slug: "internship-services",
-    legacyPath: "/study-abroad-internship-programs",
-    title: "Internship Services",
-    metaDescription:
-      "Study abroad internship programs offer the best of both worlds. Studwise is partnered with 100+ internship-providing companies to guide students moving abroad via an internship.",
-    hero: {
-      heading: "Internship",
-      accent: "Services",
-      lead: "Study abroad internship programs offer the best of both worlds, allowing you to immerse yourself in a new culture while gaining hands-on work experience in your field of interest.",
-      image: "/images/services/internship.jpg",
-      alt: "Two colleagues sharing a high five at work",
-      focus: "50% 40%",
-    },
-    overview: {
-      heading: "Studying abroad is a life-changing experience",
-      accent: "that offers countless benefits.",
-      paragraphs: [
-        "By immersing yourself in a foreign country, you’ll experience firsthand the customs, traditions, and way of life that make it unique.",
-        "This exposure to new perspectives will not only enhance your cultural understanding but also develop your adaptability and open-mindedness, qualities highly sought after by employers in today’s globalized world.",
-      ],
-    },
-    benefits: {
-      heading: "The Best of Both Worlds",
-      text: "We have a dedicated team to assist you in your further search for internship opportunities across the world.",
-      items: [
-        {
-          title: "100+ partner companies",
-          text: "Studwise gives proper guidance and financial aid who wish to move abroad via an internship, partnered with 100 + internship-providing companies.",
-          icon: ICON.briefcase,
-        },
-        {
-          title: "Skills and communication",
-          text: "An internship overseas is a great opportunity, a global perspective can be developed and helps to improve skills and cross-cultural communication.",
-          icon: ICON.spark,
-        },
-        {
-          title: "An international network",
-          text: "Additionally, combining study abroad and internships allows you to build a strong international network, connecting you with professionals and organizations around the world. This network can prove invaluable when seeking future employment or exploring international career opportunities.",
-          icon: ICON.users,
-        },
-      ],
-    },
-    quote: "Now imagine the benefits of combining study abroad and internship programs into one transformative experience.",
-    process: {
-      heading: "How study abroad internships work",
-      paragraphs: [],
-      steps: [
-        {
-          title: "Broaden your horizons",
-          text: "Firstly, it allows you to broaden your horizons and gain a deeper appreciation for different cultures.",
-        },
-        {
-          title: "Gain work experience",
-          text: "Internship programs, on the other hand, provide valuable work experience that complements your academic studies.",
-        },
-        {
-          title: "Apply what you learn",
-          text: "These programs typically combine academic coursework with internships at local companies, giving you the opportunity to apply what you’ve learned in the classroom to real-world projects and challenges.",
-        },
-      ],
-    },
-    related: ["scholarship-assistance", "post-landing-services", "career-counselling"],
-    cta: CTA,
-  },
 
   /* ---------------------------------------------------------------- 08 */
   {

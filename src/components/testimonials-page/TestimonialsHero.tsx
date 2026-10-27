@@ -24,12 +24,6 @@ function PhotoCard({ t, className = "" }: { t: Testimonial; className?: string }
   );
 }
 
-/* --------------------------------------------------------------------------
-   TestimonialsHero — headline and social proof beside two columns of
-   student photos drifting in opposite directions (a horizontal strip on
-   phones). The moving photos are decorative; every story is on the page.
-   Motion styles live in globals.css under "Testimonials page".
-   -------------------------------------------------------------------------- */
 export default function TestimonialsHero() {
   return (
     <section aria-labelledby="tm-hero-heading" className="relative bg-[#F1F5F9]">
@@ -59,9 +53,9 @@ export default function TestimonialsHero() {
               id="tm-hero-heading"
               className="banner-title mt-6 [text-shadow:0_2px_24px_rgba(10,60,120,0.2)]"
             >
-              Check out
+              Hear It from
               <span className="block">
-                what <em className="not-italic text-[#d7f1ff]">clients</em> say
+                Our <em className="not-italic text-[#d7f1ff]">Students</em>
               </span>
             </h1>
             <p className="mt-6 max-w-md body-lead text-white/90">{testimonialsIntro.text}</p>

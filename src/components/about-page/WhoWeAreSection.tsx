@@ -12,14 +12,6 @@ const PHONE =
 
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
 
-/* Light floating label used on the photo */
-const badge =
-  "absolute flex items-center gap-3 rounded-xl bg-white/95 backdrop-blur ring-1 ring-slate-900/5 shadow-[0_10px_30px_-18px_rgba(15,23,42,0.35)] px-3.5 py-2.5";
-
-/* --------------------------------------------------------------------------
-   WhoWeAreSection — office photo beside the story, the countries Studwise
-   works with, and its three centres (from data/offices, as on the footer)
-   -------------------------------------------------------------------------- */
 export default function WhoWeAreSection() {
   return (
     <section id="who-we-are" aria-labelledby="who-heading" className="scroll-mt-6 bg-[#F1F5F9]">
@@ -37,22 +29,6 @@ export default function WhoWeAreSection() {
               />
             </div>
 
-            <div data-reveal style={{ "--d": "0.35s" } as CSSProperties} className={`${badge} -bottom-5 left-4`}>
-              <span className="grid place-items-center w-9 h-9 rounded-lg bg-sky-50 text-[#0a7fb3]">
-                <Icon d={PIN} className="w-[18px] h-[18px]" />
-              </span>
-              <span>
-                <span className="block text-sm text-slate-900 leading-tight">Manjeri, Malappuram</span>
-                <span className="block text-xs text-slate-500">Headquarters · Since 2019</span>
-              </span>
-            </div>
-
-            <div data-reveal style={{ "--d": "0.5s" } as CSSProperties} className={`${badge} top-4 right-4 flex-col items-start gap-0.5`}>
-              <span className="text-2xl tracking-[-0.03em] leading-none text-slate-900">
-                1000<span className="text-[#009cd9]">+</span>
-              </span>
-              <span className="text-xs text-slate-500">students placed abroad</span>
-            </div>
           </div>
 
           {/* Story */}

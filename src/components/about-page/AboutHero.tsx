@@ -17,14 +17,6 @@ const HIGHLIGHT_ICONS = [
 const HERO_WASH =
   "radial-gradient(ellipse at 0% 0%, #bfe3f7 0%, rgba(191,227,247,0) 55%), radial-gradient(ellipse at 100% 0%, #d9effb 0%, rgba(217,239,251,0) 50%), radial-gradient(ellipse at 100% 100%, #c6e6f8 0%, rgba(198,230,248,0) 60%), radial-gradient(ellipse at 0% 100%, #dceefa 0%, rgba(220,238,250,0) 55%), #eef7fd";
 
-/* --------------------------------------------------------------------------
-   AboutHero — site header, then a two-column first screen on the
-   homepage's grid (7/12 + 5/12, 8/12 + 4/12 from 2xl), styled like the
-   service pages' hero: breadcrumb, headline, intro and actions on a soft
-   sky panel on the left, the graduate photo on the right; the highlight
-   figures follow below the banner. The consultation form lives in the
-   closing "Start your journey" section.
-   -------------------------------------------------------------------------- */
 export default function AboutHero() {
   return (
     <section aria-labelledby="about-hero-heading" className="relative bg-[#F1F5F9]">

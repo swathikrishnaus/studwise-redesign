@@ -17,14 +17,6 @@ const rows = [
 const ROW_DIRECTION = [-1, 1, -1];
 const BASE_SPEED = 0.45; // px per frame
 
-/* --------------------------------------------------------------------------
-   UniversitiesSection — partner universities
-   --------------------------------------------------------------------------
-   Three marquee rows run in alternating directions. Scrolling adds to
-   their speed (and the push decays smoothly afterwards), so the rows
-   react to the page like the rest of the scroll experience. A row pauses
-   while hovered. The loop only runs while the section is on screen.
-   -------------------------------------------------------------------------- */
 export default function UniversitiesSection() {
   const sectionRef = useRef<HTMLElement>(null);
 

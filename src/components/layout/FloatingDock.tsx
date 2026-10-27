@@ -10,13 +10,6 @@ const PHONE =
 const R = 21;
 const C = 2 * Math.PI * R;
 
-/* --------------------------------------------------------------------------
-   FloatingDock — a small glass dock at the lower right with Studwise's
-   social profiles in their brand colours and a call link (names show on
-   hover). On phones it floats just above the bottom tab bar; on desktop
-   a "back to top" button sits beneath it, its ring filling with the
-   scroll. It slides in once the first screen is scrolled past.
-   -------------------------------------------------------------------------- */
 export default function FloatingDock() {
   const ringRef = useRef<SVGCircleElement>(null);
   const [showTop, setShowTop] = useState(false);

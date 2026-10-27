@@ -8,23 +8,14 @@ import { prefersReducedMotion } from "@/lib/scroll";
 
 type Phase = "loading" | "settle" | "exit" | "gone";
 
-const MIN_MS = 700;
-const MAX_MS = 4500;
+// About 4s in all: the ring counts up (MIN_MS), the logo assembles and holds (HOLD_MS), then the screen lifts (LIFT_MS)
+const MIN_MS = 800;
+const HOLD_MS = 1600;
+const LIFT_MS = 900;
+const MAX_MS = 6000;
 const R = 46;
 const C = 2 * Math.PI * R;
 
-/* --------------------------------------------------------------------------
-   PageLoader — the brand intro on every full page load (and refresh),
-   mounted once in the root layout so moving between pages doesn't replay it.
-   The Studwise mark waits large in the centre inside a progress ring that
-   follows the real load (images, fonts, window load). When the page is
-   ready the mark glides down into its place above the "w" as the wordmark
-   sweeps in, then the screen lifts away. The pieces are the logo split in
-   two (studwise-mark / studwise-wordmark on the logo's own canvas), so
-   they meet exactly. It is server-rendered so it covers the first paint,
-   hides itself after 6s even without JavaScript (globals.css), and with
-   reduced motion simply fades out once the page is ready.
-   -------------------------------------------------------------------------- */
 export default function PageLoader() {
   const [phase, setPhase] = useState<Phase>("loading");
   const ringRef = useRef<SVGCircleElement>(null);
@@ -79,15 +70,17 @@ export default function PageLoader() {
         window.setTimeout(() => {
           setPhase("exit");
           release();
-        }, 1050),
-        window.setTimeout(() => setPhase("gone"), 1950)
+        }, HOLD_MS),
+        window.setTimeout(() => setPhase("gone"), HOLD_MS + LIFT_MS)
       );
     };
 
     const tick = () => {
       const elapsed = performance.now() - start;
       if ((ready && elapsed > MIN_MS) || elapsed > MAX_MS) target = 1;
-      shown += (target - shown) * (target === 1 ? 0.14 : 0.06);
+      // Fill steadily over MIN_MS rather than jumping ahead as images load
+      const goal = target === 1 ? 1 : Math.min(target, 0.92 * (elapsed / MIN_MS));
+      shown += (goal - shown) * (target === 1 ? 0.14 : 0.08);
       if (ringRef.current) ringRef.current.style.strokeDashoffset = String(C * (1 - shown));
       if (countRef.current) countRef.current.textContent = String(Math.round(shown * 100)).padStart(2, "0");
       if (target === 1 && shown > 0.995) {

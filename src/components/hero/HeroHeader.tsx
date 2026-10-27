@@ -20,7 +20,7 @@ const PHONE =
 
 /** Header pills: white at rest; pastel blue with brand-blue text when hovered, focused, open or on the current page */
 const pill =
-  "cursor-pointer flex items-center gap-1.5 h-10 px-3 xl:px-4 rounded-full ring-1 transition-[background-color,color,box-shadow] duration-200 focus-visible:outline-none focus-visible:bg-[#e3f4fc] focus-visible:text-[#009cd9] focus-visible:ring-[#009cd9]/40";
+  "cursor-pointer flex items-center gap-1 xl:gap-1.5 h-10 px-2.5 xl:px-4 whitespace-nowrap rounded-full ring-1 transition-[background-color,color,box-shadow] duration-200 focus-visible:outline-none focus-visible:bg-[#e3f4fc] focus-visible:text-[#009cd9] focus-visible:ring-[#009cd9]/40";
 const pillIdle =
   "bg-white text-slate-800 ring-slate-900/[0.07] shadow-[0_1px_2px_rgba(15,23,42,0.05)] hover:bg-[#e3f4fc] hover:text-[#009cd9] hover:ring-[#009cd9]/20";
 const pillOn = "bg-[#e3f4fc] text-[#009cd9] ring-[#009cd9]/20";
@@ -104,42 +104,9 @@ function QuickLink({ item, onNavigate }: { item: MegaItem; onNavigate: () => voi
 /** The filled side card that holds a mega menu's quick links and its call to action */
 const sideCard = "flex flex-col rounded-2xl bg-gradient-to-b from-[#eef8fd] to-[#dcf0fa] p-4 xl:p-5 ring-1 ring-[#009cd9]/10";
 
-/** The pill that hangs from a panel's bottom edge */
-function PanelTag() {
-  return (
-    <a
-      href={tel(headerContact.phones[0])}
-      className="absolute left-1/2 -bottom-4 -translate-x-1/2 inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-[#e3f4fc] px-4 h-8 text-[13px] text-[#0b2a45] ring-1 ring-[#009cd9]/20 transition-colors hover:bg-[#d2ecfa]"
-    >
-      <span className="relative w-1.5 h-1.5 rounded-full bg-emerald-500" aria-hidden="true">
-        <span className="absolute inset-0 rounded-full bg-emerald-500 animate-ping motion-reduce:animate-none" />
-      </span>
-      Advisors online now
-      <span className="text-[#0b2a45]/40" aria-hidden="true">·</span>
-      <span className="tabular-nums">{headerContact.phones[0]}</span>
-    </a>
-  );
-}
-
 const panel =
-  "mega-panel absolute inset-x-6 xl:inset-x-7 top-3 rounded-[1.75rem] bg-[#FCFDFE] p-6 xl:p-8 pb-8 xl:pb-10 ring-1 ring-slate-900/[0.06] shadow-[0_24px_60px_-34px_rgba(0,60,100,0.3)]";
+  "mega-panel absolute inset-x-6 xl:inset-x-7 top-3 rounded-[1.75rem] bg-[#FCFDFE] p-6 xl:p-8 ring-1 ring-slate-900/[0.06] shadow-[0_24px_60px_-34px_rgba(0,60,100,0.3)]";
 
-/* --------------------------------------------------------------------------
-   HeroHeader — site navigation
-   --------------------------------------------------------------------------
-   Links follow the live studwise.in menu (src/data/navigation.ts). On
-   desktop the logo sits on the left, the links in pills in the middle and
-   the contact actions on the right. "Services" and
-   "About Us" open full-width mega menus: on hover (with a short close
-   delay so the pointer can travel into the panel) or on click/Enter.
-   Services lays out all nine services at once, in three columns by stage
-   of the journey; each panel pairs large cards with quick links and an
-   advisory card. Icons sit on pastel tiles and cards only tint on hover. Escape or a click outside closes them. Below lg the
-   links move into a full-screen menu.
-   Once the bar has scrolled away it hides while the page scrolls down
-   and slides back in, on a frosted strip, as soon as the reader scrolls
-   up (on every screen size); at the very top it rejoins the page.
-   -------------------------------------------------------------------------- */
 export default function HeroHeader() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -196,9 +163,16 @@ export default function HeroHeader() {
       setBar(next);
       if (next === "hidden") close();
     };
+    // Phones and tablets keep the bar in the page flow (the tab bar handles navigation there)
+    const desktop = window.matchMedia("(min-width: 1024px)");
     const tick = () => {
       raf = 0;
       const y = window.scrollY;
+      if (!desktop.matches) {
+        set("top", false);
+        last = y;
+        return;
+      }
       // A scripted jump (e.g. the student spotlight's faces) never brings the bar back
       if (y >= 1 && document.documentElement.dataset.navLock) {
         if (state === "pinned") set("hidden", true);
@@ -261,7 +235,7 @@ export default function HeroHeader() {
 
           {/* Desktop navigation (centre) */}
           <nav aria-label="Main" className="hidden lg:block justify-self-center">
-            <ul className="flex items-center gap-1.5 text-[14px] tracking-[-0.01em]">
+            <ul className="flex items-center gap-1 xl:gap-1.5 text-[13.5px] xl:text-[14px] tracking-[-0.01em]">
               {mainNavLinks.map((link) => {
                 const mega = link.mega;
                 const current = isCurrent(link.href);
@@ -294,32 +268,35 @@ export default function HeroHeader() {
                     </button>
                   </li>
                 ) : (
-                  // The logo links home, so the Home pill only shows where there is room
-                  <li key={link.label} onPointerEnter={scheduleClose} className={link.href === "/" ? "hidden xl:block" : undefined}>
+                  <li key={link.label} onPointerEnter={scheduleClose}>
                     <Link href={link.href} aria-current={current ? "page" : undefined} className={`${pill} ${current ? pillOn : pillIdle}`}>
                       {link.label}
                     </Link>
                   </li>
                 );
               })}
-              <li onPointerEnter={scheduleClose}>
-                <Link href="/contact" aria-current={isCurrent("/contact") ? "page" : undefined} className={`${pill} ${isCurrent("/contact") ? pillOn : pillIdle}`}>
-                  Contact
-                </Link>
-              </li>
             </ul>
           </nav>
 
           {/* Right actions */}
           <div className="hidden lg:flex justify-self-end items-center gap-1.5 shrink-0 text-[14px] tracking-[-0.01em]" onPointerEnter={scheduleClose}>
-            {/* The number as plain text, no pill */}
-            <a
-              href={tel(headerContact.phones[0])}
-              className="hidden xl:flex items-center gap-2 h-10 px-3 rounded-full text-slate-800 transition-colors hover:text-[#009cd9] focus-visible:text-[#009cd9]"
+            {/* Contact: an outlined button beside the main call to action */}
+            <Link
+              href="/contact"
+              aria-current={isCurrent("/contact") ? "page" : undefined}
+              aria-label="Contact Us"
+              className={`group/contact inline-flex items-center gap-2 h-10 pl-1.5 pr-1.5 xl:pr-4 whitespace-nowrap rounded-full ring-1 transition-colors duration-200 ${
+                isCurrent("/contact")
+                  ? "bg-[#e3f4fc] text-[#009cd9] ring-[#009cd9]/30"
+                  : "bg-white text-slate-800 ring-slate-900/[0.1] hover:bg-[#e3f4fc] hover:text-[#009cd9] hover:ring-[#009cd9]/30"
+              }`}
             >
-              <ItemIcon d={PHONE} className="w-4 h-4 text-[#009cd9]" />
-              <span className="tabular-nums">{headerContact.phones[0]}</span>
-            </a>
+              <span className="grid place-items-center w-7 h-7 rounded-full bg-[#e3f4fc] text-[#009cd9] transition-colors group-hover/contact:bg-white">
+                <ItemIcon d={PHONE} className="w-3.5 h-3.5" />
+              </span>
+              {/* Icon only where the bar is tight */}
+              <span className="hidden xl:inline">Contact Us</span>
+            </Link>
             <CloudButton href="#consultation-panel" size="sm" className="mt-0">
               Book Free Advisory
             </CloudButton>
@@ -384,8 +361,7 @@ export default function HeroHeader() {
                   </div>
                 </div>
               </div>
-              <PanelTag />
-            </div>
+              </div>
 
             {/* About */}
             <div id="mega-about" role="region" aria-label="About Us" data-open={open === "about"} className={panel}>
@@ -416,8 +392,7 @@ export default function HeroHeader() {
                   </div>
                 </div>
               </div>
-              <PanelTag />
-            </div>
+              </div>
           </div>
         </div>
 

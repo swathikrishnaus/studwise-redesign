@@ -4,15 +4,6 @@ import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
 import { prefersReducedMotion } from "@/lib/scroll";
 
-/* --------------------------------------------------------------------------
-   LoopCarousel — an endless row of cards that glides on its own and can
-   also be scrolled by hand: dragged with the mouse, swiped on touch, or
-   scrolled sideways on a trackpad. Children are the list twice, the
-   second marked [data-loop-copy]; whenever the scroll passes one full
-   copy it jumps back by that width, so the loop never ends. Auto-gliding
-   pauses on hover, focus and while (and shortly after) the visitor
-   scrolls. Styles: ".loop-carousel" in globals.css.
-   -------------------------------------------------------------------------- */
 export default function LoopCarousel({
   children,
   duration = 70,

@@ -9,20 +9,9 @@ import { clamp, easeOutCubic } from "@/lib/scroll";
 
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
 
-/* --------------------------------------------------------------------------
-   OfficesSection — "Head office / Branch office"
-   --------------------------------------------------------------------------
-   Each office is a large row that expands to show its details; the map
-   panel beside it cross-fades to the selected office. Maps are visual only
-   (Lenis disables iframe pointer events while smooth scrolling), with an
-   "Open in Google Maps" link on top. Scroll reveals reuse --hp (heading),
-   --rv on rows and the Services media reveal on the map panel.
-   -------------------------------------------------------------------------- */
 export default function OfficesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
-  // Mobile/tablet: the selected office opens in an off-canvas drawer
-  const [drawer, setDrawer] = useState<number | null>(null);
   const current = offices[active];
 
   useEffect(() => {
@@ -100,10 +89,7 @@ export default function OfficesSection() {
                 <li key={office.city} data-reveal className="office-row border-b border-slate-300/70">
                   <button
                     type="button"
-                    onClick={() => {
-                      setActive(i);
-                      if (window.matchMedia("(max-width: 1023px)").matches) setDrawer(i);
-                    }}
+                    onClick={() => setActive(i)}
                     aria-expanded={open}
                     aria-controls={panelId}
                     className="group w-full grid grid-cols-[2.5rem_1fr_auto] sm:grid-cols-[3.5rem_1fr_auto] items-center gap-3 py-6 sm:py-7 text-left focus-visible:outline-none"
@@ -115,7 +101,7 @@ export default function OfficesSection() {
                       <span className="block text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[#0a7fb3]">
                         {office.kind}
                         {office.comingSoon && (
-                          <span className="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] tracking-wider text-amber-700">
+                          <span className="ml-2 inline-block whitespace-nowrap rounded-full bg-amber-100 px-2 py-0.5 text-[10px] tracking-wider text-amber-700">
                             Opening soon
                           </span>
                         )}
@@ -134,11 +120,8 @@ export default function OfficesSection() {
                       }`}
                       aria-hidden="true"
                     >
-                      <svg className="hidden lg:block w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeWidth={1.8} d="M12 5v14M5 12h14" />
-                      </svg>
-                      <svg className="lg:hidden w-4 h-4 -rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M5 12h14m-6-6 6 6-6 6" />
                       </svg>
                     </span>
                   </button>
@@ -146,12 +129,31 @@ export default function OfficesSection() {
                   {/* Details — grid-rows trick animates height */}
                   <div
                     id={panelId}
-                    className={`hidden lg:grid transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+                    className={`grid transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
                       open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                     }`}
                   >
                     <div className="overflow-hidden" inert={!open}>
-                      <div className="pb-7 pl-[2.5rem] sm:pl-[3.5rem] space-y-4">
+                      <div className="pb-7 sm:pl-[3.5rem] space-y-4">
+                        {/* Below lg the map sits in the open row (loaded only once it opens) */}
+                        <div className="lg:hidden relative h-56 sm:h-72 overflow-hidden rounded-2xl bg-[#dff2fb]">
+                          {office.mapQuery ? (
+                            open && (
+                              <iframe
+                                title={`Map of the Studwise ${office.city} ${office.kind.toLowerCase()}`}
+                                src={mapEmbedUrl(office.mapQuery)}
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                className="absolute inset-0 w-full h-full border-0"
+                              />
+                            )
+                          ) : (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-[#bfe6f8] to-[#f0f9ff]">
+                              <Image src="/images/airplane.png" alt="" width={410} height={207} className="w-2/5 h-auto animate-[plane-hover-float_6s_ease-in-out_infinite]" />
+                              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-[#0a7fb3]">Opening soon</p>
+                            </div>
+                          )}
+                        </div>
                         {office.address ? (
                           <p className="body-lead text-slate-600 max-w-md">
                             {office.address}
@@ -171,9 +173,9 @@ export default function OfficesSection() {
                             ))}
                           </dd>
                           <dt className="text-slate-400">Email</dt>
-                          <dd className="flex flex-wrap gap-x-4">
+                          <dd className="flex flex-wrap gap-x-4 min-w-0">
                             {office.emails.map((e) => (
-                              <a key={e} href={`mailto:${e}`} className="text-slate-900 hover:text-[#009cd9] transition-colors">
+                              <a key={e} href={`mailto:${e}`} className="text-slate-900 break-all hover:text-[#009cd9] transition-colors">
                                 {e}
                               </a>
                             ))}
@@ -259,121 +261,6 @@ export default function OfficesSection() {
         </div>
       </div>
 
-      {/* ================= Mobile off-canvas: office details + map ================= */}
-      <OfficeDrawer index={drawer} onClose={() => setDrawer(null)} />
     </section>
-  );
-}
-
-function OfficeDrawer({ index, onClose }: { index: number | null; onClose: () => void }) {
-  const open = index !== null;
-  // Keep the last office rendered while the drawer slides out
-  const [shown, setShown] = useState(0);
-  if (index !== null && index !== shown) setShown(index);
-  const office = offices[shown];
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    const html = document.documentElement;
-    const prev = html.style.overflow;
-    html.style.overflow = "hidden";
-    document.addEventListener("keydown", onKey);
-    return () => {
-      html.style.overflow = prev;
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open, onClose]);
-
-  return (
-    <div
-      className={`lg:hidden fixed inset-0 z-[70] transition-[visibility] duration-500 ${open ? "visible" : "invisible pointer-events-none"}`}
-      aria-hidden={!open}
-    >
-      <div
-        onClick={onClose}
-        className={`absolute inset-0 bg-[#0b2a45]/45 backdrop-blur-[2px] transition-opacity duration-500 ${open ? "opacity-100" : "opacity-0"}`}
-      />
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label={`${office.city} ${office.kind.toLowerCase()}`}
-        data-lenis-prevent
-        inert={!open}
-        className={`absolute inset-y-0 right-0 w-full max-w-md bg-[#F1F5F9] shadow-[-30px_0_60px_-30px_rgba(0,40,80,0.45)] flex flex-col overflow-y-auto transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="flex items-start justify-between gap-4 px-5 pt-6 pb-4">
-          <div>
-            <div className="text-[11px] uppercase tracking-[0.2em] text-[#0a7fb3]">{office.kind}</div>
-            <div className="mt-1 text-[2.2rem] leading-none tracking-[-0.03em] text-slate-900">{office.city}</div>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className="shrink-0 grid place-items-center w-11 h-11 rounded-full bg-white ring-1 ring-slate-200 text-slate-700"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path strokeLinecap="round" strokeWidth={1.8} d="M6 6l12 12M18 6 6 18" />
-            </svg>
-          </button>
-        </div>
-
-        <div className="mx-5 relative h-64 rounded-3xl overflow-hidden bg-[#dff2fb]">
-          {office.mapQuery ? (
-            open && (
-              <iframe
-                key={office.city}
-                title={`Map of the Studwise ${office.city} ${office.kind.toLowerCase()}`}
-                src={mapEmbedUrl(office.mapQuery)}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 w-full h-full border-0"
-              />
-            )
-          ) : (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-[#bfe6f8] to-[#f0f9ff]">
-              <Image src="/images/airplane.png" alt="" width={410} height={207} className="w-1/2 h-auto animate-[plane-hover-float_6s_ease-in-out_infinite]" />
-              <p className="mt-3 text-sm uppercase tracking-[0.2em] text-[#0a7fb3]">Opening soon</p>
-            </div>
-          )}
-        </div>
-
-        <div className="px-5 py-6 space-y-5">
-          <p className="text-base text-slate-600 leading-relaxed">
-            {office.address ?? `Our ${office.city} branch is opening soon.`}
-          </p>
-          <dl className="grid grid-cols-[4.5rem_1fr] gap-y-2 text-base">
-            <dt className="text-slate-400">Phone</dt>
-            <dd className="flex flex-wrap gap-x-4">
-              {office.phones.map((p) => (
-                <a key={p} href={tel(p)} className="text-slate-900">
-                  {p}
-                </a>
-              ))}
-            </dd>
-            <dt className="text-slate-400">Email</dt>
-            <dd className="flex flex-col">
-              {office.emails.map((e) => (
-                <a key={e} href={`mailto:${e}`} className="text-slate-900 break-all">
-                  {e}
-                </a>
-              ))}
-            </dd>
-          </dl>
-          <div className="flex flex-wrap gap-3 pt-1">
-            {office.mapQuery ? (
-              <CloudButton href={directionsUrl(office.mapQuery)} target="_blank" rel="noopener noreferrer">
-                Get directions
-              </CloudButton>
-            ) : (
-              <CloudButton href={tel(office.phones[0])}>Call the branch</CloudButton>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }

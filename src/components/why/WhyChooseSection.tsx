@@ -8,10 +8,6 @@ import { StatCards } from "@/components/shared/PageKit";
 import { bookAppointmentHref, whySegments, whyStats } from "@/data/whyChooseUs";
 import { clamp, pinnedProgress, smoothstep } from "@/lib/scroll";
 
-/* --------------------------------------------------------------------------
-   Flatten the paragraph into words, remembering where each highlighted
-   phrase starts and how many words it spans.
-   -------------------------------------------------------------------------- */
 type Phrase = { words: string[]; start: number; highlight: boolean };
 
 const phrases: Phrase[] = [];
@@ -22,15 +18,6 @@ for (const seg of whySegments) {
   wordCount += words.length;
 }
 
-/* --------------------------------------------------------------------------
-   WhyChooseSection — "Why Choose Us"
-   --------------------------------------------------------------------------
-   A pinned statement on a soft sky panel: the paragraph fills in word by
-   word as you scroll while the services it names sweep into highlights
-   (--wf), then the "Book appointment" button and key figures rise in
-   (--cta).
-   Styles live in globals.css under "Why Choose Us".
-   -------------------------------------------------------------------------- */
 export default function WhyChooseSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);

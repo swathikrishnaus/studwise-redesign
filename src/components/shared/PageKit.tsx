@@ -36,11 +36,6 @@ export function Eyebrow({
 /** Page gutter shared by every About section (matches the homepage panels) */
 export const gutter = "max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7";
 
-/* --------------------------------------------------------------------------
-   Stat cards — soft pastel cards with a corner icon tile, modelled on the
-   stats under the homepage form (components/hero/StudyAbroadHero). Used
-   for every figure on inner pages, instead of bordered, divided boxes.
-   -------------------------------------------------------------------------- */
 export const TONES = {
   sky: { bg: "bg-[#e3f3fc]", ink: "text-[#0a7fb3]" },
   mint: { bg: "bg-[#e3f6ec]", ink: "text-[#15803d]" },

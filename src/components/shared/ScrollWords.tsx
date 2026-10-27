@@ -4,11 +4,6 @@ import { useEffect, useRef } from "react";
 import type { CSSProperties, ElementType } from "react";
 import { clamp, prefersReducedMotion } from "@/lib/scroll";
 
-/* --------------------------------------------------------------------------
-   ScrollWords — the homepage's word-by-word "writing" effect for any
-   statement: each word lights up from faint to full as the text scrolls
-   up through the viewport (--sw, 0→1). Styles: ".sw-word" in globals.css.
-   -------------------------------------------------------------------------- */
 export default function ScrollWords({
   text,
   as: Tag = "p",

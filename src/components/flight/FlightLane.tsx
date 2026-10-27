@@ -23,16 +23,6 @@ function smoothPath(pts: Pt[]): string {
   return d;
 }
 
-/* --------------------------------------------------------------------------
-   FlightLane — the homepage's top-down airplane (see StudentsSection) for
-   inner pages: a row of stops laid out on the same grid as the cards
-   below it (offices, process steps…), joined by a dashed flight route.
-   As the lane scrolls up the screen the plane flies in from the left,
-   weaving through each stop, which lights up as it passes, and parks just
-   beyond the last one; the route behind it is inked in. The route is
-   rebuilt from the stops' real positions whenever the lane resizes.
-   Styles: "Flight lane" in globals.css.
-   -------------------------------------------------------------------------- */
 export default function FlightLane({
   stops,
   gridClassName,

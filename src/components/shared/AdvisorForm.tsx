@@ -144,18 +144,6 @@ function DirectButtons({ className = "" }: { className?: string }) {
   );
 }
 
-/* --------------------------------------------------------------------------
-   AdvisorForm — the site's consultation form (home and About heroes,
-   About and Testimonials CTAs, and the advisor popup): a 24/7 help desk,
-   four quick questions (data/consultation), "Talk to an advisor" and two
-   direct lines. The help desk is a brand-blue band (on phones, and on
-   every screen when highlighted) with a soft glow.
-   All four questions always show. The layout is compact on phones, in
-   the popup (`dialog`) and wherever `compact` is set: slimmer pills and fields, the intro line
-   dropped on phones (and on short desktop screens), and WhatsApp/Call as
-   slim buttons under the submit button. Elsewhere on desktop the direct
-   lines are tall tiles above the questions.
-   -------------------------------------------------------------------------- */
 export default function AdvisorForm({
   id,
   highlight = false,
@@ -201,7 +189,7 @@ export default function AdvisorForm({
   const answered = [!!formData.destination, !!formData.studyLevel, !!formData.intake, phoneDone];
   const doneCount = answered.filter(Boolean).length;
 
-  const shell = `relative flex-1 h-full flex flex-col rounded-[2rem] bg-white ring-1 text-slate-900 ${
+  const shell = `relative flex-1 min-w-0 h-full flex flex-col rounded-[2rem] bg-white ring-1 text-slate-900 ${
     hl
       ? "ring-[#009cd9]/30 shadow-[0_30px_70px_-30px_rgba(0,110,180,0.65)]"
       : "ring-slate-900/[0.06] max-lg:ring-[#009cd9]/25 max-lg:shadow-[0_30px_60px_-34px_rgba(0,110,180,0.6)]"
@@ -278,7 +266,7 @@ export default function AdvisorForm({
           <span className="absolute -top-28 -right-20 w-80 h-80 rounded-full bg-white/25 blur-3xl" />
           <span className="absolute -bottom-24 -left-16 w-64 h-64 rounded-full bg-[#0b2a45]/30 blur-3xl" />
         </span>
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <span
             className={`inline-flex items-center gap-2 whitespace-nowrap rounded-full ring-1 pl-2.5 pr-3 py-1 text-[11px] uppercase tracking-[0.18em] ${
               hl
@@ -356,7 +344,8 @@ export default function AdvisorForm({
           </Question>
 
           <Question n={2} done={!!formData.studyLevel} title="What do you want to study?">
-            <div className="grid grid-cols-4 gap-1.5">
+            {/* Two by two on phones, one row where there is room */}
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-1.5 sm:[&>label]:grow">
               {studyLevels.map((l) => (
                 <Option key={l} name="studyLevel" value={l} checked={formData.studyLevel === l} onChange={handleChange} />
               ))}
@@ -364,7 +353,7 @@ export default function AdvisorForm({
           </Question>
 
           <Question n={3} done={!!formData.intake} title="When do you plan to start?">
-            <div className="grid grid-cols-3 gap-1.5">
+            <div className="flex flex-wrap gap-1.5 [&>label]:grow">
               {intakes.map((i) => (
                 <Option key={i} name="intake" value={i} checked={formData.intake === i} onChange={handleChange} />
               ))}

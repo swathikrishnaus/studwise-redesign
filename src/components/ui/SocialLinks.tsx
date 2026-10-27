@@ -13,11 +13,6 @@ export function SocialBadge({ s, className = "w-6 h-6", glyph = "w-3.5 h-3.5" }:
   );
 }
 
-/* --------------------------------------------------------------------------
-   SocialLinks — round links to Studwise's social profiles, each in its
-   own brand colour (Instagram's gradient, WhatsApp green). `tone` only
-   sets the ring, to sit on a dark or a light background.
-   -------------------------------------------------------------------------- */
 export default function SocialLinks({ tone = "dark", className = "" }: { tone?: "dark" | "light"; className?: string }) {
   const ring = tone === "dark" ? "ring-white/25" : "ring-white";
   return (

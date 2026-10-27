@@ -8,10 +8,6 @@ import { SocialBadge } from "@/components/ui/SocialLinks";
 
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
 
-/* --------------------------------------------------------------------------
-   TestimonialsCta — invitation to start, beside the consultation card
-   (#consultation-panel, the target of the header's "Book Free Advisory")
-   -------------------------------------------------------------------------- */
 export default function TestimonialsCta() {
   return (
     <section aria-labelledby="tm-cta-heading">
@@ -87,7 +83,7 @@ export default function TestimonialsCta() {
             </dl>
           </div>
 
-          <div data-reveal className="lg:col-span-6 xl:col-span-5 flex text-slate-900 w-full max-w-md mx-auto lg:max-w-none">
+          <div data-reveal className="lg:col-span-6 xl:col-span-5 flex min-w-0 text-slate-900 w-full max-w-md mx-auto lg:max-w-none">
             <AdvisorForm id="consultation-panel" />
           </div>
         </div>

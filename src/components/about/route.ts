@@ -1,11 +1,5 @@
 import { clamp } from "@/lib/scroll";
 
-/* --------------------------------------------------------------------------
-   Flight route geometry
-   --------------------------------------------------------------------------
-   The route is authored in a 0–100 square and scaled to the route box's
-   pixel size, so strokes and dashes never distort on any aspect ratio.
-   -------------------------------------------------------------------------- */
 type Point = [number, number];
 
 // Every segment keeps moving left (x strictly decreasing), so the airplane

@@ -1,11 +1,3 @@
-/* --------------------------------------------------------------------------
-   Flight maths shared by the airplane animations
-   --------------------------------------------------------------------------
-   The airplane artwork (public/images/airplane.png) is a fixed pose, so
-   every flight banks it toward its heading instead of turning it round:
-   FlightPlane (About route, DOM) and the staircase journey (3D).
-   -------------------------------------------------------------------------- */
-
 /** Natural size of the airplane artwork, in px. */
 export const PLANE_W = 410;
 export const PLANE_H = 207;

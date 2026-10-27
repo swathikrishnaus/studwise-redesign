@@ -66,21 +66,6 @@ function TokenColumns({ list }: { list: Destination[] }) {
   );
 }
 
-/* --------------------------------------------------------------------------
-   StudentsSection — "Our Students Across The Globe"
-   --------------------------------------------------------------------------
-   A top-down airplane flies the whole section, like the bottle on
-   klimtwine.com: it appears at the start of its flight line (small,
-   angled, fading in) and never crosses the section above, settles into the
-   centre lane between two columns of countries (at every screen size),
-   weaves and banks past them, then
-   lands in the centre of a panel that scales up from the bottom ("Taste
-   the Art of Wine" on klimtwine). It is a fixed overlay positioned from
-   scroll each frame. The destinations float as flag tokens either side
-   of the lane, and the landing panel counts up the students guided.
-   Scroll sets --rv on each [data-reveal] (reveal 0→1) and flips
-   data-on once an item is in view; styles live in globals.css.
-   -------------------------------------------------------------------------- */
 export default function StudentsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);

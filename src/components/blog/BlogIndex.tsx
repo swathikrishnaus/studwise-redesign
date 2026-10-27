@@ -54,16 +54,6 @@ function PostCard({ post }: { post: PostSummary }) {
   );
 }
 
-/* --------------------------------------------------------------------------
-   BlogIndex — topic filters and search over one uniform grid of article
-   cards, newest first, nine per page with numbered pagination (shown only
-   when there is more than one page). Topic filters list only the topics
-   that have posts. Filters
-   and search apply first, then paging (a change returns to page 1). The
-   page number is kept in the URL (?page=2), and page links are real
-   links, so every page can be bookmarked and followed by crawlers.
-   Press "/" anywhere to jump to search.
-   -------------------------------------------------------------------------- */
 export default function BlogIndex({ posts }: { posts: PostSummary[] }) {
   const [topic, setTopic] = useState<Topic | "All">("All");
   const [query, setQueryState] = useState("");
