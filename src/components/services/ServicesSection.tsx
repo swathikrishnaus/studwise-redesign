@@ -62,11 +62,6 @@ function ServiceCard({ card, copy }: { card: (typeof cards)[number]; copy?: bool
   );
 }
 
-/* --------------------------------------------------------------------------
-   ServicesSection — "Our Services": the heading rises out of its mask on
-   scroll (--hp), then the nine services glide past in a looping row of
-   photo cards the visitor can also scroll by hand (styles: globals.css under "Services")
-   -------------------------------------------------------------------------- */
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
 

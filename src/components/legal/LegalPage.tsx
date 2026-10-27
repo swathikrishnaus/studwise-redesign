@@ -55,13 +55,6 @@ function Block({ block }: { block: LegalBlock }) {
   );
 }
 
-/* --------------------------------------------------------------------------
-   LegalPage — the Privacy Policy and Terms and Conditions (data/legal):
-   a compact header card with the title, a short introduction and the
-   last-updated date, then the numbered sections in one readable column
-   beside a contents list (it stays in view on desktop and folds away
-   behind "Contents" on phones and tablets).
-   -------------------------------------------------------------------------- */
 export default function LegalPage({ doc, other }: { doc: LegalDoc; other: { href: string; label: string } }) {
   const contents = (
     <ol className="space-y-0.5">

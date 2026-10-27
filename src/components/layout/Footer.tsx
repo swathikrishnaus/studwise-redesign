@@ -23,7 +23,9 @@ const columns: { title: string; links: FooterLink[] }[] = [
       { label: "Home", href: "/" },
       { label: "About Us", href: "/about" },
       { label: "Testimonials", href: "/testimonials" },
+      { label: "Our Team", href: "/team" },
       { label: "Blogs", href: "/blog" },
+      { label: "Careers", href: "/careers" },
       { label: "Contact Us", href: "/contact" },
     ],
   },
@@ -54,13 +56,6 @@ function ExternalIcon() {
 
 const ext = (external?: boolean) => (external ? { target: "_blank", rel: "noopener noreferrer" } : {});
 
-/* --------------------------------------------------------------------------
-   Footer — site-wide
-   --------------------------------------------------------------------------
-   Modelled on lionheart-education.com: a row of outlined contact pills,
-   a short statement beside four link columns, a legal line, and a faint
-   "studwise" wordmark filling the full width.
-   -------------------------------------------------------------------------- */
 export default function Footer() {
   const year = new Date().getFullYear();
 

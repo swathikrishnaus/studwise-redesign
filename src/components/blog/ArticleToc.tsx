@@ -4,11 +4,6 @@ import { useEffect, useState } from "react";
 import type { MouseEvent } from "react";
 import type { Heading } from "@/data/blog";
 
-/* --------------------------------------------------------------------------
-   ArticleToc — "On this page": the article's headings, the one being read
-   highlighted (scroll spy). Shown as a sticky rail on desktop and as a
-   collapsible list on smaller screens.
-   -------------------------------------------------------------------------- */
 export default function ArticleToc({ headings, variant }: { headings: Heading[]; variant: "rail" | "inline" }) {
   const [active, setActive] = useState<string | null>(headings[0]?.id ?? null);
 

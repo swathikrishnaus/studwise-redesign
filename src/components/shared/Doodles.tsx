@@ -1,8 +1,5 @@
 import type { ReactNode } from "react";
 
-/* --------------------------------------------------------------------------
-   Doodles — the homepage banner's white line icons (64 × 64 strokes)
-   -------------------------------------------------------------------------- */
 function Doodle({ children, className }: { children: ReactNode; className: string }) {
   return (
     <svg

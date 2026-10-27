@@ -2,13 +2,6 @@ import Link from "next/link";
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/utils/helpers";
 
-/* --------------------------------------------------------------------------
-   CloudButton — the site's primary call to action
-   --------------------------------------------------------------------------
-   Lusion-style pill: a dot before the label that floods the button with
-   the hover colour, the label easing left and an airplane flying in.
-   Styles live in globals.css under "Primary Button".
-   -------------------------------------------------------------------------- */
 type CloudButtonBase = {
   children: ReactNode;
   /** sky: brand-blue for light backgrounds; white: for blue backgrounds */

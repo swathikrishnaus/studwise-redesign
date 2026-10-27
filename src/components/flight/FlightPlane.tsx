@@ -7,18 +7,6 @@ import { clamp, lerp, pinnedProgress, prefersReducedMotion, smoothstep } from "@
 import { MAX_BANK, NOSE, PLANE_H, PLANE_W, wrapAngle } from "./flightMath";
 import type { Pt } from "./flightMath";
 
-/* --------------------------------------------------------------------------
-   FlightPlane — the airplane flying the About route on scroll
-   --------------------------------------------------------------------------
-   A fixed overlay that fades in at the start of the About flight path
-   ([data-flight-route]) as the About section arrives, then rides the path
-   while the section is pinned. (It used to take off from an airplane in
-   the hero; the hero now shows students instead.) The route is read live
-   from the DOM each frame, so the plane stays locked to the layout at any
-   viewport size. Only the progress values are eased, which gives the
-   flight its weight. The artwork is never mirrored and only banks gently.
-   -------------------------------------------------------------------------- */
-
 const BASE_W = PLANE_W;
 const BASE_H = PLANE_H;
 

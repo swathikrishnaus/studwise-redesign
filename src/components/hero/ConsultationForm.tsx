@@ -3,9 +3,6 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 
-/* --------------------------------------------------------------------------
-   Form option data
-   -------------------------------------------------------------------------- */
 const destinations = [
   "United Kingdom",
   "United States",
@@ -36,9 +33,6 @@ const intakes = [
   "September 2027",
 ];
 
-/* --------------------------------------------------------------------------
-   ConsultationForm
-   -------------------------------------------------------------------------- */
 export default function ConsultationForm() {
   const [formData, setFormData] = useState({
     destination: "",

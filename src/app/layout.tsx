@@ -10,12 +10,6 @@ import FloatingDock from "@/components/layout/FloatingDock";
 import AdvisorDialog from "@/components/shared/AdvisorDialog";
 import PageLoader from "@/components/layout/PageLoader";
 
-/* --------------------------------------------------------------------------
-   Font Configuration
-   --------------------------------------------------------------------------
-   GoogleSans Variable is used as the primary sans-serif font.
-   Geist Mono is retained for monospace/code contexts.
-   -------------------------------------------------------------------------- */
 const fontSans = localFont({
   src: [
     {
@@ -37,9 +31,6 @@ const fontMono = Geist_Mono({
   display: "swap",
 });
 
-/* --------------------------------------------------------------------------
-   Metadata
-   -------------------------------------------------------------------------- */
 export const metadata: Metadata = {
   title: {
     default: "Studwise — Study Abroad Consultants",
@@ -85,9 +76,6 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-/* --------------------------------------------------------------------------
-   Root Layout
-   -------------------------------------------------------------------------- */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html

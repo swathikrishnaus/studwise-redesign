@@ -3,13 +3,6 @@
 import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
 
-/* --------------------------------------------------------------------------
-   RevealRoot — fades [data-reveal] children in as they enter the viewport
-   --------------------------------------------------------------------------
-   Hidden states only apply once the root is marked ready, so the page
-   reads fine before hydration or without JavaScript. Styles live in
-   globals.css under "About page".
-   -------------------------------------------------------------------------- */
 export default function RevealRoot({ children }: { children: ReactNode }) {
   const rootRef = useRef<HTMLDivElement>(null);
 

@@ -220,6 +220,6 @@ export const featuredTestimonials = ["maria", "ardra-ashok"]
 
 export const testimonialsIntro = {
   eyebrow: "Testimonials",
-  title: "Check out what clients say",
+  title: "Hear It from Our Students",
   text: "Collecting the trust and commitment of our happy students.",
 };

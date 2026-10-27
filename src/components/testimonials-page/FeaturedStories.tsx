@@ -27,6 +27,7 @@ const NEXT = "M9 18l6-6-6-6";
 export default function FeaturedStories() {
   const rowRef = useRef<HTMLDivElement>(null);
   const [edge, setEdge] = useState({ start: true, end: false });
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   const onScroll = () => {
     const el = rowRef.current;
@@ -111,7 +112,7 @@ export default function FeaturedStories() {
               />
 
               {/* Photo */}
-              <div className="relative lg:col-span-5 min-h-[20rem] sm:min-h-[26rem] overflow-hidden rounded-2xl bg-slate-100">
+              <div className="relative lg:col-span-5 aspect-[4/3] sm:aspect-auto sm:min-h-[22rem] overflow-hidden rounded-2xl bg-slate-100">
                 <Image
                   src={t.photo}
                   alt={`${t.name}, ${t.course} at ${t.university.name}`}
@@ -131,29 +132,45 @@ export default function FeaturedStories() {
 
               {/* Quote */}
               <div className="relative lg:col-span-7 flex flex-col px-3 pt-5 pb-4 sm:px-6 sm:pt-8 lg:px-10 lg:py-10">
-                <blockquote className="flex-1 text-[1.2rem] sm:text-[1.45rem] lg:text-[1.6rem] leading-[1.42] tracking-[-0.02em] text-slate-800">
-                  “<Quote t={t} />”
-                </blockquote>
-                <figcaption className="mt-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-slate-100 pt-6">
+                <div className="flex-1">
+                  <blockquote
+                    id={`featured-quote-${t.slug}`}
+                    className={`text-[1.05rem] sm:text-[1.35rem] lg:text-[1.5rem] leading-[1.45] tracking-[-0.02em] text-slate-800 ${
+                      expanded === t.slug ? "" : "line-clamp-5 lg:line-clamp-4"
+                    }`}
+                  >
+                    “<Quote t={t} />”
+                  </blockquote>
+                  <button
+                    type="button"
+                    aria-expanded={expanded === t.slug}
+                    aria-controls={`featured-quote-${t.slug}`}
+                    onClick={() => setExpanded(expanded === t.slug ? null : t.slug)}
+                    className="mt-3 text-sm sm:text-[15px] text-[#0a7fb3] hover:text-[#009cd9]"
+                  >
+                    {expanded === t.slug ? "Show less" : "Show more"}
+                  </button>
+                </div>
+                <figcaption className="mt-6 sm:mt-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-slate-100 pt-6">
                   <span className="flex min-w-0 items-center gap-3.5">
                     <span className="min-w-0">
                       <span className="block text-lg sm:text-xl tracking-[-0.02em] text-slate-900">{t.name}</span>
                       <span className="block text-sm sm:text-[15px] text-slate-500">{t.course}</span>
                     </span>
                   </span>
-                  <span className="flex items-center gap-3 sm:ml-auto">
+                  <span className="flex items-center gap-2 sm:gap-3 sm:ml-auto">
                     {t.university.logo && (
-                      <span className="grid place-items-center h-11 shrink-0">
+                      <span className="grid place-items-center h-8 sm:h-11 shrink-0">
                         <Image
                           src={t.university.logo}
                           alt=""
                           width={96}
                           height={40}
-                          className="h-7 w-auto max-w-[5rem] object-contain"
+                          className="h-5 sm:h-7 w-auto max-w-[3.5rem] sm:max-w-[5rem] object-contain"
                         />
                       </span>
                     )}
-                    <span className="text-sm sm:text-[15px] leading-snug text-slate-700 max-w-[11rem]">
+                    <span className="text-[13px] sm:text-[15px] leading-snug text-slate-700 max-w-[11rem]">
                       <span className="sr-only">University: </span>
                       {t.university.name}
                     </span>

@@ -10,11 +10,6 @@ import { Eyebrow, gutter } from "@/components/shared/PageKit";
 
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
 
-/* --------------------------------------------------------------------------
-   AboutCtaSection — "So, are you planning to go for abroad studies!" on a
-   brand-blue panel, beside the consultation card (#consultation-panel, the
-   target of the header's "Book Free Advisory" buttons)
-   -------------------------------------------------------------------------- */
 export default function AboutCtaSection() {
   return (
     <section aria-labelledby="about-cta-heading" className="bg-[#F1F5F9]">
@@ -106,7 +101,7 @@ export default function AboutCtaSection() {
             <div
               data-reveal
               style={{ "--d": "0.2s" } as CSSProperties}
-              className="lg:col-span-6 xl:col-span-5 flex text-slate-900 w-full max-w-md mx-auto lg:max-w-none"
+              className="lg:col-span-6 xl:col-span-5 flex min-w-0 text-slate-900 w-full max-w-md mx-auto lg:max-w-none"
             >
               <AdvisorForm id="consultation-panel" />
             </div>
