@@ -17,14 +17,6 @@ function Arrow({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-/* --------------------------------------------------------------------------
-   AboutTeamSection — "Meet our team" on the About page: a pastel panel
-   that invites a click through to /team from every part of it. The faces
-   of the team lead to the team page, each group chip jumps to its group
-   there, and every card in the slow marquee links to its member's group
-   (the marquee pauses under the pointer and a "View" chip appears on the
-   card; hover only tints, it never lifts).
-   -------------------------------------------------------------------------- */
 export default function AboutTeamSection() {
   return (
     <section id="our-team" aria-labelledby="about-team-heading" className="scroll-mt-6 bg-[#F1F5F9]">
@@ -64,7 +56,6 @@ export default function AboutTeamSection() {
                 </span>
               </Link>
 
-
               {/* The section's main action: a large button with its own line of context */}
               <div className="mt-9 flex flex-wrap items-center gap-x-5 gap-y-3">
                 <CloudButton href="/team" size="lg" className="mt-0 shadow-[0_18px_36px_-16px_rgba(0,140,200,0.75)]">
@@ -85,19 +76,19 @@ export default function AboutTeamSection() {
                     <li
                       key={`${m.name}-${i}`}
                       aria-hidden={copy || undefined}
-                      className={`w-44 sm:w-52 lg:w-56 shrink-0 ${copy ? "motion-reduce:hidden" : ""}`}
+                      className={`w-56 sm:w-64 lg:w-72 shrink-0 ${copy ? "motion-reduce:hidden" : ""}`}
                     >
                       <Link
                         href={`/team#${m.group}`}
                         tabIndex={copy ? -1 : undefined}
                         className="group block h-full rounded-2xl bg-white p-2 ring-1 ring-slate-900/5 transition-[box-shadow] duration-300 hover:ring-[#009cd9]/35"
                       >
-                        <span className="relative block aspect-[4/5] overflow-hidden rounded-xl bg-slate-100">
+                        <span className="relative block aspect-[5/4] overflow-hidden rounded-xl bg-slate-100">
                           <Image
                             src={m.photo}
                             alt={copy ? "" : `${m.name}, ${m.role} at Studwise`}
                             fill
-                            sizes="(min-width: 1024px) 224px, (min-width: 640px) 208px, 176px"
+                            sizes="(min-width: 1024px) 288px, (min-width: 640px) 256px, 224px"
                             className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                           />
                           <span className="absolute right-2 bottom-2 inline-flex items-center gap-1 h-7 pl-2.5 pr-2 rounded-full bg-white/90 backdrop-blur text-[12px] text-[#0a7fb3] opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">

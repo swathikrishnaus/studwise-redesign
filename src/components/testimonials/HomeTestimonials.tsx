@@ -42,10 +42,6 @@ function ReviewCard({ t, copy }: { t: Testimonial; copy?: boolean }) {
   );
 }
 
-/* --------------------------------------------------------------------------
-   HomeTestimonials — student reviews gliding past in one auto-scrolling row
-   (components/shared/LoopCarousel, also scrollable by hand), with a link to the full page
-   -------------------------------------------------------------------------- */
 export default function HomeTestimonials() {
   const [first, ...rest] = testimonialsIntro.title.split(" what ");
   return (

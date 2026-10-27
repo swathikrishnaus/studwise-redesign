@@ -67,7 +67,6 @@ export const serviceMenu: MegaGroup[] = [
     items: [
       { label: "Post-Landing Services", href: "/services/post-landing-services", description: "Help on arrival in your new country", icon: ICONS.pin },
       { label: "Accommodation Assistance", href: "/services/accommodation-assistance", description: "Housing within your budget, and part-time work guidance", icon: ICONS.home },
-      { label: "Internship Services", href: "/services/internship-services", description: "Internship programmes while you study", icon: ICONS.briefcase },
     ],
   },
 ];
@@ -82,7 +81,7 @@ export const aboutMenu: MegaItem[] = [
   { label: "Core values", href: "/about#our-values", description: "Excellence, honesty, dedication and transparency", icon: ICONS.star, footerOnly: true },
   { label: "Our approach", href: "/about#our-approach", description: "Led by founder & CEO Mr. P S Mahmood", icon: ICONS.award },
   { label: "Our team", href: "/about#our-team", description: "The people who guide every student", icon: ICONS.person, featured: true },
-  { label: "Why choose us", href: "/about#why-choose-us", description: "5+ years, 150+ universities, 24/7 support", icon: ICONS.cap },
+  { label: "Why choose us", href: "/about#why-choose-us", description: "7+ years, 150+ universities, 24/7 support", icon: ICONS.cap },
   { label: "Our centres", href: "/about#our-centres", description: "Manjeri, Valanchery and Calicut", icon: ICONS.building, footerOnly: true },
 ];
 
@@ -94,12 +93,14 @@ export const aboutMenuExtras: MegaItem[] = [
 
 export type MainNavItem = NavLink & { mega?: "services" | "about" };
 
+/** The header's links; Contact is its own button beside them (the logo links home) */
 export const mainNavLinks: MainNavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/services", mega: "services" },
   { label: "About Us", href: "/about", mega: "about" },
+  { label: "Services", href: "/services", mega: "services" },
+  { label: "Our Team", href: "/team" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Blogs", href: "/blog" },
+  { label: "Careers", href: "/careers" },
 ];
 
 /** The phone tab bar's links (components/navigation/MobileTabBar); the
@@ -107,7 +108,7 @@ export const mainNavLinks: MainNavItem[] = [
 export const mobileTabLinks: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Stories", href: "/testimonials" },
+  { label: "Blogs", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -122,6 +123,7 @@ export const footerNavLinks: NavLink[] = [
   { label: "Services", href: "/services" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Blogs", href: "/blog" },
+  { label: "Careers", href: "/careers" },
   { label: "Contact Us", href: "/contact" },
 ];
 

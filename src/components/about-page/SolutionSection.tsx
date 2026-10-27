@@ -5,10 +5,6 @@ import { solution } from "@/data/aboutPage";
 import { Eyebrow, gutter } from "@/components/shared/PageKit";
 import ScrollWords from "@/components/shared/ScrollWords";
 
-/* --------------------------------------------------------------------------
-   SolutionSection — "A Comprehensive Solution for Your Dreams", with the
-   founder's card and a team photo
-   -------------------------------------------------------------------------- */
 export default function SolutionSection() {
   return (
     <section id="our-approach" aria-labelledby="solution-heading" className="scroll-mt-6 bg-[#F1F5F9]">
@@ -69,14 +65,6 @@ export default function SolutionSection() {
                 sizes="(min-width: 1024px) 46vw, 92vw"
                 className="object-cover"
               />
-            </div>
-            <div
-              data-reveal
-              style={{ "--d": "0.4s" } as CSSProperties}
-              className="absolute -bottom-5 right-4 sm:right-6 flex items-center gap-3 rounded-xl bg-white/95 backdrop-blur ring-1 ring-slate-900/5 shadow-[0_10px_30px_-18px_rgba(15,23,42,0.35)] px-4 py-2.5"
-            >
-              <span className="text-2xl tracking-[-0.03em] leading-none text-slate-900">150<span className="text-[#009cd9]">+</span></span>
-              <span className="text-xs text-slate-500 leading-snug max-w-[7.5rem]">universities across the globe</span>
             </div>
           </div>
         </div>

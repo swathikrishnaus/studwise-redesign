@@ -4,7 +4,7 @@ import type { TeamMember } from "@/data/team";
 export default function TeamMemberCard({ member }: { member: TeamMember }) {
   return (
     <article className="group h-full rounded-2xl bg-white p-2 ring-1 ring-slate-900/5 transition-[box-shadow] duration-300 hover:ring-[#009cd9]/30">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-slate-100">
+      <div className="relative aspect-square overflow-hidden rounded-xl bg-slate-100">
         <Image
           src={member.photo}
           alt={`${member.name}, ${member.role} at Studwise`}

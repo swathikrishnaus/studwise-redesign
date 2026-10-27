@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
       // The old WordPress About page lived at /about-us/; keep its links working
       { source: "/about-us", destination: "/about", permanent: true },
       { source: "/contact-us", destination: "/contact", permanent: true },
+      // The internship service was withdrawn; its old addresses lead to the services
+      { source: "/services/internship-services", destination: "/#services", permanent: false },
+      { source: "/study-abroad-internship-programs", destination: "/#services", permanent: false },
       // Old WordPress service pages
       ...serviceDetails.map((s) => ({ source: s.legacyPath, destination: `/services/${s.slug}`, permanent: true })),
       // Old WordPress articles lived at the site root (/<slug>/)

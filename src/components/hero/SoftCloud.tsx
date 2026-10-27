@@ -1,13 +1,5 @@
 import { useId } from "react";
 
-/* --------------------------------------------------------------------------
-   SoftCloud — a fluffy, photo-like cloud drawn in SVG
-   --------------------------------------------------------------------------
-   Shaded circles ("puffs") are pushed around by fractal noise and lightly
-   blurred, which turns them into billowing cumulus. A paler, blurrier back
-   layer gives depth. Shapes are authored in the cloud's own viewBox and
-   the SVG scales to whatever box it is placed in.
-   -------------------------------------------------------------------------- */
 type Circle = [cx: number, cy: number, r: number];
 
 export type CloudShape = {

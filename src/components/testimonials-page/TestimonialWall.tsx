@@ -6,7 +6,7 @@ import { Eyebrow } from "@/components/shared/PageKit";
 import { testimonials } from "@/data/testimonials";
 import type { Testimonial } from "@/data/testimonials";
 
-const LONG = 480; // characters before a quote collapses behind "Read more"
+const LONG = 240; // characters before a quote collapses behind "Show more"
 const FIRST_BATCH = 9;
 const BATCH = 6;
 
@@ -20,9 +20,9 @@ function StoryCard({ t, id: cardId }: { t: Testimonial; id?: string }) {
   const id = `tm-quote-${t.slug}`;
 
   return (
-    <article id={cardId} tabIndex={-1} className="tm-enter outline-none rounded-3xl bg-white p-6 sm:p-7 ring-1 ring-slate-900/[0.04] shadow-[0_24px_48px_-36px_rgba(15,23,42,0.35)] [font-optical-sizing:none] transition-shadow duration-300 hover:shadow-[0_28px_56px_-30px_rgba(0,110,170,0.35)]">
+    <article id={cardId} tabIndex={-1} className="tm-enter outline-none rounded-3xl bg-white p-5 sm:p-7 ring-1 ring-slate-900/[0.04] shadow-[0_24px_48px_-36px_rgba(15,23,42,0.35)] [font-optical-sizing:none] transition-shadow duration-300 hover:shadow-[0_28px_56px_-30px_rgba(0,110,170,0.35)]">
       <div className="flex items-start justify-between gap-4">
-        <span className="relative w-20 h-20 shrink-0 overflow-hidden rounded-full bg-slate-100 ring-4 ring-[#F1F5F9]">
+        <span className="relative w-14 h-14 sm:w-20 sm:h-20 shrink-0 overflow-hidden rounded-full bg-slate-100 ring-4 ring-[#F1F5F9]">
           <Image src={t.photo} alt="" fill sizes="80px" className="object-cover" style={{ objectPosition: t.focus }} />
         </span>
         <svg className="w-8 h-8 text-[#009cd9]/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -32,7 +32,7 @@ function StoryCard({ t, id: cardId }: { t: Testimonial; id?: string }) {
 
       <blockquote
         id={id}
-        className={`mt-5 body-text tracking-[-0.01em] text-slate-800 ${long && !open ? "line-clamp-7" : ""}`}
+        className={`mt-4 sm:mt-5 body-text tracking-[-0.01em] text-slate-800 ${long && !open ? "line-clamp-4" : ""}`}
       >
         {t.quote}
       </blockquote>
@@ -44,11 +44,11 @@ function StoryCard({ t, id: cardId }: { t: Testimonial; id?: string }) {
           onClick={() => setOpen(!open)}
           className="mt-2 text-sm text-[#0a7fb3] hover:text-[#009cd9]"
         >
-          {open ? "Show less" : "Read more"}
+          {open ? "Show less" : "Show more"}
         </button>
       )}
 
-      <footer className="mt-6 pt-5 border-t border-slate-100">
+      <footer className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-slate-100">
         <h3 className="text-[1.0625rem] leading-tight tracking-[-0.01em] text-slate-900">{t.name}</h3>
         <p className="mt-1 text-sm leading-snug text-slate-500">{t.course}</p>
         <p className="mt-3 inline-flex max-w-full items-center gap-1.5 rounded-full bg-sky-50 px-2.5 py-1 text-xs leading-tight text-[#0a7fb3] ring-1 ring-sky-100">
@@ -63,9 +63,6 @@ function StoryCard({ t, id: cardId }: { t: Testimonial; id?: string }) {
   );
 }
 
-/* --------------------------------------------------------------------------
-   Column count, following the grid's breakpoints (sm: 2, xl: 3)
-   -------------------------------------------------------------------------- */
 const QUERIES = ["(min-width: 1280px)", "(min-width: 640px)"];
 const subscribe = (cb: () => void) => {
   const lists = QUERIES.map((q) => window.matchMedia(q));
@@ -90,10 +87,6 @@ function toColumns(items: Testimonial[], count: number) {
   return cols.map((c) => c.items);
 }
 
-/* --------------------------------------------------------------------------
-   TestimonialWall — the reviews in a masonry wall, nine at first, then more
-   in batches with "Load more stories"
-   -------------------------------------------------------------------------- */
 export default function TestimonialWall() {
   const cols = useSyncExternalStore(subscribe, columnCount, () => 3);
   const [count, setCount] = useState(FIRST_BATCH);

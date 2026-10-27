@@ -12,7 +12,7 @@ export const aboutTagline =
 
 /** Client-provided figures (Studwise fact sheet, October 2026): confirm before launch */
 export const aboutStats = [
-  { value: 5, suffix: "+", label: "Years of Experience" },
+  { value: 7, suffix: "+", label: "Years of Experience" },
   { value: 550, suffix: "+", label: "Students Guided" },
   { value: 14, suffix: "+", label: "Countries" },
 ];

@@ -14,9 +14,9 @@ const items = [
   {
     ...pillars[0],
     id: "our-vision",
-    image: "/images/vision.jpg",
+    image: "/images/vision-web.jpg",
     alt: "A graduate in a blue gown tossing her cap into the air as she walks down an arched corridor",
-    focus: "50% 32%",
+    focus: "50% 12%",
   },
   {
     ...pillars[1],
@@ -36,15 +36,14 @@ const items = [
   },
 ];
 
-/* --------------------------------------------------------------------------
-   PurposeSection — Vision, Mission and Values as one editorial split: a
-   numbered accordion on the left (one pillar open at a time, the core
-   values listed under Values) and a tall photo stage on the right that
-   crossfades to the open pillar. /about#our-values opens Values.
-   Styles: "About — Our Purpose" in globals.css.
-   -------------------------------------------------------------------------- */
 export default function PurposeSection() {
+  // The open pillar (null once it is closed again) and the photo on show (the last one opened)
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [active, setActive] = useState(0);
+  const select = (i: number) => {
+    setActive(i);
+    setOpenIndex(i);
+  };
 
   // Deep links (/about#our-vision, #our-mission, #our-values) open their
   // pillar, then bring the section back into view once the accordion has
@@ -54,7 +53,7 @@ export default function PurposeSection() {
     const sync = () => {
       const i = items.findIndex((item) => `#${item.id}` === window.location.hash);
       if (i < 0) return;
-      setActive(i);
+      select(i);
       window.clearTimeout(timer);
       timer = window.setTimeout(() => {
         const section = document.getElementById("our-purpose");
@@ -71,8 +70,6 @@ export default function PurposeSection() {
       window.clearTimeout(timer);
     };
   }, []);
-
-  const current = items[active];
 
   return (
     <section id="our-purpose" aria-labelledby="purpose-heading" className="scroll-mt-6 bg-[#F1F5F9]">
@@ -91,7 +88,7 @@ export default function PurposeSection() {
               <div className="mt-10 sm:mt-12 lg:mt-auto lg:pt-16">
                 <ul className="border-t border-slate-200">
                   {items.map((item, i) => {
-                    const open = i === active;
+                    const open = i === openIndex;
                     const panelId = `${item.id}-panel`;
                     return (
                       <li
@@ -106,7 +103,7 @@ export default function PurposeSection() {
                             type="button"
                             aria-expanded={open}
                             aria-controls={panelId}
-                            onClick={() => setActive(i)}
+                            onClick={() => (open ? setOpenIndex(null) : select(i))}
                             className="group flex w-full items-center gap-4 sm:gap-5 py-5 sm:py-6 text-left"
                           >
                             <span
@@ -160,6 +157,20 @@ export default function PurposeSection() {
                                   })}
                                 </ul>
                               )}
+
+                              {/* Below lg each pillar carries its own photo, under its text */}
+                              <div className="lg:hidden relative mt-6 aspect-[4/3] overflow-hidden rounded-2xl bg-slate-100">
+                                <Image
+                                  src={item.image}
+                                  alt={item.alt}
+                                  fill
+                                  sizes="94vw"
+                                  // The open pillar's photo is on screen at once; the others wait until opened
+                                  loading={open ? "eager" : "lazy"}
+                                  className="object-cover"
+                                  style={{ objectPosition: item.focus }}
+                                />
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -170,8 +181,8 @@ export default function PurposeSection() {
               </div>
             </div>
 
-            {/* ---------------- Photo stage ---------------- */}
-            <div className="lg:col-span-6 xl:col-span-7 order-first lg:order-none">
+            {/* ---------------- Photo stage (desktop; phones show each photo in its pillar) ---------------- */}
+            <div className="hidden lg:block lg:col-span-6 xl:col-span-7">
               <div
                 data-reveal="clip"
                 className="relative h-full min-h-[18rem] sm:min-h-[26rem] lg:min-h-[40rem] overflow-hidden rounded-2xl bg-slate-100"
@@ -189,30 +200,6 @@ export default function PurposeSection() {
                       />
                     </div>
                   ))}
-
-                  {/* Caption: the open pillar and its place in the three */}
-                  <div className="absolute left-4 right-4 bottom-4 sm:left-6 sm:right-auto sm:bottom-6 flex items-center gap-4 rounded-2xl bg-white/85 backdrop-blur-xl ring-1 ring-white/70 pl-3 pr-5 py-3">
-                    <span
-                      className="grid place-items-center w-11 h-11 rounded-xl bg-sky-50 text-[#0a7fb3] ring-1 ring-sky-100"
-                      aria-hidden="true"
-                    >
-                      <Icon d={current.icon} />
-                    </span>
-                    <span>
-                      <span className="block text-[11px] uppercase tracking-[0.2em] text-slate-500">
-                        <span className="hidden sm:inline">Our purpose · </span>0{active + 1} / 0{items.length}
-                      </span>
-                      <span className="block text-lg leading-tight tracking-tight text-slate-900">Our {current.title}</span>
-                    </span>
-                    <span className="ml-auto sm:ml-4 flex gap-1.5" aria-hidden="true">
-                      {items.map((item, i) => (
-                        <span
-                          key={item.id}
-                          className={`h-1.5 rounded-full transition-all duration-500 ${i === active ? "w-6 bg-[#009cd9]" : "w-1.5 bg-slate-300"}`}
-                        />
-                      ))}
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>

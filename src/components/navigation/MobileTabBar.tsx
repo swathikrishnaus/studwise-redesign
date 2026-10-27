@@ -8,8 +8,8 @@ import { mobileTabLinks } from "@/data/navigation";
 const ICONS: Record<string, string> = {
   "/": "M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9.5Z",
   "/about": "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-10v5m0-8h.01",
-  "/testimonials": "M8 9h8M8 13h5m-9 8 3.5-3H19a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v15Z",
-  "/contact": "M3 7l9 6 9-6M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z",
+  "/blog": "M12 6.5C10.5 5.3 8.4 4.5 6 4.5c-1.1 0-2.1.2-3 .5v14c.9-.3 1.9-.5 3-.5 2.4 0 4.5.8 6 2m0-14c1.5-1.2 3.6-2 6-2 1.1 0 2.1.2 3 .5v14c-.9-.3-1.9-.5-3-.5-2.4 0-4.5.8-6 2m0-14v14",
+  "/contact": "M3 5a2 2 0 0 1 2-2h2.3a1 1 0 0 1 1 .7l1.1 3.4a1 1 0 0 1-.3 1.1L7.6 9.6a11 11 0 0 0 6.8 6.8l1.4-1.5a1 1 0 0 1 1.1-.3l3.4 1.1a1 1 0 0 1 .7 1V19a2 2 0 0 1-2 2h-1C9.7 21 3 14.3 3 6V5Z",
 };
 const HEADSET =
   "M4 14v-2a8 8 0 1 1 16 0v2M4 14a2 2 0 0 0 2 2h1v-5H6a2 2 0 0 0-2 2v1Zm16 0a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2v1Zm-3 2v1a3 3 0 0 1-3 3h-2";
@@ -25,15 +25,6 @@ function Stroke({ d, className = "w-[22px] h-[22px]" }: { d: string; className?:
   );
 }
 
-/* --------------------------------------------------------------------------
-   MobileTabBar — the bottom navigation on phones and tablets (below lg):
-   a frosted-glass bar (the page blurs through it) with a notch in the
-   middle that cradles a raised
-   brand-blue advisor button (it opens components/shared/AdvisorDialog).
-   Two icon tabs sit either side; the current page's icon turns brand
-   blue and its name slides in beneath it. WhatsApp, Call and Instagram float
-   above it in the FloatingDock. The hamburger menu leaves these links out.
-   -------------------------------------------------------------------------- */
 export default function MobileTabBar() {
   const pathname = usePathname();
   const isCurrent = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
@@ -47,7 +38,7 @@ export default function MobileTabBar() {
           aria-label={t.label}
           aria-current={active ? "page" : undefined}
           className={`tabbar__tab relative flex h-16 flex-col items-center justify-center transition-colors duration-300 ${
-            active ? "text-[#009cd9]" : "text-slate-400 active:text-slate-600"
+            active ? "text-[#009cd9]" : "text-slate-500 active:text-slate-700"
           }`}
         >
           <Stroke d={ICONS[t.href]} />
@@ -69,7 +60,7 @@ export default function MobileTabBar() {
         {/* A soft glow beneath (a real shadow would stop the glass blurring the page) */}
         <span className="absolute inset-x-6 -bottom-1 h-8 rounded-full bg-[#0b2a45]/15 blur-xl" aria-hidden="true" />
         {/* The glass, cut to the notched shape */}
-        <div className="tabbar__glass absolute inset-0 rounded-[1.4rem] bg-white/60 backdrop-blur-xl backdrop-saturate-150" aria-hidden="true" />
+        <div className="tabbar__glass absolute inset-0 rounded-[1.4rem] bg-white/88 backdrop-blur-xl backdrop-saturate-150" aria-hidden="true" />
         {/* Its light edge, notch included */}
         <div className="absolute inset-0 flex pointer-events-none" aria-hidden="true">
           <span className="flex-1 rounded-l-[1.4rem] border border-r-0 border-white/80" />

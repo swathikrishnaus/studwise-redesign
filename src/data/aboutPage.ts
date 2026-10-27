@@ -15,7 +15,7 @@ export const aboutHero = {
 
 export const aboutHighlights = [
   { value: "2019", label: "Founded in Manjeri" },
-  { value: "5+", label: "Years of experience" },
+  { value: "7+", label: "Years of experience" },
   { value: "550+", label: "Students guided abroad" },
   { value: "150+", label: "Universities represented" },
 ];
@@ -24,7 +24,7 @@ export const aboutHighlights = [
 export const whoWeAre = {
   lead: "Studwise is the best education consultancy in Malappuram founded in 2019 and headquartered in Manjeri, with its centres in Valanchery and Calicut.",
   paragraphs: [
-    "With over 5+ years of experience, Studwise has guided 550+ students to study in 14+ countries, including the UK, USA, Canada, Australia, Malta, Singapore, Dubai, and Malaysia. Studwise represents 150+ universities across the globe, with 250+ postgraduate courses spanning 30+ unique research areas.",
+    "With over 7+ years of experience, Studwise has guided 550+ students to study in 14+ countries, including the UK, USA, Canada, Australia, Malta, Singapore, Dubai, and Malaysia. Studwise represents 150+ universities across the globe, with 250+ postgraduate courses spanning 30+ unique research areas.",
     "We provide courses like TOEFL, IELTS, and EPT support with career counselling and proper guidance in course selection. It all involves working together closely with students. For them to comply with the cultural and analytical updates brought about by overseas education.",
     "Studwise's comprehensive support services and experienced team of experts help students find the best courses, scholarship assistance, colleges, and universities that perfectly meet their career expectations, and academic and financial background needs on a global scale. This helps them reach their study abroad dream destination.",
   ],
@@ -74,7 +74,7 @@ export const solution = {
 };
 
 export const whyChoose = {
-  text: "With 5+ years of experience in our bag, Studwise represents 150+ universities across the globe. With top-notch and experienced counsellors, Studwise makes sure the journey is a hassle-free ride. Career counseling, appropriate course selection, and TOEFL, IELTS, and EPT support are the foundational events of this ride.",
+  text: "With 7+ years of experience in our bag, Studwise represents 150+ universities across the globe. With top-notch and experienced counsellors, Studwise makes sure the journey is a hassle-free ride. Career counseling, appropriate course selection, and TOEFL, IELTS, and EPT support are the foundational events of this ride.",
   stats: [
     {
       value: "24/7",

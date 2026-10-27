@@ -18,12 +18,6 @@ type CoverProps = Pick<PostSummary, "kicker" | "icon" | "sky" | "topic" | "image
   scale?: number;
 };
 
-/* --------------------------------------------------------------------------
-   PostCover — a designed cover in the site's sky style: the post's country
-   or theme set big over a tinted sky and soft clouds, with its topic and a
-   line icon. Sized by its box; type scales with the box (container units).
-   A post with its own cover photo shows that instead.
-   -------------------------------------------------------------------------- */
 export default function PostCover({ kicker, icon, sky, topic, image, className = "", large = false, scale = 1 }: CoverProps) {
   if (image)
     return (

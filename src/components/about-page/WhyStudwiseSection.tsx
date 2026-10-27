@@ -2,9 +2,6 @@ import { whyChoose } from "@/data/aboutPage";
 import { Eyebrow, StatCards, gutter } from "@/components/shared/PageKit";
 import ScrollWords from "@/components/shared/ScrollWords";
 
-/* --------------------------------------------------------------------------
-   WhyStudwiseSection — "Why Choose Us" statement and three key figures
-   -------------------------------------------------------------------------- */
 export default function WhyStudwiseSection() {
   return (
     <section id="why-choose-us" aria-labelledby="why-studwise-heading" className="scroll-mt-6 bg-[#F1F5F9]">

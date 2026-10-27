@@ -6,9 +6,6 @@ import { headerContact } from "@/data/navigation";
 
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
 
-/* --------------------------------------------------------------------------
-   BlogCta — "ask a counsellor" band closing the blog pages
-   -------------------------------------------------------------------------- */
 export default function BlogCta() {
   return (
     <section

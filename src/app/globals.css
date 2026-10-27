@@ -692,12 +692,13 @@ select:focus-visible {
     z-index: -1;
     left: 50%;
     top: 50%;
-    width: 64em;
-    height: 64em;
-    margin: -32em 0 0 -32em;
+    /* Big enough to flood even a full-width button from its dot */
+    width: 180em;
+    height: 180em;
+    margin: -90em 0 0 -90em;
     border-radius: 9999px;
     background: var(--hover-bg);
-    transform: scale(0.0078);
+    transform: scale(0.0028);
     will-change: transform;
     transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
   }
@@ -1492,7 +1493,7 @@ html[data-loading] {
   background: linear-gradient(160deg, #e3f3fc 0%, #f1f5f9 55%, #eaf4fb 100%);
   clip-path: inset(0 0 0 0);
   transition: clip-path 0.85s cubic-bezier(0.76, 0, 0.24, 1);
-  animation: page-loader-failsafe 0.4s ease 6s forwards;
+  animation: page-loader-failsafe 0.4s ease 8s forwards;
 }
 .page-loader[data-phase="exit"] {
   clip-path: inset(0 0 100% 0);

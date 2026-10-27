@@ -49,14 +49,6 @@ export function MenuToggle({ open, onClick }: { open: boolean; onClick: () => vo
   );
 }
 
-/* --------------------------------------------------------------------------
-   MobileMenu — the full-screen menu behind the header's toggle (below lg):
-   big numbered links that rise in one after another, Services opening
-   into icon tiles, and a brand-blue advisory card with the phone numbers
-   and socials. Home, About, Testimonials and Contact live in the bottom
-   tab bar, so they are left out here. Page scroll is locked while it is
-   open.
-   -------------------------------------------------------------------------- */
 export default function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const pathname = usePathname();
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -75,7 +67,7 @@ export default function MobileMenu({ open, onClose }: { open: boolean; onClose: 
 
   // Everything the bottom tab bar doesn't already link to (About's sections live on the About page)
   const tabHrefs = new Set(mobileTabLinks.map((l) => l.href));
-  const rows = [...mainNavLinks.filter((l) => !tabHrefs.has(l.href)), { label: "Our Team", href: "/team" }];
+  const rows = mainNavLinks.filter((l) => !tabHrefs.has(l.href));
 
   return (
     <div

@@ -10,8 +10,8 @@ export const destinationPhrase: Record<string, string> = {
   USA: "the USA",
   Other: "your chosen country",
 };
-export const studyLevels = ["Bachelor's", "Master's", "MBA", "PhD"];
-export const intakes = ["2027", "2028", "Not sure"];
+export const studyLevels = ["Bachelor's", "Master's", "MBA", "Not Sure"];
+export const intakes = ["2027 Jan", "2027 Sep", "2028"];
 
 // Dialling codes for the WhatsApp number (India first; then main study and
 // Gulf countries where many students' families live)

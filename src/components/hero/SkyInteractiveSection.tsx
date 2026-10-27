@@ -8,17 +8,6 @@ import { Books, Cap, Globe, Sparks } from "@/components/shared/Doodles";
 /* Services offered by Studwise, shown as quick-scan chips under the copy */
 const heroPerks = ["Scholarship guidance", "Visa assistance", "IELTS / TOEFL prep", "Accommodation support"];
 
-/* --------------------------------------------------------------------------
-   SkyInteractiveSection — the homepage banner panel
-   --------------------------------------------------------------------------
-   A student (cut out from the client's approved banner mockup:
-   public/images/hero/student-hero.webp) standing in soft clouds on a clear sky, with white line icons and dashed paths around her. It
-   used to show a 3D airplane; the client asked for a student so the site
-   doesn't read as a travel agency.
-   The "stage" box holds the student, her clouds and icons so they scale
-   together: below xl it sits under the copy (sized by height), from xl up
-   beside it (sized by width). Layers drift with the pointer.
-   -------------------------------------------------------------------------- */
 export default function SkyInteractiveSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });

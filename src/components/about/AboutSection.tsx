@@ -23,17 +23,6 @@ import { buildRoutePath, routeProgress } from "./route";
 const introWords = aboutIntro.split(" ");
 const countries = routeStops.filter((s) => s.kind === "country");
 
-/* --------------------------------------------------------------------------
-   AboutSection — pinned "Who We Are" scene
-   --------------------------------------------------------------------------
-   The section is 320vh tall with a sticky, full-viewport frame. Scroll
-   progress through it drives (via CSS variables, no React re-renders):
-     · the intro paragraph lighting up word by word
-     · the flight route drawing itself, stop by stop
-     · the countries paragraph, then the stats + CTA
-   An airplane (see FlightPlane) settles in at the start of the route and
-   rides it as the section scrolls.
-   -------------------------------------------------------------------------- */
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const routeRef = useRef<HTMLDivElement>(null);

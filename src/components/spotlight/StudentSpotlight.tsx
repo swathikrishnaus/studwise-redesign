@@ -60,17 +60,6 @@ function Counter({ index, className = "" }: { index: number; className?: string 
   );
 }
 
-/* --------------------------------------------------------------------------
-   StudentSpotlight — "Their World. Their Next Chapter." Real photographs
-   of students abroad (data/studentSpotlight), told as a short visual story.
-   Desktop: a brief pinned scene; scrolling through it moves to the next
-   student, whose photo unmasks upward and settles from a slight zoom
-   while the name and details rise in and the counter advances. The faces
-   below jump straight to a student.
-   Phones and tablets: no pinning; a swipeable row in the page flow, each
-   photo unmasking as the section comes into view.
-   Reduced motion: everything shows at once, without transitions.
-   -------------------------------------------------------------------------- */
 export default function StudentSpotlight() {
   const sectionRef = useRef<HTMLElement>(null);
   const rowRef = useRef<HTMLUListElement>(null);
@@ -173,7 +162,6 @@ export default function StudentSpotlight() {
               {/* ---------------- Intro and the current student ---------------- */}
               <div className="lg:col-span-5 flex flex-col lg:py-4 xl:pl-6">
                 <Eyebrow>
-                  <span className="w-6 h-px bg-current" aria-hidden="true" />
                   {spotlightIntro.label}
                 </Eyebrow>
                 <h2

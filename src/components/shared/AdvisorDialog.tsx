@@ -11,15 +11,6 @@ export function openAdvisorDialog() {
   window.dispatchEvent(new Event(OPEN_EVENT));
 }
 
-/* --------------------------------------------------------------------------
-   AdvisorDialog — the consultation form as a popup, mounted once in the
-   root layout. It opens from openAdvisorDialog() (the phone tab bar's
-   Advisory button, the service pages' buttons) and from any "Book Free
-   Advisory" link (#consultation-panel) on a page without an inline form.
-   The form inside is the stepped, compact layout, so the popup always
-   fits the screen: a sheet at the foot of the screen on phones, centred
-   from sm up. Escape, the close button or a click outside closes it.
-   -------------------------------------------------------------------------- */
 export default function AdvisorDialog() {
   const ref = useRef<HTMLDialogElement>(null);
 
