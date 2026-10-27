@@ -100,10 +100,3 @@ export const hiringSteps = [
   { title: "Offer", text: "We let you know, either way." },
 ];
 
-/** Photos from our offices (public/images/careers: web-sized copies of the originals in students-abroad) */
-export const lifePhotos = [
-  { src: "/images/careers/life-1.jpg", alt: "The Studwise team working on laptops around a table in the office", focus: "45% 50%" },
-  { src: "/images/careers/life-2.jpg", alt: "Studwise counsellors smiling together around a laptop", focus: "50% 45%" },
-  { src: "/images/careers/life-3.jpg", alt: "Two counsellors helping a colleague at his laptop", focus: "55% 45%" },
-  { src: "/images/careers/life-4.jpg", alt: "Three Studwise team members working together at their laptops", focus: "50% 40%" },
-];

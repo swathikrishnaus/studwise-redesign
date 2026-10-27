@@ -211,7 +211,7 @@ export default function CareersBoard() {
         className="consult-dialog fixed inset-0 m-0 w-full h-full max-w-none max-h-none overflow-y-auto overscroll-contain bg-transparent p-2.5 sm:p-6 backdrop:bg-[#0b2a45]/50 backdrop:backdrop-blur-sm"
       >
         <div className="min-h-full flex items-end sm:items-center justify-center" onClick={(e) => e.target === e.currentTarget && close()}>
-          <div className="w-full max-w-lg rounded-[2rem] bg-white p-6 sm:p-8 text-slate-900 shadow-[0_30px_70px_-30px_rgba(0,60,100,0.5)]">
+          <div className="w-full max-w-lg rounded-3xl bg-white p-6 sm:p-8 text-slate-900 shadow-[0_30px_70px_-30px_rgba(0,60,100,0.5)]">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.2em] text-[#0a7fb3]">Apply</p>

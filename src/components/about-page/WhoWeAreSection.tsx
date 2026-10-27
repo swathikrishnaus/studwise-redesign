@@ -16,7 +16,7 @@ export default function WhoWeAreSection() {
   return (
     <section id="who-we-are" aria-labelledby="who-heading" className="scroll-mt-6 bg-[#F1F5F9]">
       <div className={`${gutter} py-14 sm:py-20 lg:py-28`}>
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-start px-3 sm:px-5 lg:px-6">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-start">
           {/* Photo */}
           <div className="relative lg:col-span-5 max-w-lg w-full mx-auto lg:max-w-none lg:sticky lg:top-8">
             <div data-reveal="clip" className="relative aspect-[949/1024] overflow-hidden rounded-2xl">

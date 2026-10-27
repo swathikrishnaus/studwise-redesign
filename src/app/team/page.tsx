@@ -37,7 +37,7 @@ export default function TeamPage() {
           </div>
         </header>
 
-        <div className="mt-14 sm:mt-20 space-y-16 sm:space-y-20 px-0 sm:px-2">
+        <div className="mt-14 sm:mt-20 space-y-16 sm:space-y-20">
           {teamGroups.map((group) => (
             <section key={group.id} id={group.id} aria-labelledby={`${group.id}-heading`} className="scroll-mt-6">
               <h2

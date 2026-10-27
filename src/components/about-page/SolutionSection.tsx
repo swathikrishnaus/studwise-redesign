@@ -9,7 +9,7 @@ export default function SolutionSection() {
   return (
     <section id="our-approach" aria-labelledby="solution-heading" className="scroll-mt-6 bg-[#F1F5F9]">
       <div className={`${gutter} py-14 sm:py-20 lg:py-28`}>
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-center px-3 sm:px-5 lg:px-6">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-center">
           {/* Copy */}
           <div className="lg:col-span-6 order-2 lg:order-1">
             <div data-reveal>

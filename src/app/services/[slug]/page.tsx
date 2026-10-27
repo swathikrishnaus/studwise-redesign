@@ -127,7 +127,7 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
           {/* ---------------- Overview ---------------- */}
           {/* The live page's opening sentence reads as an editorial statement
               (not a section title), with its paragraphs in columns below */}
-          <section aria-labelledby="overview-heading" className="px-3 sm:px-6 lg:px-14 py-16 sm:py-20 lg:py-24">
+          <section aria-labelledby="overview-heading" className="py-16 sm:py-20 lg:py-24">
             <div data-reveal className="max-w-5xl">
               <Eyebrow>Overview</Eyebrow>
               <h2 id="overview-heading" className="lead-statement mt-5 text-slate-900 text-balance">
@@ -216,7 +216,7 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
           {/* ---------------- Process ---------------- */}
           <section aria-labelledby="process-heading" className="py-20 sm:py-28">
             {/* Heading and copy side by side from xl, sized to the same height */}
-            <div className="grid xl:grid-cols-12 gap-x-12 gap-y-6 xl:items-center px-3 sm:px-5 lg:px-6">
+            <div className="grid xl:grid-cols-12 gap-x-12 gap-y-6 xl:items-center">
               <h2
                 id="process-heading"
                 data-reveal

@@ -29,7 +29,7 @@ export default function AboutHero() {
             {/* ============== LEFT: copy ============== */}
             <div
               style={{ background: HERO_WASH }}
-              className="lg:col-span-7 xl:col-span-7 2xl:col-span-8 flex flex-col rounded-3xl lg:rounded-[2rem] ring-1 ring-slate-900/5 px-6 pt-6 pb-10 sm:px-10 sm:pt-8 sm:pb-14 lg:px-14 lg:pt-10 lg:pb-14 min-h-[30rem]"
+              className="lg:col-span-7 xl:col-span-7 2xl:col-span-8 flex flex-col rounded-3xl ring-1 ring-slate-900/5 px-6 pt-6 pb-10 sm:px-10 sm:pt-8 sm:pb-14 lg:px-14 lg:pt-10 lg:pb-14 min-h-[30rem]"
             >
 
               <div className="flex-1 flex flex-col justify-center">
@@ -58,7 +58,7 @@ export default function AboutHero() {
             </div>
 
             {/* ============== RIGHT: photo ============== */}
-            <div className="relative lg:col-span-5 xl:col-span-5 2xl:col-span-4 min-h-[22rem] sm:min-h-[30rem] overflow-hidden rounded-3xl lg:rounded-[2rem] bg-slate-200">
+            <div className="relative lg:col-span-5 xl:col-span-5 2xl:col-span-4 min-h-[22rem] sm:min-h-[30rem] overflow-hidden rounded-3xl bg-slate-200">
               <Image
                 src="/images/services/about-banner.jpg"
                 alt="A Studwise graduate in cap and gown holding her degree outside a university building"

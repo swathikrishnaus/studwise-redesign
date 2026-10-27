@@ -149,7 +149,7 @@ export default function StudentSpotlight() {
       <div className="lg:sticky lg:top-0 lg:h-svh">
         <div className="w-full lg:h-full max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7 py-3 sm:py-4 lg:py-6">
           {/* A soft sky panel, so the section reads as its own scene */}
-          <div className="relative isolate overflow-hidden lg:h-full rounded-[2rem] lg:rounded-[2.5rem] bg-gradient-to-br from-[#c9e8f8] via-[#dcf0fa] to-[#ecf7fd] ring-1 ring-[#009cd9]/10 py-10 sm:py-14 lg:py-0 lg:flex lg:items-center">
+          <div className="relative isolate overflow-hidden lg:h-full rounded-3xl bg-gradient-to-br from-[#c9e8f8] via-[#dcf0fa] to-[#ecf7fd] ring-1 ring-[#009cd9]/10 py-10 sm:py-14 lg:py-0 lg:flex lg:items-center">
             <span
               className="pointer-events-none absolute -top-40 -left-32 -z-10 w-[34rem] h-[34rem] rounded-full bg-white/45 blur-3xl"
               aria-hidden="true"
@@ -204,7 +204,7 @@ export default function StudentSpotlight() {
 
               {/* ---------------- Desktop: the featured photograph ---------------- */}
               <div className="hidden lg:block lg:col-span-7 relative">
-                <div className="relative h-full overflow-hidden rounded-[2rem] bg-[#cfe6f3]">
+                <div className="relative h-full overflow-hidden rounded-2xl bg-[#cfe6f3]">
                   {spotlightStudents.map((s, i) => (
                     <div
                       key={s.name}

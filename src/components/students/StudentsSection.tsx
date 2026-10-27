@@ -236,7 +236,7 @@ export default function StudentsSection() {
       </div>
 
       {/* ---------------- Header ---------------- */}
-      <div className="relative max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 lg:text-center mb-14 lg:mb-10">
+      <div className="relative max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7 lg:text-center mb-14 lg:mb-10">
         <div className="flex lg:justify-center items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
           Global reach
         </div>
@@ -265,7 +265,7 @@ export default function StudentsSection() {
           aria-hidden="true"
         />
 
-        <div className="relative max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pt-[8vh] lg:pt-[28vh]">
+        <div className="relative max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7 pt-[8vh] lg:pt-[28vh]">
           <TokenColumns list={destinations} />
         </div>
 

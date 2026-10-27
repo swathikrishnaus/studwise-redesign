@@ -36,7 +36,7 @@ export default function BlogPage() {
           </div>
         </header>
 
-        <div className="mt-6 sm:mt-8 px-0 sm:px-2">
+        <div className="mt-6 sm:mt-8">
           <BlogIndex posts={postSummaries} />
         </div>
 

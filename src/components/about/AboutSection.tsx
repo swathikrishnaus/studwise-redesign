@@ -161,7 +161,7 @@ export default function AboutSection() {
       }
     >
       <div className="sticky top-0 h-svh w-full p-3 sm:p-4 lg:p-6 xl:p-7">
-        <div className="relative mx-auto h-full max-w-[1728px] overflow-hidden rounded-[2rem] lg:rounded-[2.5rem] bg-gradient-to-b from-[#dff2fb] via-[#f2faff] to-white text-slate-800">
+        <div className="relative mx-auto h-full max-w-[1728px] overflow-hidden rounded-3xl bg-gradient-to-b from-[#dff2fb] via-[#f2faff] to-white text-slate-800">
           {/* ---------------- Sky: drifting clouds ---------------- */}
           <div
             className="hidden lg:block absolute -left-16 top-[8%] w-[340px] opacity-70 pointer-events-none translate-x-[calc(var(--pb)*60px)]"

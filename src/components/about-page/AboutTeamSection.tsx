@@ -21,7 +21,7 @@ export default function AboutTeamSection() {
   return (
     <section id="our-team" aria-labelledby="about-team-heading" className="scroll-mt-6 bg-[#F1F5F9]">
       <div className={`${gutter} pb-14 sm:pb-20 lg:pb-28`}>
-        <div className="relative isolate overflow-hidden rounded-[2rem] lg:rounded-[2.5rem] bg-gradient-to-br from-[#dff2fb] via-[#ecf7fd] to-white ring-1 ring-[#009cd9]/10 px-5 py-10 sm:px-8 sm:py-14 lg:px-12 lg:py-16">
+        <div className="relative isolate overflow-hidden rounded-3xl bg-gradient-to-br from-[#dff2fb] via-[#ecf7fd] to-white ring-1 ring-[#009cd9]/10 px-5 py-10 sm:px-8 sm:py-14 lg:px-12 lg:py-16">
           <span className="pointer-events-none absolute -top-32 -left-24 -z-10 w-[28rem] h-[28rem] rounded-full bg-white/70 blur-3xl" aria-hidden="true" />
 
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">

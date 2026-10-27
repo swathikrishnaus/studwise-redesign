@@ -96,7 +96,7 @@ export default function ServicesSection() {
       className="relative bg-[#F1F5F9] pt-20 sm:pt-28 lg:pt-36 pb-24 sm:pb-32 lg:pb-40"
       style={{ "--hp": 0 } as CSSProperties}
     >
-      <div className="max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16">
+      <div className="max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-6 items-end mb-12 sm:mb-16 lg:mb-20">
           <div className="lg:col-span-8">
             <div className="flex items-center gap-3 mb-6 text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">
