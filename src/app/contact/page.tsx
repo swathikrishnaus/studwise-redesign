@@ -170,7 +170,7 @@ export default function ContactPage() {
 
         {/* Offices */}
         <section id="offices" aria-labelledby="offices-heading" className="scroll-mt-6 mt-20 sm:mt-28">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 px-0 sm:px-2">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
             <div>
               <Eyebrow>Our offices</Eyebrow>
               <h2

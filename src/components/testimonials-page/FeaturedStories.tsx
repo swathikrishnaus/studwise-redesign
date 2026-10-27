@@ -48,7 +48,7 @@ export default function FeaturedStories() {
     }`;
 
   return (
-    <section id="featured" aria-labelledby="featured-heading" className="px-2 sm:px-5 lg:px-8">
+    <section id="featured" aria-labelledby="featured-heading">
       <div data-reveal className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
         <div>
           <Eyebrow>Featured stories</Eyebrow>
@@ -96,7 +96,7 @@ export default function FeaturedStories() {
         onScroll={onScroll}
         aria-label="Featured stories"
         data-reveal
-        className="mt-4 sm:mt-6 -mx-2 sm:-mx-5 lg:-mx-8 px-2 sm:px-5 lg:px-8 flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-px-2 sm:scroll-px-5 lg:scroll-px-8 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="mt-4 sm:mt-6 flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {featuredTestimonials.map((t, i) => {
           const last = i === featuredTestimonials.length - 1;

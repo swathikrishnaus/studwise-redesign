@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import HeroHeader from "@/components/hero/HeroHeader";
 import CloudButton from "@/components/ui/CloudButton";
 import CareersBoard from "@/components/careers/CareersBoard";
 import { Eyebrow, Icon, gutter, toneAt } from "@/components/shared/PageKit";
-import { careerReasons, hiringSteps, lifePhotos, openings } from "@/data/careers";
+import { careerReasons, hiringSteps, openings } from "@/data/careers";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -43,7 +42,7 @@ export default function CareersPage() {
         </header>
 
         {/* ---------------- Open roles ---------------- */}
-        <section id="open-roles" aria-labelledby="roles-heading" className="scroll-mt-24 mt-14 sm:mt-20 px-0 sm:px-2">
+        <section id="open-roles" aria-labelledby="roles-heading" className="scroll-mt-24 mt-14 sm:mt-20">
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200 pb-4">
             <h2 id="roles-heading" className="text-2xl sm:text-3xl tracking-[-0.03em] text-slate-900">
               Open roles
@@ -56,7 +55,7 @@ export default function CareersPage() {
         </section>
 
         {/* ---------------- Why Studwise ---------------- */}
-        <section aria-labelledby="why-heading" className="mt-20 sm:mt-28 px-0 sm:px-2">
+        <section aria-labelledby="why-heading" className="mt-20 sm:mt-28">
           <h2 id="why-heading" className="border-b border-slate-200 pb-4 text-2xl sm:text-3xl tracking-[-0.03em] text-slate-900">
             Why Studwise
           </h2>
@@ -77,7 +76,7 @@ export default function CareersPage() {
         </section>
 
         {/* ---------------- How we hire ---------------- */}
-        <section aria-labelledby="hire-heading" className="mt-20 sm:mt-28 px-0 sm:px-2">
+        <section aria-labelledby="hire-heading" className="mt-20 sm:mt-28">
           <h2 id="hire-heading" className="border-b border-slate-200 pb-4 text-2xl sm:text-3xl tracking-[-0.03em] text-slate-900">
             How we hire
           </h2>
@@ -90,22 +89,6 @@ export default function CareersPage() {
               </li>
             ))}
           </ol>
-        </section>
-
-        {/* ---------------- Life at Studwise ---------------- */}
-        <section aria-labelledby="life-heading" className="mt-20 sm:mt-28 px-0 sm:px-2">
-          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200 pb-4">
-            <h2 id="life-heading" className="text-2xl sm:text-3xl tracking-[-0.03em] text-slate-900">
-              Life at Studwise
-            </h2>
-          </div>
-          <ul className="mt-6 sm:mt-8 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {lifePhotos.map((p, i) => (
-              <li key={p.src} className={`relative overflow-hidden rounded-2xl bg-slate-100 aspect-[4/5] ${i % 2 ? "lg:translate-y-8" : ""}`}>
-                <Image src={p.src} alt={p.alt} fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" style={{ objectPosition: p.focus }} />
-              </li>
-            ))}
-          </ul>
         </section>
       </div>
     </div>

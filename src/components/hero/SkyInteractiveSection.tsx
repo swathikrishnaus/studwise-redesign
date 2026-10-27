@@ -41,7 +41,7 @@ export default function SkyInteractiveSection() {
       onMouseLeave={handleMouseLeave}
       // Phones get a tall panel: the copy sits on top and the student gets
       // a clear stage of their own underneath
-      className="relative isolate w-full h-full min-h-[48rem] sm:min-h-[54rem] lg:min-h-[40rem] rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden flex flex-col justify-start p-7 pt-9 sm:p-10 sm:pt-12 lg:p-12 xl:p-14 select-none"
+      className="relative isolate w-full h-full min-h-[48rem] sm:min-h-[54rem] lg:min-h-[40rem] rounded-3xl overflow-hidden flex flex-col justify-start p-7 pt-9 sm:p-10 sm:pt-12 lg:p-12 xl:p-14 select-none"
       style={{
         // A clear, soft daytime sky: deeper at the lower left, paler toward
         // the sun at the top right

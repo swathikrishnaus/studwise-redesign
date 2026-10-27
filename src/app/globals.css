@@ -873,7 +873,7 @@ select:focus-visible {
 .landing-panel {
   transform: scale(calc(0.84 + var(--lv, 1) * 0.16));
   transform-origin: 50% 100%;
-  border-radius: calc(4.5rem - var(--lv, 1) * 2rem);
+  border-radius: calc(4.5rem - var(--lv, 1) * 3rem);
 }
 
 /* Giants slide in from their outer side */

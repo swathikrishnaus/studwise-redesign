@@ -101,7 +101,7 @@ export default function UniversitiesSection() {
       style={{ "--hp": 0 } as CSSProperties}
     >
       <div className="max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7">
-        <div className="relative overflow-hidden rounded-[2rem] lg:rounded-[2.5rem] bg-white ring-1 ring-slate-200/70 py-14 sm:py-20 lg:py-28">
+        <div className="relative overflow-hidden rounded-3xl bg-white ring-1 ring-slate-200/70 py-14 sm:py-20 lg:py-28">
           {/* ---------------- Header ---------------- */}
           <div className="px-5 sm:px-8 lg:px-12 xl:px-14 grid lg:grid-cols-12 gap-8 items-end mb-12 sm:mb-16 lg:mb-20">
             <div className="lg:col-span-7">

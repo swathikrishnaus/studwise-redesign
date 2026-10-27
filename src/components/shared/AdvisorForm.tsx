@@ -189,7 +189,7 @@ export default function AdvisorForm({
   const answered = [!!formData.destination, !!formData.studyLevel, !!formData.intake, phoneDone];
   const doneCount = answered.filter(Boolean).length;
 
-  const shell = `relative flex-1 min-w-0 h-full flex flex-col rounded-[2rem] bg-white ring-1 text-slate-900 ${
+  const shell = `relative flex-1 min-w-0 h-full flex flex-col rounded-3xl bg-white ring-1 text-slate-900 ${
     hl
       ? "ring-[#009cd9]/30 shadow-[0_30px_70px_-30px_rgba(0,110,180,0.65)]"
       : "ring-slate-900/[0.06] max-lg:ring-[#009cd9]/25 max-lg:shadow-[0_30px_60px_-34px_rgba(0,110,180,0.6)]"

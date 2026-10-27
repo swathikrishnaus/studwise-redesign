@@ -20,9 +20,7 @@ const FIELDS: { name: Field; label: string; type: string; autoComplete: string; 
 ];
 
 const CHECK = "M5 13l4 4L19 7";
-const MAIL = "M3 7l9 6 9-6M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2Z";
-const WHATSAPP =
-  "M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3ZM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z";
+const ARROW = "M5 12h14m-6-6 6 6-6 6";
 
 function validate(v: Values): Partial<Record<Field, string>> {
   const e: Partial<Record<Field, string>> = {};
@@ -106,7 +104,7 @@ export default function ContactForm() {
   const fieldDone = (f: Field) => Boolean(values[f].trim()) && !check[f];
   const doneCount = (["firstName", "lastName", "email", "phone", "message"] as Field[]).filter(fieldDone).length;
 
-  const shell = "relative flex flex-col rounded-[2rem] bg-white ring-1 ring-slate-900/[0.06] text-slate-900";
+  const shell = "relative flex flex-col rounded-3xl bg-white ring-1 ring-slate-900/[0.06] text-slate-900";
   const field = (bad: boolean) =>
     `w-full rounded-2xl bg-slate-50 px-4 text-base text-slate-900 outline-none focus-visible:outline-none ring-1 ring-inset transition-[background-color,box-shadow] focus:bg-white focus:ring-2 ${
       bad ? "ring-rose-300 focus:ring-rose-400" : "ring-slate-200 hover:ring-slate-300 focus:ring-[#009cd9]"
@@ -168,7 +166,7 @@ export default function ContactForm() {
         Send us a message
       </h2>
       <p className="mt-1.5 sm:mt-2 max-sm:text-[15px] max-sm:leading-snug body-text text-slate-500">
-        Your message opens in WhatsApp (or your email app) ready to send to the Studwise team.
+        Your message opens in WhatsApp, ready to send to the Studwise team.
       </p>
 
       <div className="my-5 sm:my-6 h-px bg-slate-200" aria-hidden="true" />
@@ -220,27 +218,19 @@ export default function ContactForm() {
       </div>
 
       {/* ---------------- Send ---------------- */}
-      <div className="mt-5 sm:mt-7 grid sm:grid-cols-[1fr_auto] gap-2 sm:gap-2.5">
-        <button
-          type="submit"
-          className="group flex items-center justify-between w-full h-14 rounded-full bg-[#009cd9] pl-6 pr-2 text-base text-white shadow-[0_14px_28px_-16px_rgba(0,120,180,0.85)] transition-colors duration-300 hover:bg-[#0b2a45] focus-visible:outline-offset-4"
-        >
-          Get in touch now
-          <span className="grid place-items-center w-10 h-10 rounded-full bg-white text-[#009cd9] transition-colors duration-300 group-hover:text-[#0b2a45]">
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path fillRule="evenodd" d={WHATSAPP} />
-            </svg>
+      <button
+        type="submit"
+        className="fly-btn group relative isolate overflow-hidden mt-5 sm:mt-7 flex items-center w-full h-13 sm:h-14 rounded-full bg-[#009cd9] pl-6 pr-2 text-base text-white shadow-[0_14px_28px_-16px_rgba(0,120,180,0.85)] transition-colors duration-300 hover:bg-[#0b2a45] focus-visible:outline-offset-4"
+      >
+        Get in touch now
+        <span className="fly-btn__lane" aria-hidden="true">
+          <span className="fly-btn__trail" />
+          <span className="fly-btn__disc" />
+          <span className="fly-btn__icon">
+            <Icon d={ARROW} className="w-full h-full" />
           </span>
-        </button>
-        <button
-          type="button"
-          onClick={() => send("email")}
-          className="inline-flex items-center justify-center gap-2 h-11 sm:h-14 px-6 rounded-full ring-1 ring-inset ring-slate-200 text-[15px] sm:text-base text-slate-700 transition-colors hover:ring-[#009cd9] hover:text-[#0a7fb3]"
-        >
-          <Icon d={MAIL} className="w-[18px] h-[18px]" />
-          Send by email instead
-        </button>
-      </div>
+        </span>
+      </button>
     </form>
   );
 }

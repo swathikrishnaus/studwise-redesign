@@ -46,7 +46,7 @@ export default function HomeTestimonials() {
   const [first, ...rest] = testimonialsIntro.title.split(" what ");
   return (
     <section aria-labelledby="home-testimonials-heading" className="bg-[#F1F5F9] py-14 sm:py-24 lg:py-32">
-      <div className="max-w-[1728px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16">
+      <div className="max-w-[1728px] mx-auto px-3 sm:px-4 lg:px-6 xl:px-7">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
           <div className="max-w-3xl">
             <p className="text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#0a7fb3]">{testimonialsIntro.eyebrow}</p>

@@ -66,7 +66,7 @@ export default function AdvisorDialog() {
           if (e.target === e.currentTarget) close();
         }}
       >
-        <div className="flex w-full max-w-[30rem] max-h-[calc(100dvh-1.25rem)] sm:max-h-[calc(100dvh-3rem)] overflow-y-auto overscroll-contain rounded-[2rem]">
+        <div className="flex w-full max-w-[30rem] max-h-[calc(100dvh-1.25rem)] sm:max-h-[calc(100dvh-3rem)] overflow-y-auto overscroll-contain rounded-3xl">
           <AdvisorForm id="advisor-dialog-form" dialog onClose={close} />
         </div>
       </div>

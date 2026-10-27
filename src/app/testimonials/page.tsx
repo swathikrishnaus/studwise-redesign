@@ -20,7 +20,7 @@ export default function TestimonialsPage() {
       <div className="bg-[#F1F5F9]">
         <div className={`${gutter} pt-16 sm:pt-24`}>
           <FeaturedStories />
-          <div className="px-2 sm:px-5 lg:px-8 py-16 sm:py-24">
+          <div className="py-16 sm:py-24">
             <TestimonialWall />
           </div>
           <MeetTeamCta />

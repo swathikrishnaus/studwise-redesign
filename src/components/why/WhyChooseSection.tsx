@@ -65,7 +65,7 @@ export default function WhyChooseSection() {
     >
       <div ref={pinRef} className="relative h-[380vh] lg:h-[280vh]">
         <div className="sticky top-0 h-svh p-3 sm:p-4 lg:p-6 xl:p-7">
-          <div className="relative h-full max-w-[1728px] mx-auto flex items-center overflow-hidden rounded-[2rem] lg:rounded-[2.5rem] bg-gradient-to-br from-[#d9f0fb] via-[#e8f6fd] to-[#d2edfa]">
+          <div className="relative h-full max-w-[1728px] mx-auto flex items-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#d9f0fb] via-[#e8f6fd] to-[#d2edfa]">
           {/* ---------------- Sky atmosphere ---------------- */}
           <div
             className="absolute -top-40 -right-24 w-[560px] h-[560px] rounded-full bg-white/70 blur-[100px] pointer-events-none"
