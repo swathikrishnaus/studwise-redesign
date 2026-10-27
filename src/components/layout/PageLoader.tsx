@@ -9,8 +9,8 @@ import { prefersReducedMotion } from "@/lib/scroll";
 type Phase = "loading" | "settle" | "exit" | "gone";
 
 // About 4s in all: the ring counts up (MIN_MS), the logo assembles and holds (HOLD_MS), then the screen lifts (LIFT_MS)
-const MIN_MS = 800;
-const HOLD_MS = 1600;
+const MIN_MS = 1250;
+const HOLD_MS = 1150;
 const LIFT_MS = 900;
 const MAX_MS = 6000;
 const R = 46;
@@ -137,7 +137,26 @@ export default function PageLoader() {
                 transform="rotate(-90 50 50)"
               />
             </svg>
-            <Image src="/images/studwise-mark.png" alt="" fill priority sizes="140px" className="object-contain" />
+            {/* The mark in layers: the disc and its three wing feathers, which beat like a wing taking off */}
+            <span className="page-loader__shadow" />
+            <span className="page-loader__emblem">
+              <Image src="/images/loader/mark-disc.png" alt="" fill priority sizes="140px" className="page-loader__disc object-contain" />
+              <span className="page-loader__wing">
+              {[2, 1, 3].map((n, i) => (
+                <Image
+                  key={n}
+                  src={`/images/loader/feather-${n}.png`}
+                  alt=""
+                  fill
+                  priority
+                  sizes="140px"
+                  className="page-loader__feather object-contain"
+                  style={{ "--f": i } as CSSProperties}
+                />
+              ))}
+              </span>
+              <span className="page-loader__glint" />
+            </span>
           </div>
         </div>
         <p className="page-loader__count">

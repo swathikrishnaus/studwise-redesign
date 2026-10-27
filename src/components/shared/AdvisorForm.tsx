@@ -353,7 +353,8 @@ export default function AdvisorForm({
           </Question>
 
           <Question n={3} done={!!formData.intake} title="When do you plan to start?">
-            <div className="flex flex-wrap gap-1.5 [&>label]:grow">
+            {/* Four answers on one row, so the extra option doesn't add a line */}
+            <div className="grid grid-cols-4 gap-1 sm:gap-1.5">
               {intakes.map((i) => (
                 <Option key={i} name="intake" value={i} checked={formData.intake === i} onChange={handleChange} />
               ))}
