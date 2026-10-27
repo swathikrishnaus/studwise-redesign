@@ -83,7 +83,7 @@ export default function AboutTeamSection() {
                         tabIndex={copy ? -1 : undefined}
                         className="group block h-full rounded-2xl bg-white p-2 ring-1 ring-slate-900/5 transition-[box-shadow] duration-300 hover:ring-[#009cd9]/35"
                       >
-                        <span className="relative block aspect-[5/4] overflow-hidden rounded-xl bg-slate-100">
+                        <span className="relative block aspect-[10/11] overflow-hidden rounded-xl bg-slate-100">
                           <Image
                             src={m.photo}
                             alt={copy ? "" : `${m.name}, ${m.role} at Studwise`}

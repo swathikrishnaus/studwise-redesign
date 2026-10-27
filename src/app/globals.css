@@ -1569,6 +1569,147 @@ html[data-loading] {
 .page-loader[data-phase="exit"] .page-loader__mark {
   transform: none;
 }
+/* Take-off, seen from the side as the logo is (like a bird drawn in
+   profile, wing raised and swept back): on each downstroke the wing beats
+   down toward the body line, so in side view it shortens until it is
+   almost flat, and on the upstroke it rises back to its full raised height.
+   The squash pivots on the body line at the wing's root. Three beats, each
+   shallower, then the wing settles raised as in the logo. --f numbers the
+   feathers from the leading edge in: the further back, the later it
+   follows. Every downstroke lifts the mark. */
+.page-loader__emblem {
+  position: absolute;
+  inset: 0;
+  animation: page-loader-climb 1.75s cubic-bezier(0.37, 0, 0.3, 1) 0.15s both;
+}
+@keyframes page-loader-climb {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 12%, 0) scale(0.95);
+  }
+  8% {
+    opacity: 1;
+  }
+  14% {
+    transform: translate3d(0, 10%, 0) scale(0.96);
+  }
+  26% {
+    transform: translate3d(0, 6%, 0) scale(0.97);
+  }
+  40% {
+    transform: translate3d(0, 7%, 0) scale(0.98);
+  }
+  52% {
+    transform: translate3d(0, 3%, 0) scale(0.99);
+  }
+  66% {
+    transform: translate3d(0, 4%, 0);
+  }
+  78% {
+    transform: translate3d(0, 1%, 0);
+  }
+  100% {
+    transform: none;
+  }
+}
+.page-loader__disc {
+  animation: page-loader-disc 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+}
+@keyframes page-loader-disc {
+  from {
+    transform: scale(0.6);
+  }
+}
+.page-loader__wing {
+  position: absolute;
+  inset: 0;
+  clip-path: circle(49.6% at 50% 50%);
+}
+.page-loader__feather {
+  transform-origin: 60% 90%;
+  animation: page-loader-flap 1.75s ease-in-out calc(0.15s + var(--f) * 0.03s) both;
+}
+@keyframes page-loader-flap {
+  /* partly folded */
+  0% {
+    opacity: 0;
+    transform: scaleY(0.5);
+  }
+  8% {
+    opacity: 1;
+  }
+  /* beat 1: raised, then a gentle downstroke */
+  14% {
+    transform: scaleY(1);
+  }
+  26% {
+    transform: scaleY(0.55) skewX(-3deg);
+  }
+  /* beat 2 */
+  40% {
+    transform: scaleY(1);
+  }
+  52% {
+    transform: scaleY(0.7) skewX(-2deg);
+  }
+  /* beat 3, then it settles raised */
+  66% {
+    transform: scaleY(1);
+  }
+  78% {
+    transform: scaleY(0.86) skewX(-1deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+/* The ground falls away: a soft shadow that shrinks and fades as the mark climbs */
+.page-loader__shadow {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -14%;
+  height: 12%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(11, 42, 69, 0.22), transparent);
+  opacity: 0;
+  animation: page-loader-shadow 1.75s ease-out 0.15s both;
+}
+@keyframes page-loader-shadow {
+  0% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+.page-loader__glint {
+  position: absolute;
+  inset: 2%;
+  border-radius: 9999px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.page-loader__glint::after {
+  content: "";
+  position: absolute;
+  inset: -20% auto -20% 0;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translate3d(-160%, 0, 0) skewX(-18deg);
+  animation: page-loader-glint 1s cubic-bezier(0.65, 0, 0.35, 1) 1.75s both;
+}
+@keyframes page-loader-glint {
+  to {
+    transform: translate3d(330%, 0, 0) skewX(-18deg);
+  }
+}
+.page-loader[data-phase="settle"] .page-loader__feather,
+.page-loader[data-phase="exit"] .page-loader__feather {
+  animation: none;
+}
 .page-loader__ring {
   position: absolute;
   inset: -22%;
@@ -1634,5 +1775,12 @@ html[data-loading] {
   .page-loader__ripple {
     animation: none;
     opacity: 0;
+  }
+  .page-loader__emblem,
+  .page-loader__disc,
+  .page-loader__feather,
+  .page-loader__shadow,
+  .page-loader__glint::after {
+    animation: none;
   }
 }
