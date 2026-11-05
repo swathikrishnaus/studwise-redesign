@@ -5,7 +5,7 @@ import type { ChangeEvent, FormEvent } from "react";
 import CloudButton from "@/components/ui/CloudButton";
 import { Icon } from "@/components/shared/PageKit";
 import { getLenis } from "@/components/layout/SmoothScroll";
-import { openings } from "@/data/careers";
+import { experienceLevels, openings } from "@/data/careers";
 import type { Opening } from "@/data/careers";
 import { headerContact } from "@/data/navigation";
 
@@ -16,6 +16,7 @@ const CHECK = "M5 13l4 4L19 7";
 const CLOSE = "M6 6l12 12M18 6 6 18";
 const FILE = "M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Zm0 0v5h5M12 17v-6m-3 3 3-3 3 3";
 const ARROW = "M5 12h14m-6-6 6 6-6 6";
+const CHEVRON = "m6 9 6 6 6-6";
 
 /** Where applications are sent: a form service that accepts file uploads
     (e.g. Formspree, Getform, Web3Forms). Until one is set up, the form
@@ -96,7 +97,9 @@ function Role({ job, open, onToggle, onApply }: { job: Opening; open: boolean; o
 
 export default function CareersBoard() {
   const [openId, setOpenId] = useState<string | null>(openings[0]?.id ?? null);
-  const [role, setRole] = useState("");
+  const [applying, setApplying] = useState<Opening | null>(null);
+  const [experience, setExperience] = useState("");
+  const [current, setCurrent] = useState(true);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "drafted" | "error">("idle");
   const [resume, setResume] = useState<File | null>(null);
   const [fileError, setFileError] = useState("");
@@ -104,8 +107,12 @@ export default function CareersBoard() {
   const fileRef = useRef<HTMLInputElement>(null);
   const formId = useId();
 
-  const apply = useCallback((title: string) => {
-    setRole(title);
+  const role = applying?.title ?? "";
+
+  const apply = useCallback((opening: Opening) => {
+    setApplying(opening);
+    setExperience("");
+    setCurrent(true);
     setStatus("idle");
     setResume(null);
     setFileError("");
@@ -167,7 +174,14 @@ export default function CareersBoard() {
       `Name: ${get("name")}`,
       `Email: ${get("email")}`,
       `Phone: ${get("phone")}`,
-      ...(get("link") ? [`Profile or portfolio: ${get("link")}`] : []),
+      ...(applying?.askExperience
+        ? [
+            `Study abroad / overseas education experience: ${get("experience")}`,
+            ...(get("consultancy")
+              ? [`${current ? "Currently working at" : "Last worked at"}: ${get("consultancy")}`, `Designation: ${get("designation")}`]
+              : []),
+          ]
+        : []),
       "",
       get("note"),
       "",
@@ -192,7 +206,7 @@ export default function CareersBoard() {
               job={job}
               open={openId === job.id}
               onToggle={() => setOpenId(openId === job.id ? null : job.id)}
-              onApply={() => apply(job.title)}
+              onApply={() => apply(job)}
             />
           ))}
         </ul>
@@ -266,6 +280,82 @@ export default function CareersBoard() {
                   <input name="email" type="email" required autoComplete="email" className={field} />
                 </label>
 
+                {applying?.askExperience && (
+                  <>
+                    <label className="block">
+                      <span className="mb-1.5 block text-sm text-slate-600">Experience in study abroad / overseas education</span>
+                      <span className="relative block">
+                        <select
+                          name="experience"
+                          required
+                          value={experience}
+                          onChange={(e) => setExperience(e.target.value)}
+                          className={`${field} appearance-none pr-10 ${experience ? "" : "text-slate-400"}`}
+                        >
+                          <option value="" disabled>
+                            Select
+                          </option>
+                          {experienceLevels.map((level) => (
+                            <option key={level} value={level} className="text-slate-900">
+                              {level}
+                            </option>
+                          ))}
+                        </select>
+                        <Icon d={CHEVRON} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                      </span>
+                    </label>
+                    {/* Freshers have no consultancy to name */}
+                    {experience && experience !== "Fresher" && (
+                      <>
+                        <fieldset>
+                          <legend className="mb-1.5 block text-sm text-slate-600">Are you working at a consultancy now?</legend>
+                          <div className="grid grid-cols-2 gap-2">
+                            {[
+                              { value: "current", label: "Yes, currently", on: true },
+                              { value: "previous", label: "No, previously", on: false },
+                            ].map((opt) => (
+                              <label
+                                key={opt.value}
+                                className={`flex h-12 cursor-pointer items-center justify-center rounded-xl text-[15px] ring-1 ring-inset transition focus-within:ring-2 focus-within:ring-[#009cd9] ${
+                                  current === opt.on ? "bg-[#eef7fc] text-[#0a7fb3] ring-[#009cd9]/50" : "bg-slate-50 text-slate-600 ring-slate-200 hover:ring-[#009cd9]/40"
+                                }`}
+                              >
+                                <input
+                                  type="radio"
+                                  name="employment"
+                                  value={opt.value}
+                                  checked={current === opt.on}
+                                  onChange={() => setCurrent(opt.on)}
+                                  className="sr-only"
+                                />
+                                <span
+                                  className={`mr-2.5 grid place-items-center w-4 h-4 rounded-full ring-1 ring-inset ${
+                                    current === opt.on ? "ring-[#009cd9]" : "ring-slate-300 bg-white"
+                                  }`}
+                                  aria-hidden="true"
+                                >
+                                  {current === opt.on && <span className="w-2 h-2 rounded-full bg-[#009cd9]" />}
+                                </span>
+                                {opt.label}
+                              </label>
+                            ))}
+                          </div>
+                        </fieldset>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <label className="block">
+                            <span className="mb-1.5 block text-sm text-slate-600">{current ? "Current consultancy" : "Last consultancy"}</span>
+                            <input name="consultancy" required autoComplete="organization" className={field} />
+                          </label>
+                          <label className="block">
+                            <span className="mb-1.5 block text-sm text-slate-600">{current ? "Your designation" : "Your designation there"}</span>
+                            <input name="designation" required autoComplete="organization-title" className={field} />
+                          </label>
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+
                 {/* Resume */}
                 <div>
                   <span id={`${formId}-resume`} className="mb-1.5 block text-sm text-slate-600">
@@ -303,12 +393,6 @@ export default function CareersBoard() {
                   {fileError && <p className="mt-1.5 text-[13px] text-rose-600">{fileError}</p>}
                 </div>
 
-                <label className="block">
-                  <span className="mb-1.5 block text-sm text-slate-600">
-                    LinkedIn or portfolio <span className="text-slate-400">(optional)</span>
-                  </span>
-                  <input name="link" type="url" placeholder="https://" className={field} />
-                </label>
                 <label className="block">
                   <span className="mb-1.5 block text-sm text-slate-600">
                     A few lines about you <span className="text-slate-400">(optional)</span>

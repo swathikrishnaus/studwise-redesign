@@ -1,11 +1,9 @@
 /* ==========================================================================
    Careers (app/careers)
    ==========================================================================
-   SAMPLE CONTENT FOR CLIENT REVIEW. The openings below are placeholders
-   modelled on the roles on the Team page (data/team): the client has not
-   supplied real vacancies yet. Replace them, and confirm the hiring steps
-   and where applications should go, before launch. Removing every opening
-   leaves the page with its general-application card only.
+   Current vacancies. Removing every opening leaves the page saying there
+   are no open roles. Roles with `askExperience` add the overseas-education
+   experience and current/last consultancy questions to the application.
    ========================================================================== */
 
 export type Opening = {
@@ -17,14 +15,18 @@ export type Opening = {
   summary: string;
   responsibilities: string[];
   requirements: string[];
+  askExperience?: boolean;
 };
+
+/** Options for "Experience in study abroad / overseas education" */
+export const experienceLevels = ["Fresher", "Below 1 year", "1 to 1.5 years", "1.5 to 3 years", "3+ years"];
 
 export const openings: Opening[] = [
   {
     id: "student-counsellor",
     title: "Student Counsellor",
     team: "Counselling",
-    location: "Manjeri",
+    location: "Valanchery and Manjeri",
     type: "Full-time",
     summary: "Guide students and their families from the first conversation to the right course, university and country.",
     responsibilities: [
@@ -36,42 +38,29 @@ export const openings: Opening[] = [
     requirements: [
       "Confident speaking with students and parents",
       "A genuine interest in international education",
-      "Organised, with an eye for detail",
+      "Freshers and experienced counsellors are both welcome",
     ],
+    askExperience: true,
   },
   {
-    id: "visa-application-executive",
-    title: "Visa Application Executive",
-    team: "Applications & Visas",
-    location: "Manjeri",
+    id: "team-leader",
+    title: "Team Leader",
+    team: "Counselling",
+    location: "Valanchery and Manjeri",
     type: "Full-time",
-    summary: "Prepare and check university and visa applications so every document is right the first time.",
+    summary: "Lead a team of counsellors and keep every student's journey on track, from enquiry to visa.",
     responsibilities: [
-      "Prepare university and student visa applications with students",
-      "Check documents carefully against each country's requirements",
-      "Keep track of deadlines and application status",
-      "Help students prepare for visa interviews",
+      "Lead, train and support a team of student counsellors",
+      "Set targets and keep track of the team's enquiries and applications",
+      "Step in on complex student cases and important family conversations",
+      "Work with the applications and visa team to meet every deadline",
     ],
     requirements: [
-      "Careful and comfortable working with documents and deadlines",
-      "Clear written communication",
-      "Experience with university or visa applications is a plus",
+      "Experience in the study abroad / overseas education field",
+      "Confident leading a team and speaking with students and parents",
+      "Organised, with an eye for detail",
     ],
-  },
-  {
-    id: "student-coordinator",
-    title: "Student Coordinator",
-    team: "Student Coordination",
-    location: "Valanchery",
-    type: "Full-time",
-    summary: "Keep each student's journey organised at our centre, from first visit to departure.",
-    responsibilities: [
-      "Welcome students and book counselling sessions",
-      "Coordinate between students, counsellors and the application team",
-      "Keep student records up to date",
-      "Share pre-departure information with students",
-    ],
-    requirements: ["Friendly and well organised", "Comfortable with everyday office tools", "Good at keeping several tasks moving"],
+    askExperience: true,
   },
 ];
 
