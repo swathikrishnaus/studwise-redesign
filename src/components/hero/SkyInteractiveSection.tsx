@@ -73,12 +73,12 @@ export default function SkyInteractiveSection() {
 
       {/* ------------------------------------------------------------------
           Stage: the student with her clouds, icons and dashed paths
-          (the cut-out is 1100 × 1159). It sinks a little below the panel so
-          the clouds take her at the waist, and from xl up it is nudged past
-          the right edge so the backpack tucks out of frame.
+          (the full cut-out, 1000 × 1528). It is sized by the
+          panel's height so she always clears the copy, and sits on the
+          panel's bottom edge with only a light haze of cloud over it.
           ------------------------------------------------------------------ */}
       <div
-        className="absolute -bottom-[2%] xl:-bottom-[3%] right-[2%] sm:right-[10%] lg:right-[4%] xl:right-0 xl:translate-x-[4%] h-[46%] lg:h-[42%] xl:h-auto xl:w-[56%] aspect-[1100/1159] pointer-events-none"
+        className="absolute bottom-0 right-0 translate-x-[10%] sm:right-[8%] sm:translate-x-0 lg:right-0 lg:translate-x-[24%] xl:translate-x-[3%] h-[52%] sm:h-[56%] lg:h-[46%] xl:h-[66%] 2xl:h-[80%] aspect-[1000/1528] pointer-events-none"
         aria-hidden="true"
       >
         {/* Dashed paths: one sweeping up from the foot of the panel to the
@@ -112,10 +112,10 @@ export default function SkyInteractiveSection() {
         {/* The student */}
         <div className="absolute inset-0 transition-transform duration-300 ease-out" style={{ transform: `translate3d(${studentX}px, ${studentY}px, 0)` }}>
           <Image
-            src="/images/hero/student-hero.webp"
+            src="/images/hero/hero-student-full.webp"
             alt=""
             width={1000}
-            height={1574}
+            height={1528}
             priority
             sizes="(min-width: 1280px) 520px, (min-width: 640px) 420px, 340px"
             className="w-full h-full object-contain object-bottom drop-shadow-[0_30px_40px_rgba(10,60,110,0.3)]"
@@ -130,15 +130,15 @@ export default function SkyInteractiveSection() {
           <span className="absolute top-[12%] left-[79%] w-[11%] animate-[cloud-float-reverse_8s_ease-in-out_infinite] motion-reduce:animate-none">
             <Globe className="w-full h-auto" />
           </span>
-          <span className="absolute top-[27%] left-[2%] sm:left-[4%] w-[12%] animate-[cloud-float-reverse_9s_ease-in-out_infinite] motion-reduce:animate-none">
+          <span className="absolute top-[27%] left-[2%] sm:left-[4%] xl:top-[30%] xl:left-[12%] 2xl:top-[27%] 2xl:left-[4%] w-[12%] animate-[cloud-float-reverse_9s_ease-in-out_infinite] motion-reduce:animate-none">
             <Books className="w-full h-auto" />
           </span>
           <Sparks className="absolute top-[8%] left-[15%] w-[8%] h-auto" />
         </div>
 
-        {/* Cloud bank she stands in, over her waist */}
-        <div className="absolute -bottom-[34%] -left-[70%] w-[220%] transition-transform duration-150 ease-out" style={drift(1, 0.6)}>
-          <SoftCloud shape={CLOUD_BANK} seed={7} className="w-full h-auto opacity-60" />
+        {/* A light haze of cloud along the bottom edge */}
+        <div className="absolute -bottom-[44%] -left-[70%] w-[220%] transition-transform duration-150 ease-out" style={drift(1, 0.6)}>
+          <SoftCloud shape={CLOUD_BANK} seed={7} className="w-full h-auto opacity-40" />
         </div>
       </div>
 
